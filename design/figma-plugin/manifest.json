@@ -1,0 +1,16 @@
+{
+  "name": "HIT-T Maquettes",
+  "id": "hitt-maquettes-local",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": { "allowedDomains": ["none"] },
+  "menu": [
+    { "name": "1. Appliquer la charte HIT-T (couleurs + logo)", "command": "charte" },
+    { "name": "2. Créer les écrans d'administration", "command": "admin" },
+    { "name": "3. Créer les écrans mobile", "command": "mobile" },
+    { "separator": true },
+    { "name": "Tout exécuter (1 → 3)", "command": "tout" }
+  ]
+}
