@@ -11,7 +11,7 @@ HIT-T Reco : MVP de soutenance qui recommande à un apprenant 5 formations du ca
 
 ## Règles (`.claude/rules/`)
 
-`perimetre-et-git.md` s'applique toujours ; les autres se chargent selon les fichiers touchés : `backend.md`, `moteur-recommandation.md`, `base-de-donnees.md`, `frontend.md` (dont la charte visuelle), `documentation.md`, `deploiement.md`, `design.md`.
+`perimetre-et-git.md` et `securite-ia.md` (secrets, données non fiables, données personnelles, actions à confirmer) s'appliquent toujours, avec les interdictions de `.claude/settings.json` (`permissions.deny`) ; les autres se chargent selon les fichiers touchés : `backend.md`, `moteur-recommandation.md`, `base-de-donnees.md`, `frontend.md` (dont la charte visuelle), `documentation.md`, `deploiement.md`, `design.md`.
 
 ## Agents du projet (`.claude/agents/`)
 
