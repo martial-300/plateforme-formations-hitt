@@ -45,7 +45,7 @@ let V = {}, TS = {}, FP, DESK, MOB, FONTS;
 async function getPage(name, create) {
   let p = figma.root.children.find((x) => x.name === name);
   if (!p && create) { p = figma.createPage(); p.name = name; }
-  if (!p) throw new Error('Page « ' + name + ' » introuvable : lancez d\'abord le script 01.');
+  if (!p) throw new Error('Page « ' + name + ' » introuvable : lancez d\'abord le script v2-01-fondations.js, puis relancez celui-ci.');
   await load(p);
   return p;
 }
@@ -88,11 +88,11 @@ async function initDesign(create) {
     const full = 'HIT-T v2/' + name;
     let s = existing[full];
     if (!s && !create) throw new Error('Style « ' + full + ' » introuvable : lancez d\'abord le script 01.');
-    if (!s) {
+    if (!s || create) {
+      // Création, ou mise à jour d'un style existant (ex. ancienne police) lors du script 01
       const fn = pickFont(fams, w);
       await figma.loadFontAsync(fn);
-      s = figma.createTextStyle();
-      s.name = full;
+      if (!s) { s = figma.createTextStyle(); s.name = full; }
       s.fontName = fn;
       s.fontSize = size;
       s.lineHeight = { unit: 'PIXELS', value: lh };
