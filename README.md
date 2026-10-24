@@ -27,6 +27,7 @@ Aujourd'hui l'orientation est faite à la main par les conseillers (lent, subjec
 | Catalogue | 86 formations (SISG, IA-Data, TRIT), liste publique filtrable par domaine et type, CRUD admin |
 | Questionnaire | Niveau d'études, compétences, centres d'intérêt, objectif pro, type souhaité, budget max (FCFA) ; modifiable |
 | Recommandations | Top 5 classé + mots-clés correspondants + retour « pertinent / non pertinent » |
+| Aperçu visiteur | Exemple sur l'accueil et essai sans compte : 3 questions → 3 formations (RF-12, ajout v1.1) |
 | Tableau de bord admin | Nb d'apprenants, 5 formations les plus recommandées, taux de retours « pertinent » |
 
 Hors MVP (V2) : réinitialisation de mot de passe, refresh token, rôle conseiller, historique, filtrage collaboratif, CI/CD… Voir le [cahier des charges](docs/cahier-des-charges-mvp.md#2-périmètre).
@@ -90,7 +91,7 @@ Le lancement du backend et du frontend est décrit dans [backend/README.md](back
 | [Cahier des charges MVP](docs/cahier-des-charges-mvp.md) | Périmètre, exigences, critères de validation (référence) |
 | [Architecture](docs/architecture.md) | Couches, pages frontend, organisation du code |
 | [Modèle de données](docs/modele-donnees.md) | 4 tables, diagramme entité-relation |
-| [API REST](docs/api.md) | 11 endpoints, exemples de requêtes / réponses |
+| [API REST](docs/api.md) | 12 endpoints, exemples de requêtes / réponses |
 | [Moteur de recommandation](docs/moteur-recommandation.md) | Algorithme TF-IDF + cosinus, pseudo-code |
 | [Diagrammes UML](docs/uml.md) | Cas d'utilisation, classes, séquence « obtenir des recommandations » |
 | [Évaluation](docs/evaluation.md) | Protocole précision@5, panel d'apprenants |

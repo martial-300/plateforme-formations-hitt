@@ -20,6 +20,7 @@
 | PUT | `/profil` | Soumettre / mettre à jour le questionnaire, renvoie les recommandations | Connecté | RF-06 → RF-09 |
 | POST | `/recommandations/{id}/retour` | Retour pertinent / non pertinent | Connecté | RF-10 |
 | GET | `/admin/statistiques` | Les 3 chiffres clés | Admin | RF-11 |
+| POST | `/recommandations/apercu` | Aperçu sans compte (3 formations, rien n'est enregistré) | Public | RF-12 |
 
 La déconnexion (RF-02) est gérée côté frontend : suppression du JWT stocké.
 
@@ -132,6 +133,29 @@ Moins de 5 résultats peuvent être renvoyés si le filtre type + budget laisse 
 ```
 
 Valeurs : `pertinent` | `non_pertinent`. L'apprenant ne peut noter que ses propres recommandations (sinon `404`).
+
+### `POST /recommandations/apercu` (public, RF-12)
+
+Aperçu pour un visiteur sans compte. Même moteur que `PUT /profil`, mais avec 3 réponses, 3 résultats et **aucune écriture en base**.
+
+```json
+{ "centres_interet": "créer des sites internet, programmer", "type_souhaite": "carte", "budget_max_fcfa": 150000 }
+```
+
+`200 OK`
+
+```json
+{
+  "recommandations": [
+    { "rang": 1, "score": 0.48, "mots_cles_communs": ["développement web", "site web", "programmation"],
+      "formation": { "id": "…", "intitule": "Développement de site web avec PHP, HTML, CSS", "domaine": "TRIT", "type": "carte", "duree_valeur": 3, "duree_unite": "semaine", "cout_fcfa": 125000, "cout_promo_fcfa": 120500 } }
+  ]
+}
+```
+
+- Pas de description ni d'identifiant de recommandation (rien n'est enregistré, donc pas de retour possible).
+- Limiter le nombre d'appels par adresse IP (ex. 20 par minute) : la route est publique.
+- Le frontend garde les 3 réponses en mémoire de session pour pré-remplir le questionnaire après l'inscription.
 
 ## Administration
 

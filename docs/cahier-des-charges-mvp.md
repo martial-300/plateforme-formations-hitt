@@ -1,6 +1,6 @@
 # Cahier des charges MVP — Plateforme de recommandation de formations (HIT-T Institute)
 
-*23 octobre 2026 · Martial*
+*23 octobre 2026 · Martial — v1.1 du 24 octobre 2026 : ajout de l'aperçu pour les visiteurs (RF-12)*
 
 > Version Markdown du document de référence. Original Word : [Cahier_des_Charges_MVP_HITT_Institute.docx](Cahier_des_Charges_MVP_HITT_Institute.docx).
 
@@ -23,6 +23,7 @@ Le MVP couvre 4 modules : comptes, catalogue, questionnaire, recommandations. Le
 | Catalogue de formations | CRUD admin + liste publique avec filtre domaine/type | Recherche plein texte avancée |
 | Questionnaire de profilage | Un formulaire fixe | Questionnaire dynamique, historique des versions |
 | Recommandations | Top 5 classé + mots-clés correspondants + retour pertinent / non pertinent | Historique, filtrage collaboratif, approche hybride |
+| Aperçu pour les visiteurs *(ajout v1.1)* | Exemple sur l'accueil + essai sans compte (3 questions → 3 formations) | — |
 | Tableau de bord admin | 3 chiffres clés | Graphiques, rapports exportables |
 | Déploiement | Docker Compose sur un VPS avec HTTPS | CI/CD, sauvegardes automatisées |
 
@@ -56,7 +57,7 @@ Trois rôles utilisent le système dans le MVP. Le visiteur n'a pas de compte : 
 
 | Rôle | Ce qu'il fait dans le MVP |
 |---|---|
-| Visiteur (non connecté) | Consulte le catalogue et le détail des formations, filtre par domaine et par type, crée un compte pour obtenir des recommandations. |
+| Visiteur (non connecté) | Consulte le catalogue et le détail des formations, filtre par domaine et par type, crée un compte pour obtenir des recommandations. Peut aussi essayer la plateforme sans compte (aperçu de 3 formations). |
 | Apprenant | Tout ce que fait le visiteur, plus : remplit le questionnaire, consulte ses recommandations, donne un retour. |
 | Administrateur | Gère le catalogue, consulte les chiffres clés. |
 
@@ -64,7 +65,7 @@ Le rôle Conseiller pédagogique n'est pas nécessaire au MVP : l'apprenant reç
 
 ## 4. Exigences fonctionnelles MVP
 
-11 exigences (contre 18 dans la v2.0), toutes obligatoires pour la soutenance.
+12 exigences (contre 18 dans la v2.0), toutes obligatoires pour la soutenance. RF-12 est un ajout de la v1.1 de ce document, à faire valider par les encadreurs.
 
 | Code | Exigence | Module |
 |---|---|---|
@@ -79,6 +80,7 @@ Le rôle Conseiller pédagogique n'est pas nécessaire au MVP : l'apprenant reç
 | RF-09 | Chaque recommandation affiche les mots-clés qui l'expliquent. | Recommandation |
 | RF-10 | L'apprenant marque une recommandation « pertinente » ou « non pertinente ». | Recommandation |
 | RF-11 | L'administrateur voit : nombre d'apprenants inscrits, 5 formations les plus recommandées, taux de retours « pertinent ». | Tableau de bord |
+| RF-12 | Un visiteur sans compte répond à 3 questions (ce qu'il aimerait apprendre, format, budget) et voit les 3 formations les plus pertinentes (intitulé, domaine, correspondance, mots en commun). Rien n'est enregistré ; à l'inscription, ses réponses pré-remplissent le questionnaire. L'accueil montre aussi un exemple de résultat pour un profil fictif. | Recommandation |
 
 ## 5. Exigences non fonctionnelles essentielles
 
@@ -120,7 +122,7 @@ Le texte utilisé par le moteur IA est reconstruit à la volée à partir du pro
 
 ## 8. API REST minimale
 
-11 endpoints (contre 18 dans le cahier technique), base `/api/v1`, JSON, JWT en en-tête `Authorization: Bearer`. La documentation Swagger générée par FastAPI sur `/docs` sert de référence.
+12 endpoints (contre 18 dans le cahier technique), base `/api/v1`, JSON, JWT en en-tête `Authorization: Bearer`. La documentation Swagger générée par FastAPI sur `/docs` sert de référence.
 
 | Méthode | Route | Rôle | Accès |
 |---|---|---|---|
@@ -135,6 +137,7 @@ Le texte utilisé par le moteur IA est reconstruit à la volée à partir du pro
 | PUT | /profil | Soumettre ou mettre à jour le questionnaire, renvoie les recommandations | Connecté |
 | POST | /recommandations/{id}/retour | Enregistrer le retour pertinent / non pertinent | Connecté |
 | GET | /admin/statistiques | Les 3 chiffres clés | Admin |
+| POST | /recommandations/apercu | Aperçu sans compte : 3 formations, rien n'est enregistré (RF-12, ajout v1.1) | Public |
 
 Supprimés : /auth/refresh, PATCH /users/me, /recommandations/historique, /admin/utilisateurs, /admin/recommandation/recalculer (le calcul est refait à chaque soumission).
 
@@ -175,7 +178,7 @@ Méthode : Scrum allégé, sprints d'une semaine, démo aux encadreurs en fin de
 
 Le MVP est validé quand :
 
-- [ ] Les 11 exigences fonctionnelles fonctionnent sur l'application déployée.
+- [ ] Les 12 exigences fonctionnelles fonctionnent sur l'application déployée.
 - [ ] Le parcours complet (inscription → questionnaire → 5 recommandations → retour) se fait sans erreur bloquante.
 - [ ] Les recommandations s'affichent en moins de 3 secondes.
 - [ ] La précision@5 moyenne atteint au moins 0,6 (3 formations pertinentes sur 5) sur les 20 profils de test.

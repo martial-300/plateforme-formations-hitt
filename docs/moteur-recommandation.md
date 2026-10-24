@@ -67,6 +67,16 @@ def recommander(profil, formations, k=5):
 | Doublon « Initiation Informatique » (SISG et TRIT) | Ne garder qu'une occurrence par intitulé dans le top 5 |
 | `niveau_etudes` | Collecté mais non utilisé pour le score (même niveau d'admission partout) |
 
+## Aperçu pour les visiteurs (RF-12)
+
+Même fonction `recommander`, appelée avec :
+
+- un texte de profil réduit à la seule réponse « ce que vous aimeriez apprendre » ;
+- `k = 3` ;
+- aucune persistance (pas d'écriture dans `recommandations`).
+
+Le texte étant plus court, les scores sont en général plus faibles qu'avec le questionnaire complet : l'écran l'indique (« le questionnaire complet affine ce résultat »).
+
 ## Performance
 
 86 formations : vectorisation + calcul < 1 s (exigence : affichage < 3 s). La matrice TF-IDF des formations peut être mise en cache et invalidée à chaque modification du catalogue (RF-04).
