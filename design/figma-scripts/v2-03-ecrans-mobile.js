@@ -394,7 +394,7 @@ async function authScreen(mode, idx) {
   const left = AL('VERTICAL', { name: 'Présentation', gap: 24 }); append(cols, left);
   left.appendChild(await txt('Espace apprenant', 'Surtitre', 'couleur/vert/700'));
   await para(left, 'Trouvez la formation adaptée à votre projet', 'Display');
-  await para(left, 'Répondez à six questions sur votre parcours et vos objectifs : la plateforme compare votre profil aux 86 formations de HIT-T Institute et vous indique les cinq plus adaptées.', 'Corps', 'couleur/encre-2');
+  await para(left, 'Répondez à six questions sur votre parcours et vos objectifs : la plateforme compare automatiquement votre profil aux 86 formations de HIT-T Institute et vous indique les cinq plus adaptées.', 'Corps', 'couleur/encre-2');
   await steps(left, [['Créez votre compte', 'Nom, prénom, adresse email et mot de passe.'], ['Remplissez le questionnaire', 'Environ deux minutes ; vous pourrez modifier vos réponses.'], ['Consultez vos recommandations', 'Cinq formations classées, avec les raisons de chaque choix.']]);
   const form = panel(mode === 'login' ? 'Formulaire de connexion' : 'Formulaire d\'inscription', 40); form.itemSpacing = 20; cols.appendChild(form); setW(form, 480);
   const fh = AL('VERTICAL', { name: 'En-tête', gap: 6 }); append(form, fh);
@@ -423,7 +423,7 @@ async function catalogueScreen(idx) {
   await pageTitle(tl, 'Accueil  /  Catalogue', 'Catalogue des formations', '86 formations réparties en trois domaines : Secrétariat et Gestion (SISG), IA, Data science et Blockchain, Informatique et Télécoms (TRIT).');
   const call = encadre('Aide au choix'); top.appendChild(call); setW(call, 380);
   call.appendChild(await txt('Vous ne savez pas quoi choisir ?', 'Titre 3'));
-  await para(call, 'Répondez au questionnaire : nous vous proposons les cinq formations les plus proches de votre profil.', 'Petit', 'couleur/encre-2');
+  await para(call, 'Répondez au questionnaire : la plateforme sélectionne automatiquement les cinq formations les plus proches de votre profil. Un conseiller du cabinet peut aussi vous aider.', 'Petit', 'couleur/encre-2');
   call.appendChild(inst(S.btn, 'Type=Secondaire', { 'Libellé': 'Répondre au questionnaire' }));
 
   const bar = AL('HORIZONTAL', { name: 'Filtres', gap: 24 }); bar.counterAxisAlignItems = 'MAX'; stroke(bar, 'couleur/filet', 1, 'b'); append(b, bar);
@@ -473,7 +473,7 @@ async function detailScreen(idx) {
   pr.appendChild(await txt('120 500 FCFA', 'Titre 1', 'couleur/orange/700'));
   pr.appendChild(await txt('Prix promotionnel', 'Petit', 'couleur/encre-2'));
   rule(side);
-  await para(side, 'Le paiement se fait auprès du cabinet. Créez un compte pour savoir si cette formation correspond à votre profil.', 'Petit', 'couleur/encre-2');
+  await para(side, 'Le paiement se fait auprès du cabinet. Créez un compte et répondez au questionnaire : la plateforme vous dira automatiquement si cette formation correspond à votre profil.', 'Petit', 'couleur/encre-2');
   append(side, inst(S.btn, 'Type=Principal', { 'Libellé': 'Obtenir mes recommandations' }));
   append(side, inst(S.btn, 'Type=Lien', { 'Libellé': 'Retour au catalogue' }), null);
   footer(sc);
@@ -697,7 +697,7 @@ async function ecransMobile() {
   await para(h1, '86 formations en Secrétariat et Gestion, IA et Data, Informatique et Télécoms.', 'Corps', 'couleur/encre-2');
   const call = encadre('Aide au choix'); append(b1, call);
   await para(call, 'Vous ne savez pas quoi choisir ?', 'Titre 3');
-  await para(call, 'Répondez au questionnaire pour recevoir cinq propositions.', 'Petit', 'couleur/encre-2');
+  await para(call, 'Répondez au questionnaire pour recevoir cinq propositions calculées automatiquement.', 'Petit', 'couleur/encre-2');
   call.appendChild(inst(S.btn, 'Type=Secondaire', { 'Libellé': 'Répondre au questionnaire' }));
   const tabs = AL('HORIZONTAL', { name: 'Onglets', gap: 18 }); stroke(tabs, 'couleur/filet', 1, 'b'); append(b1, tabs);
   for (const [o, a] of [['Tous', true], ['SISG', false], ['IA · Data', false], ['TRIT', false]]) tabs.appendChild(inst(S.tab, a ? 'État=Actif' : 'État=Inactif', { 'Libellé': o }));
