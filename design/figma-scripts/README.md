@@ -1,13 +1,23 @@
 # Scripts Figma (Scripter)
 
-Trois scripts autonomes à coller dans le plugin **Scripter** (Figma navigateur ou desktop), dans le fichier **Plateforme formations HIT-T — Maquettes MVP**.
+Scripts autonomes à coller dans le plugin **Scripter** (Figma navigateur ou desktop), dans le fichier **Plateforme formations HIT-T — Maquettes MVP**. Chaque script peut être relancé : ce qui existe déjà n'est pas recréé.
+
+## Design v2 — institutionnel (à utiliser)
 
 | Ordre | Script | Résultat |
 |---|---|---|
-| 1 | `01-charte-hitt.js` | Couleurs du logo dans les variables + logo vectoriel dans le composant « Logo » : tous les écrans se mettent à jour. |
-| 2 | `02-ecrans-admin.js` | Écrans **07 · Administration** et **08 · Modifier une formation** (page « Écrans desktop »). |
-| 3 | `03-ecrans-mobile.js` | Écrans **M1 · Catalogue**, **M2 · Questionnaire**, **M3 · Mes recommandations** (page « Écrans mobile »). |
+| 1 | `v2-01-fondations.js` | Pages « v2 · … », couleurs du logo, typographie Source Serif 4 / Source Sans 3, tous les composants (en-tête par rôle, pied de page, lignes de catalogue, recommandations, champs…). |
+| 2 | `v2-02-ecrans-desktop.js` | 01 Connexion · 02 Inscription · 03 Catalogue · 04 Détail · 05 Questionnaire · 06 Mes recommandations · 07 Tableau de bord · 08 Modifier une formation. |
+| 3 | `v2-03-ecrans-mobile.js` | M1 Catalogue · M2 Questionnaire · M3 Mes recommandations (390 px). |
+
+Principes : bandeau vert plein pour la navigation, titres à empattements, angles de 2 px, filets fins, pas d'ombres ni de pastilles, catalogue en liste, orange réservé aux prix promo et au domaine SISG. Le score de pertinence est remplacé côté apprenant par un libellé (« Très proche / Proche / Peut vous intéresser ») ; le score exact reste en base.
+
+Aperçu attendu (rendu simulé, hors Figma) : [`../apercu-v2/`](../apercu-v2/).
+
+Si les polices Source Serif 4 / Source Sans 3 manquent dans Figma, le script se rabat sur Inter.
+
+## Version 1 (remplacée)
+
+`01-charte-hitt.js`, `02-ecrans-admin.js`, `03-ecrans-mobile.js` complètent la première version (pages « Fondations & composants », « Écrans desktop », « Écrans mobile »). Elle reste dans le fichier pour comparaison.
 
 Mode d'emploi : ouvrir le fichier → **Plugins → Scripter** → nouveau script → coller le contenu d'un fichier → **Run**. Le résultat s'affiche (✅ / ℹ️ / ❌).
-
-Chaque script peut être relancé : ce qui existe déjà n'est pas recréé. Les mêmes actions existent aussi sous forme de plugin de développement dans `../figma-plugin/`.
