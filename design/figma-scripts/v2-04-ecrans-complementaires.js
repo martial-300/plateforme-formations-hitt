@@ -533,7 +533,7 @@ async function recommandationsScreen(idx) {
   const sc = screen('06 · Mes recommandations', idx);
   await header(sc, 'Apprenant', 'Mes recommandations');
   const b = body(sc);
-  await pageTitle(b, 'Espace apprenant  /  Mes recommandations', 'Vos cinq formations recommandées', 'Établies le 24 octobre 2026 à partir de votre questionnaire, de la plus proche à la moins proche de votre profil.');
+  await pageTitle(b, 'Espace apprenant  /  Mes recommandations', 'Vos cinq formations recommandées', 'Propositions calculées automatiquement le 24 octobre 2026 à partir de votre questionnaire, de la plus proche à la moins proche de votre profil. Un conseiller du cabinet peut vous aider à choisir.');
   const cols = AL('HORIZONTAL', { name: 'Colonnes', gap: 40 }); append(b, cols);
   const list = AL('VERTICAL', { name: 'Liste', gap: 16 }); append(cols, list);
   let rank = 1;
@@ -752,7 +752,7 @@ async function ecransMobile() {
   const b3 = mBody(m3, 16);
   const h3 = AL('VERTICAL', { name: 'Titre', gap: 6 }); append(b3, h3);
   await para(h3, 'Vos cinq formations recommandées', 'Titre 1');
-  await para(h3, 'De la plus proche à la moins proche de votre profil.', 'Corps', 'couleur/encre-2');
+  await para(h3, 'Calculées automatiquement à partir de vos réponses. Un conseiller peut vous aider à choisir.', 'Corps', 'couleur/encre-2');
   const prof = AL('HORIZONTAL', { name: 'Résumé du profil', gap: 12 }); prof.counterAxisAlignItems = 'CENTER'; pad(prof, 12, 14); prof.fills = fill('couleur/papier'); rad(prof); append(b3, prof);
   const pt = AL('VERTICAL', { name: 'Texte', gap: 2 }); append(prof, pt);
   await para(pt, 'À la carte · 150 000 FCFA max.', 'Petit fort');
@@ -878,7 +878,7 @@ async function accueil(col) {
   const how = AL('HORIZONTAL', { name: 'Fonctionnement', gap: 64 }); append(b, how);
   const ht = AL('VERTICAL', { name: 'Titre', gap: 12 }); how.appendChild(ht); setW(ht, 380);
   await para(ht, 'Comment fonctionne l\'orientation', 'Titre 1');
-  await para(ht, 'Le calcul compare les mots de vos réponses à ceux de chaque formation. Il ne retient que le format choisi et les formations dans votre budget.', 'Corps', 'couleur/encre-2');
+  await para(ht, 'Le classement est automatique : il compare les mots de vos réponses à ceux de chaque formation et ne retient que le format choisi et les formations dans votre budget. Vos avis servent à l\'améliorer.', 'Corps', 'couleur/encre-2');
   const st = AL('VERTICAL', { name: 'Étapes', gap: 0 }); append(how, st);
   await steps(st, [['Créez votre compte', 'Nom, prénom, adresse email et mot de passe.'], ['Remplissez le questionnaire', 'Parcours, compétences, centres d\'intérêt, objectif, format et budget.'], ['Consultez vos cinq formations', 'Classées, avec les mots qui les relient à votre profil. Donnez votre avis sur chacune.']]);
   footer(sc);

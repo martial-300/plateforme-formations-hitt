@@ -533,7 +533,7 @@ async function recommandationsScreen(idx) {
   const sc = screen('06 · Mes recommandations', idx);
   await header(sc, 'Apprenant', 'Mes recommandations');
   const b = body(sc);
-  await pageTitle(b, 'Espace apprenant  /  Mes recommandations', 'Vos cinq formations recommandées', 'Établies le 24 octobre 2026 à partir de votre questionnaire, de la plus proche à la moins proche de votre profil.');
+  await pageTitle(b, 'Espace apprenant  /  Mes recommandations', 'Vos cinq formations recommandées', 'Propositions calculées automatiquement le 24 octobre 2026 à partir de votre questionnaire, de la plus proche à la moins proche de votre profil. Un conseiller du cabinet peut vous aider à choisir.');
   const cols = AL('HORIZONTAL', { name: 'Colonnes', gap: 40 }); append(b, cols);
   const list = AL('VERTICAL', { name: 'Liste', gap: 16 }); append(cols, list);
   let rank = 1;
