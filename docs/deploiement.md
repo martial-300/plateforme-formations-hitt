@@ -13,8 +13,8 @@ Cible : **un VPS Linux** avec Docker Compose, Nginx en frontal et certificat **L
 
 ```bash
 # 1. Récupérer le code
-git clone https://github.com/<votre-compte>/hitt-recommandation.git
-cd hitt-recommandation
+git clone https://github.com/martial-300/plateforme-formations-hitt.git
+cd plateforme-formations-hitt
 
 # 2. Configurer
 cp .env.example .env

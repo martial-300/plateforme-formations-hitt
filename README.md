@@ -43,7 +43,7 @@ Hors MVP (V2) : réinitialisation de mot de passe, refresh token, rôle conseill
 ## Structure du dépôt
 
 ```
-hitt-recommandation/
+plateforme-formations-hitt/
 ├── backend/          API FastAPI + moteur de recommandation (Python)
 ├── frontend/         Application React + TypeScript (Vite)
 ├── database/
@@ -60,8 +60,8 @@ hitt-recommandation/
 Prérequis : Docker et Docker Compose.
 
 ```bash
-git clone https://github.com/<votre-compte>/hitt-recommandation.git
-cd hitt-recommandation
+git clone https://github.com/martial-300/plateforme-formations-hitt.git
+cd plateforme-formations-hitt
 cp .env.example .env          # puis adapter les mots de passe et JWT_SECRET
 docker compose up -d db       # PostgreSQL + chargement automatique du catalogue
 ```
