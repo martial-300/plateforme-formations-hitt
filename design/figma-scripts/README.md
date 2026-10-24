@@ -6,7 +6,7 @@ Scripts autonomes à coller dans le plugin **Scripter** (Figma navigateur ou des
 
 | Ordre | Script | Résultat |
 |---|---|---|
-| 1 | `v2-01-fondations.js` | Pages « v2 · … », couleurs du logo, typographie Source Serif 4 / Source Sans 3, tous les composants (en-tête par rôle, pied de page, lignes de catalogue, recommandations, champs…). |
+| 1 | `v2-01-fondations.js` | Pages « v2 · … », couleurs du logo, typographie IBM Plex Sans, tous les composants (en-tête par rôle, pied de page, lignes de catalogue, recommandations, champs…). |
 | 2 | `v2-02-ecrans-desktop.js` | 01 Connexion · 02 Inscription · 03 Catalogue · 04 Détail · 05 Questionnaire · 06 Mes recommandations · 07 Tableau de bord · 08 Modifier une formation. |
 | 3 | `v2-03-ecrans-mobile.js` | M1 Catalogue · M2 Questionnaire · M3 Mes recommandations (390 px). |
 
