@@ -4,9 +4,11 @@ Scripts autonomes à coller dans le plugin **Scripter** (Figma navigateur ou des
 
 ## Design v2 — institutionnel (à utiliser)
 
+La formule Starter de Figma limite un fichier à 3 pages : la v2 ne crée pas de page, elle est rangée dans des **sections** « v2 · Fondations », « v2 · Écrans desktop » et « v2 · Écrans mobile », sous la v1, sur les pages 1, 2 et 3. Pour repartir de zéro, supprimer ces 3 sections puis relancer 01 → 02 → 03.
+
 | Ordre | Script | Résultat |
 |---|---|---|
-| 1 | `v2-01-fondations.js` | Pages « v2 · … », couleurs du logo, typographie IBM Plex Sans, tous les composants (en-tête par rôle, pied de page, lignes de catalogue, recommandations, champs…). |
+| 1 | `v2-01-fondations.js` | Section « v2 · Fondations » (page 1), couleurs du logo, typographie IBM Plex Sans, tous les composants (en-tête par rôle, pied de page, lignes de catalogue, recommandations, champs…). |
 | 2 | `v2-02-ecrans-desktop.js` | 01 Connexion · 02 Inscription · 03 Catalogue · 04 Détail · 05 Questionnaire · 06 Mes recommandations · 07 Tableau de bord · 08 Modifier une formation. |
 | 3 | `v2-03-ecrans-mobile.js` | M1 Catalogue · M2 Questionnaire · M3 Mes recommandations (390 px). |
 

@@ -1,13 +1,13 @@
 // HIT-T — design v2 (institutionnel) · étape 1 · Fondations
 // À coller dans le plugin Scripter, dans le fichier des maquettes HIT-T, puis Run.
-// Crée les pages « v2 · … », les couleurs du logo, la typographie (Source Serif / Source Sans) et tous les composants.
+// Range la v2 dans des sections « v2 · … » sous la v1 (pas de nouvelle page : limite de 3 pages en formule Starter). Crée les couleurs du logo, la typographie (Source Serif / Source Sans) et tous les composants.
 // Peut être relancé sans risque : ce qui existe déjà n'est pas recréé.
 
 const out = typeof print === 'function' ? print : console.log;
 const load = async (p) => { if (p.loadAsync) await p.loadAsync(); };
 const goTo = async (p) => { if (figma.setCurrentPageAsync) await figma.setCurrentPageAsync(p); else figma.currentPage = p; };
 
-const PAGES = { fond: 'v2 · Fondations', desk: 'v2 · Écrans desktop', mob: 'v2 · Écrans mobile' };
+const PAGES = { fond: ['v2 · Fondations', 0, 'Fondations & composants'], desk: ['v2 · Écrans desktop', 1, 'Écrans desktop'], mob: ['v2 · Écrans mobile', 2, 'Écrans mobile'] };
 // Police unique de la plateforme (repli sur Inter si absente)
 const TITRES = ['IBM Plex Sans', 'Inter'];
 const SANS = ['IBM Plex Sans', 'Inter'];
@@ -42,12 +42,35 @@ const STYLES = [
 
 let V = {}, TS = {}, FP, DESK, MOB, FONTS;
 
-async function getPage(name, create) {
-  let p = figma.root.children.find((x) => x.name === name);
-  if (!p && create) { p = figma.createPage(); p.name = name; }
-  if (!p) throw new Error('Page « ' + name + ' » introuvable : lancez d\'abord le script v2-01-fondations.js, puis relancez celui-ci.');
-  await load(p);
-  return p;
+// La formule Starter de Figma limite un fichier à 3 pages : la v2 est rangée dans des sections
+// « v2 · … » placées sous le contenu existant des pages 1, 2 et 3 (créées seulement si absentes).
+async function getZone(key, create) {
+  const [name, idx, pageName] = PAGES[key];
+  let page = figma.root.children[idx];
+  if (!page) {
+    if (!create) throw new Error('Page n° ' + (idx + 1) + ' introuvable : lancez d\'abord le script v2-01-fondations.js.');
+    page = figma.createPage(); page.name = pageName;
+  }
+  await load(page);
+  let sec = page.children.find((n) => n.type === 'SECTION' && n.name === name);
+  if (!sec && !create) throw new Error('Zone « ' + name + ' » introuvable : lancez d\'abord le script v2-01-fondations.js, puis relancez celui-ci.');
+  if (!sec) {
+    sec = figma.createSection();
+    sec.name = name;
+    page.appendChild(sec);
+    let bottom = 0;
+    for (const c of page.children) if (c !== sec) bottom = Math.max(bottom, c.y + c.height);
+    sec.x = 0; sec.y = bottom ? bottom + 400 : 0;
+    sec.resizeWithoutConstraints(2000, 1200);
+  }
+  return { page, sec };
+}
+
+// Ajuste la section à son contenu
+function fit(sec) {
+  let r = 0, b = 0;
+  for (const c of sec.children) { r = Math.max(r, c.x + c.width); b = Math.max(b, c.y + c.height); }
+  sec.resizeWithoutConstraints(Math.max(r + 80, 400), Math.max(b + 80, 400));
 }
 
 function pickFont(families, weight) {
@@ -328,17 +351,16 @@ async function navLink(label, active, dark = true) {
 }
 
 async function fondations() {
-  FP = await getPage(PAGES.fond, true);
-  DESK = await getPage(PAGES.desk, true);
-  MOB = await getPage(PAGES.mob, true);
-  await goTo(FP);
+  const zone = await getZone('fond', true);
+  FP = zone.sec;
+  await goTo(zone.page);
   if (exists(FP, 'Fondations HIT-T v2')) return false;
 
   const board = AL('VERTICAL', { name: 'Fondations HIT-T v2', gap: 56 });
   setW(board, 1600);
   pad(board, 64);
   board.fills = fill('couleur/fond');
-  board.x = 0; board.y = 0;
+  FP.appendChild(board); board.x = 80; board.y = 80;
 
   // En-tête de planche
   const intro = AL('VERTICAL', { name: 'Introduction', gap: 8 }); append(board, intro);
@@ -696,6 +718,7 @@ async function fondations() {
     for (const [n, t] of Object.entries(vals)) t.componentPropertyReferences = { characters: r.addComponentProperty(n, 'TEXT', t.characters) };
     r.description = 'Ligne du tableau de gestion du catalogue (RF-04). Montants en FCFA, « — » si pas de prix promo.';
   }
+  fit(FP);
   return true;
 }
 
@@ -704,5 +727,5 @@ async function fondations() {
 try {
   await initDesign(true);
   const r = await fondations();
-  out(r ? '✅ Fondations v2 créées sur la page « v2 · Fondations »' : 'ℹ️ Fondations v2 déjà présentes : rien à faire');
+  out(r ? '✅ Fondations v2 créées (section « v2 · Fondations », page 1)' : 'ℹ️ Fondations v2 déjà présentes : rien à faire');
 } catch (e) { out('❌ ' + e.message); }

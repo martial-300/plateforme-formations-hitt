@@ -7,7 +7,7 @@ const out = typeof print === 'function' ? print : console.log;
 const load = async (p) => { if (p.loadAsync) await p.loadAsync(); };
 const goTo = async (p) => { if (figma.setCurrentPageAsync) await figma.setCurrentPageAsync(p); else figma.currentPage = p; };
 
-const PAGES = { fond: 'v2 · Fondations', desk: 'v2 · Écrans desktop', mob: 'v2 · Écrans mobile' };
+const PAGES = { fond: ['v2 · Fondations', 0, 'Fondations & composants'], desk: ['v2 · Écrans desktop', 1, 'Écrans desktop'], mob: ['v2 · Écrans mobile', 2, 'Écrans mobile'] };
 // Police unique de la plateforme (repli sur Inter si absente)
 const TITRES = ['IBM Plex Sans', 'Inter'];
 const SANS = ['IBM Plex Sans', 'Inter'];
@@ -42,12 +42,35 @@ const STYLES = [
 
 let V = {}, TS = {}, FP, DESK, MOB, FONTS;
 
-async function getPage(name, create) {
-  let p = figma.root.children.find((x) => x.name === name);
-  if (!p && create) { p = figma.createPage(); p.name = name; }
-  if (!p) throw new Error('Page « ' + name + ' » introuvable : lancez d\'abord le script v2-01-fondations.js, puis relancez celui-ci.');
-  await load(p);
-  return p;
+// La formule Starter de Figma limite un fichier à 3 pages : la v2 est rangée dans des sections
+// « v2 · … » placées sous le contenu existant des pages 1, 2 et 3 (créées seulement si absentes).
+async function getZone(key, create) {
+  const [name, idx, pageName] = PAGES[key];
+  let page = figma.root.children[idx];
+  if (!page) {
+    if (!create) throw new Error('Page n° ' + (idx + 1) + ' introuvable : lancez d\'abord le script v2-01-fondations.js.');
+    page = figma.createPage(); page.name = pageName;
+  }
+  await load(page);
+  let sec = page.children.find((n) => n.type === 'SECTION' && n.name === name);
+  if (!sec && !create) throw new Error('Zone « ' + name + ' » introuvable : lancez d\'abord le script v2-01-fondations.js, puis relancez celui-ci.');
+  if (!sec) {
+    sec = figma.createSection();
+    sec.name = name;
+    page.appendChild(sec);
+    let bottom = 0;
+    for (const c of page.children) if (c !== sec) bottom = Math.max(bottom, c.y + c.height);
+    sec.x = 0; sec.y = bottom ? bottom + 400 : 0;
+    sec.resizeWithoutConstraints(2000, 1200);
+  }
+  return { page, sec };
+}
+
+// Ajuste la section à son contenu
+function fit(sec) {
+  let r = 0, b = 0;
+  for (const c of sec.children) { r = Math.max(r, c.x + c.width); b = Math.max(b, c.y + c.height); }
+  sec.resizeWithoutConstraints(Math.max(r + 80, 400), Math.max(b + 80, 400));
 }
 
 function pickFont(families, weight) {
@@ -314,7 +337,8 @@ function screen(name, idx) {
   const f = figma.createFrame();
   f.name = name;
   f.resize(1440, 900);
-  f.x = idx * 1540; f.y = 0;
+  DESK.appendChild(f);
+  f.x = 80 + idx * 1540; f.y = 80;
   f.layoutMode = 'VERTICAL';
   f.counterAxisSizingMode = 'FIXED'; f.primaryAxisSizingMode = 'AUTO';
   f.fills = fill('couleur/fond');
@@ -598,10 +622,11 @@ async function adminScreen(idx) {
 }
 
 async function ecransDesktop() {
-  FP = await getPage(PAGES.fond);
-  DESK = await getPage(PAGES.desk);
+  FP = (await getZone('fond', false)).sec;
+  const zone = await getZone('desk', true);
+  DESK = zone.sec;
   if (DESK.children.some((n) => n.name.startsWith('01 ·'))) return false;
-  await goTo(DESK);
+  await goTo(zone.page);
   const made = [];
   made.push(await authScreen('login', 0));
   made.push(await authScreen('signup', 1));
@@ -610,7 +635,8 @@ async function ecransDesktop() {
   made.push(await questionnaireScreen(4));
   made.push(await recommandationsScreen(5));
   made.push(...(await adminScreen(6)));
-  figma.viewport.scrollAndZoomIntoView(made);
+  fit(DESK);
+  figma.viewport.scrollAndZoomIntoView([DESK]);
   return true;
 }
 
@@ -619,5 +645,5 @@ async function ecransDesktop() {
 try {
   await initDesign(false);
   const r = await ecransDesktop();
-  out(r ? '✅ 8 écrans créés sur la page « v2 · Écrans desktop »' : 'ℹ️ Écrans desktop v2 déjà présents : rien à faire');
+  out(r ? '✅ 8 écrans créés (section « v2 · Écrans desktop », page 2)' : 'ℹ️ Écrans desktop v2 déjà présents : rien à faire');
 } catch (e) { out('❌ ' + e.message); }
