@@ -279,6 +279,21 @@ function setLevel(node, level) {
   for (let k = 1; k <= 3; k++) { const sq = node.findOne((n) => n.name === 'Niveau ' + k); if (sq) sq.fills = fill(k <= level ? 'couleur/vert/600' : 'couleur/filet'); }
 }
 
+// Jauge de correspondance : 3 segments sur toute la largeur, libellé en dessous
+async function jauge(parent, level, label, width, style = 'Corps fort') {
+  const j = AL('VERTICAL', { name: 'Correspondance', gap: 6 });
+  parent.appendChild(j);
+  if (width) setW(j, width); else j.layoutSizingHorizontal = 'FILL';
+  const bar = AL('HORIZONTAL', { name: 'Niveau', gap: 3 }); append(j, bar);
+  for (let k = 1; k <= 3; k++) {
+    const r = figma.createRectangle(); r.name = 'Niveau ' + k; r.resize(20, 6);
+    r.fills = fill(k <= level ? 'couleur/vert/600' : 'couleur/filet'); bar.appendChild(r); r.layoutSizingHorizontal = 'FILL';
+  }
+  const t = await txt(label, style, 'couleur/vert/700'); t.name = 'Correspondance'; j.appendChild(t);
+  t.textAutoResize = 'HEIGHT'; t.layoutSizingHorizontal = 'FILL';
+  return j;
+}
+
 function setActive(header, label) {
   for (const l of header.findAll((n) => n.type === 'FRAME' && n.name.startsWith('Lien · '))) {
     const ind = l.findOne((n) => n.name === 'Indicateur');
@@ -628,13 +643,7 @@ async function fondations() {
     b.appendChild(await txt(label, 'Petit fort', chosen ? 'couleur/blanc' : 'couleur/encre'));
     return b;
   };
-  const levelRow = async (parent) => {
-    const row = AL('HORIZONTAL', { name: 'Correspondance', gap: 10 }); row.counterAxisAlignItems = 'CENTER'; append(parent, row);
-    const sq = AL('HORIZONTAL', { name: 'Niveau', gap: 3 }); row.appendChild(sq);
-    for (let k = 1; k <= 3; k++) { const r = figma.createRectangle(); r.name = 'Niveau ' + k; r.resize(10, 10); r.fills = fill('couleur/vert/600'); sq.appendChild(r); }
-    const t = await txt('Très proche de votre profil', 'Corps fort', 'couleur/vert/700'); t.name = 'Correspondance'; row.appendChild(t); t.textAutoResize = 'HEIGHT'; t.layoutSizingHorizontal = 'FILL';
-    return row;
-  };
+  const levelRow = (parent) => jauge(parent, 3, 'Très proche de votre profil', null);
   for (const mobile of [false, true]) {
     const vs = [];
     for (const retour of ['Aucun', 'Pertinent', 'Non pertinent']) {
@@ -667,7 +676,7 @@ async function fondations() {
       const info = await para(body, '3 semaines · 120 500 FCFA (prix promotionnel)', 'Petit', 'couleur/encre-2'); info.name = 'Infos';
       const side = AL('VERTICAL', { name: 'Avis', gap: 12 });
       if (mobile) { append(r, side); side.paddingTop = 4; } else { r.appendChild(side); setW(side, 248); side.paddingLeft = 8; side.layoutSizingVertical = 'FILL'; }
-      side.appendChild(await txt('Correspondance', 'Surtitre', 'couleur/discret'));
+      const st = await txt('Correspondance', 'Surtitre', 'couleur/discret'); st.name = 'Titre correspondance'; side.appendChild(st);
       await levelRow(side);
       const q = await para(side, retour === 'Aucun' ? 'Cette formation vous intéresse ?' : 'Votre avis (modifiable) :', 'Petit', 'couleur/discret'); q.name = 'Question';
       const btns = AL(mobile ? 'HORIZONTAL' : 'VERTICAL', { name: 'Boutons', gap: 8 }); append(side, btns);
