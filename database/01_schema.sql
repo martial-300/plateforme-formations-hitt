@@ -9,10 +9,12 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
     nom                VARCHAR(100) NOT NULL,
     prenom             VARCHAR(100) NOT NULL,
     email              VARCHAR(255) NOT NULL UNIQUE,
-    mot_de_passe_hash  VARCHAR(255) NOT NULL,
+    mot_de_passe_hash  VARCHAR(255),              -- NULL pour un compte Google (RF-13)
+    google_id          VARCHAR(255) UNIQUE,       -- identifiant « sub » Google, NULL pour un compte email
     role               VARCHAR(20)  NOT NULL DEFAULT 'apprenant'
                        CHECK (role IN ('apprenant', 'administrateur')),
-    date_creation      TIMESTAMP    NOT NULL DEFAULT now()
+    date_creation      TIMESTAMP    NOT NULL DEFAULT now(),
+    CHECK (mot_de_passe_hash IS NOT NULL OR google_id IS NOT NULL)
 );
 
 CREATE TABLE IF NOT EXISTS profils_apprenants (

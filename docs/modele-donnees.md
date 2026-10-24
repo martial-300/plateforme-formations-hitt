@@ -15,7 +15,8 @@ erDiagram
         varchar nom
         varchar prenom
         varchar email UK
-        varchar mot_de_passe_hash
+        varchar mot_de_passe_hash "NULL si compte Google"
+        varchar google_id UK "NULL si compte email"
         varchar role "apprenant | administrateur"
         timestamp date_creation
     }
@@ -61,6 +62,7 @@ erDiagram
 | Email unique | Contrainte `UNIQUE` sur `utilisateurs.email` |
 | Un seul profil par apprenant | `profils_apprenants.utilisateur_id` `UNIQUE` |
 | Le visiteur n'est pas stocké | Aucune ligne tant qu'il n'a pas créé de compte |
+| Compte Google (RF-13) | `google_id` unique, `mot_de_passe_hash` NULL ; au moins l'un des deux est renseigné |
 | Inscription publique = rôle `apprenant` | L'API force le rôle ; le compte admin est créé au démarrage (variables `ADMIN_*`) |
 | Prix promo absent pour les modulaires | `cout_promo_fcfa` nullable |
 | Durée hétérogène | `duree_valeur` + `duree_unite` |

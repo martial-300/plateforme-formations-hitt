@@ -23,7 +23,7 @@ Aujourd'hui l'orientation est faite à la main par les conseillers (lent, subjec
 
 | Module | Ce qui est livré |
 |---|---|
-| Comptes | Inscription apprenant, connexion / déconnexion (JWT), routes admin protégées |
+| Comptes | Inscription apprenant, connexion / déconnexion (JWT) par email ou avec Google, routes admin protégées |
 | Catalogue | 86 formations (SISG, IA-Data, TRIT), liste publique filtrable par domaine et type, CRUD admin |
 | Questionnaire | Niveau d'études, compétences, centres d'intérêt, objectif pro, type souhaité, budget max (FCFA) ; modifiable |
 | Recommandations | Top 5 classé + mots-clés correspondants + retour « pertinent / non pertinent » |
@@ -91,7 +91,7 @@ Le lancement du backend et du frontend est décrit dans [backend/README.md](back
 | [Cahier des charges MVP](docs/cahier-des-charges-mvp.md) | Périmètre, exigences, critères de validation (référence) |
 | [Architecture](docs/architecture.md) | Couches, pages frontend, organisation du code |
 | [Modèle de données](docs/modele-donnees.md) | 4 tables, diagramme entité-relation |
-| [API REST](docs/api.md) | 12 endpoints, exemples de requêtes / réponses |
+| [API REST](docs/api.md) | 13 endpoints, exemples de requêtes / réponses |
 | [Moteur de recommandation](docs/moteur-recommandation.md) | Algorithme TF-IDF + cosinus, pseudo-code |
 | [Diagrammes UML](docs/uml.md) | Cas d'utilisation, classes, séquence « obtenir des recommandations » |
 | [Évaluation](docs/evaluation.md) | Protocole précision@5, panel d'apprenants |

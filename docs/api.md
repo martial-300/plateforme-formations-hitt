@@ -11,6 +11,7 @@
 |---|---|---|---|---|
 | POST | `/auth/register` | Créer un compte apprenant | Public | RF-01 |
 | POST | `/auth/login` | Se connecter, recevoir un JWT | Public | RF-02 |
+| POST | `/auth/google` | Connexion ou inscription avec Google | Public | RF-13 |
 | GET | `/users/me` | Infos du compte connecté | Connecté | RF-02 |
 | GET | `/formations` | Lister (filtres `domaine`, `type`) | Public | RF-05 |
 | GET | `/formations/{id}` | Détail d'une formation | Public | RF-05 |
@@ -58,6 +59,25 @@ Format d'erreur : `{"detail": "message"}`.
 ```json
 { "access_token": "eyJhbGciOi...", "token_type": "bearer" }
 ```
+
+### `POST /auth/google` (RF-13)
+
+Le frontend affiche le bouton **Google Identity Services** (« Continuer avec Google ») et envoie le jeton d'identité reçu :
+
+```json
+{ "id_token": "eyJhbGciOiJSUzI1NiIs..." }
+```
+
+Le backend :
+
+1. vérifie le jeton auprès de Google (bibliothèque `google-auth`) : signature, `aud` = `GOOGLE_CLIENT_ID`, expiration, `email_verified` = vrai ;
+2. cherche l'utilisateur par `google_id` (champ `sub` du jeton), sinon par email ;
+3. s'il n'existe pas, crée un compte **apprenant** avec `nom` (`family_name`), `prenom` (`given_name`) et `email`, sans mot de passe ;
+4. renvoie un JWT de la plateforme, comme `/auth/login`.
+
+`200 OK` → `{ "access_token": "…", "token_type": "bearer", "nouveau_compte": true }`
+
+`401` si le jeton Google est invalide ou si l'email n'est pas vérifié. Un compte administrateur ne peut pas se connecter par Google (connexion email + mot de passe uniquement).
 
 ### `GET /users/me`
 

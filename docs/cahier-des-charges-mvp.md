@@ -1,6 +1,6 @@
 # Cahier des charges MVP — Plateforme de recommandation de formations (HIT-T Institute)
 
-*23 octobre 2026 · Martial — v1.1 du 24 octobre 2026 : ajout de l'aperçu pour les visiteurs (RF-12)*
+*23 octobre 2026 · Martial — v1.1 du 24 octobre 2026 : ajout de l'aperçu pour les visiteurs (RF-12) et de la connexion avec Google (RF-13)*
 
 > Version Markdown du document de référence. Original Word : [Cahier_des_Charges_MVP_HITT_Institute.docx](Cahier_des_Charges_MVP_HITT_Institute.docx).
 
@@ -18,7 +18,7 @@ Le MVP couvre 4 modules : comptes, catalogue, questionnaire, recommandations. Le
 
 | Fonctionnalité | MVP | V2 (après soutenance) |
 |---|---|---|
-| Inscription / connexion (email + mot de passe) | Oui | Réinitialisation de mot de passe, refresh token |
+| Inscription / connexion (email + mot de passe, ou compte Google *— ajout v1.1*) | Oui | Réinitialisation de mot de passe, refresh token |
 | Rôles | Visiteur (non connecté) + Apprenant + Administrateur | Rôle Conseiller pédagogique |
 | Catalogue de formations | CRUD admin + liste publique avec filtre domaine/type | Recherche plein texte avancée |
 | Questionnaire de profilage | Un formulaire fixe | Questionnaire dynamique, historique des versions |
@@ -65,7 +65,7 @@ Le rôle Conseiller pédagogique n'est pas nécessaire au MVP : l'apprenant reç
 
 ## 4. Exigences fonctionnelles MVP
 
-12 exigences (contre 18 dans la v2.0), toutes obligatoires pour la soutenance. RF-12 est un ajout de la v1.1 de ce document, à faire valider par les encadreurs.
+13 exigences (contre 18 dans la v2.0), toutes obligatoires pour la soutenance. RF-12 et RF-13 sont des ajouts de la v1.1 de ce document, à faire valider par les encadreurs.
 
 | Code | Exigence | Module |
 |---|---|---|
@@ -81,6 +81,7 @@ Le rôle Conseiller pédagogique n'est pas nécessaire au MVP : l'apprenant reç
 | RF-10 | L'apprenant marque une recommandation « pertinente » ou « non pertinente ». | Recommandation |
 | RF-11 | L'administrateur voit : nombre d'apprenants inscrits, 5 formations les plus recommandées, taux de retours « pertinent ». | Tableau de bord |
 | RF-12 | Un visiteur sans compte répond à 3 questions (ce qu'il aimerait apprendre, format, budget) et voit les 3 formations les plus pertinentes (intitulé, domaine, correspondance, mots en commun). Rien n'est enregistré ; à l'inscription, ses réponses pré-remplissent le questionnaire. L'accueil montre aussi un exemple de résultat pour un profil fictif. | Recommandation |
+| RF-13 | Un visiteur crée son compte apprenant ou se connecte avec son compte Google (« Continuer avec Google »). Seuls le nom, le prénom et l'email sont récupérés ; aucun mot de passe n'est stocké pour ces comptes. | Comptes |
 
 ## 5. Exigences non fonctionnelles essentielles
 
@@ -113,7 +114,7 @@ Pages frontend : Connexion/Inscription, Catalogue, Questionnaire, Mes recommanda
 
 | Table | Colonnes | Relations |
 |---|---|---|
-| utilisateurs | id, nom, prenom, email (unique), mot_de_passe_hash, role (apprenant / administrateur), date_creation | 1 → 0..1 profil ; 1 → N recommandations |
+| utilisateurs | id, nom, prenom, email (unique), mot_de_passe_hash (vide pour un compte Google), google_id (unique, facultatif), role (apprenant / administrateur), date_creation | 1 → 0..1 profil ; 1 → N recommandations |
 | profils_apprenants | id, utilisateur_id, niveau_etudes, competences, centres_interet, objectif_professionnel, type_souhaite, budget_max_fcfa, date_maj | 1 → 1 utilisateur |
 | formations | id, intitule, description, domaine (SISG / IA-Data / TRIT), type (carte / modulaire), duree_valeur, duree_unite (heure / jour / semaine / mois), cout_fcfa, cout_promo_fcfa, mots_cles | 1 → N recommandations |
 | recommandations | id, utilisateur_id, formation_id, score (0 à 1), retour (pertinent / non_pertinent / aucun), date_generation | N → 1 utilisateur, N → 1 formation |
@@ -122,12 +123,13 @@ Le texte utilisé par le moteur IA est reconstruit à la volée à partir du pro
 
 ## 8. API REST minimale
 
-12 endpoints (contre 18 dans le cahier technique), base `/api/v1`, JSON, JWT en en-tête `Authorization: Bearer`. La documentation Swagger générée par FastAPI sur `/docs` sert de référence.
+13 endpoints (contre 18 dans le cahier technique), base `/api/v1`, JSON, JWT en en-tête `Authorization: Bearer`. La documentation Swagger générée par FastAPI sur `/docs` sert de référence.
 
 | Méthode | Route | Rôle | Accès |
 |---|---|---|---|
 | POST | /auth/register | Créer un compte apprenant | Public |
 | POST | /auth/login | Se connecter, recevoir un JWT | Public |
+| POST | /auth/google | Se connecter ou s'inscrire avec Google, recevoir un JWT (RF-13, ajout v1.1) | Public |
 | GET | /users/me | Infos du compte connecté | Connecté |
 | GET | /formations | Lister (filtres domaine, type) | Public |
 | GET | /formations/{id} | Détail d'une formation | Public |
@@ -178,7 +180,7 @@ Méthode : Scrum allégé, sprints d'une semaine, démo aux encadreurs en fin de
 
 Le MVP est validé quand :
 
-- [ ] Les 12 exigences fonctionnelles fonctionnent sur l'application déployée.
+- [ ] Les 13 exigences fonctionnelles fonctionnent sur l'application déployée.
 - [ ] Le parcours complet (inscription → questionnaire → 5 recommandations → retour) se fait sans erreur bloquante.
 - [ ] Les recommandations s'affichent en moins de 3 secondes.
 - [ ] La précision@5 moyenne atteint au moins 0,6 (3 formations pertinentes sur 5) sur les 20 profils de test.

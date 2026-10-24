@@ -69,6 +69,7 @@ frontend/
 
 - Mots de passe hachés avec **bcrypt** (jamais stockés ni renvoyés en clair).
 - **JWT** signé (`JWT_SECRET`, HS256), durée de vie `JWT_EXPIRE_MINUTES`.
+- **Connexion Google** (RF-13) : jeton d'identité vérifié côté serveur (signature, audience `GOOGLE_CLIENT_ID`, email vérifié) ; jamais de confiance accordée aux données envoyées par le navigateur seules.
 - Contrôle du rôle sur toutes les routes admin (dépendance `require_admin`).
 - Accès base **uniquement via l'ORM** (pas de SQL concaténé).
 - **HTTPS** obligatoire en production (Nginx + Let's Encrypt).
