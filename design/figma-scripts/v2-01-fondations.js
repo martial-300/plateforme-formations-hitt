@@ -8,8 +8,9 @@ const load = async (p) => { if (p.loadAsync) await p.loadAsync(); };
 const goTo = async (p) => { if (figma.setCurrentPageAsync) await figma.setCurrentPageAsync(p); else figma.currentPage = p; };
 
 const PAGES = { fond: 'v2 · Fondations', desk: 'v2 · Écrans desktop', mob: 'v2 · Écrans mobile' };
-const SERIF = ['Source Serif 4', 'Source Serif Pro', 'Georgia'];
-const SANS = ['Source Sans 3', 'Source Sans Pro', 'Inter'];
+// Police unique de la plateforme (repli sur Inter si absente)
+const TITRES = ['IBM Plex Sans', 'Inter'];
+const SANS = ['IBM Plex Sans', 'Inter'];
 
 const COULEURS = {
   'couleur/vert/800': '#0F5236', 'couleur/vert/700': '#146B47', 'couleur/vert/600': '#1A8559', 'couleur/vert/100': '#D5E8DC', 'couleur/vert/50': '#EEF5F0',
@@ -23,10 +24,10 @@ const COULEURS = {
 const RAYONS = { 'rayon/petit': 2, 'rayon/moyen': 4 };
 // [nom, familles, graisse, taille, interligne, interlettrage %, casse]
 const STYLES = [
-  ['Display', SERIF, 'Semibold', 40, 48, 0, 'ORIGINAL'],
-  ['Titre 1', SERIF, 'Semibold', 30, 38, 0, 'ORIGINAL'],
-  ['Titre 2', SERIF, 'Semibold', 22, 30, 0, 'ORIGINAL'],
-  ['Marque', SERIF, 'Semibold', 19, 24, 0, 'ORIGINAL'],
+  ['Display', TITRES, 'Bold', 40, 48, -1, 'ORIGINAL'],
+  ['Titre 1', TITRES, 'Bold', 30, 38, -0.5, 'ORIGINAL'],
+  ['Titre 2', TITRES, 'Semibold', 22, 30, 0, 'ORIGINAL'],
+  ['Marque', TITRES, 'Bold', 19, 24, 0, 'ORIGINAL'],
   ['Titre 3', SANS, 'Semibold', 17, 24, 0, 'ORIGINAL'],
   ['Chapô', SANS, 'Regular', 18, 28, 0, 'ORIGINAL'],
   ['Corps', SANS, 'Regular', 15, 22, 0, 'ORIGINAL'],
@@ -35,8 +36,8 @@ const STYLES = [
   ['Petit', SANS, 'Regular', 13, 18, 0, 'ORIGINAL'],
   ['Petit fort', SANS, 'Semibold', 13, 18, 0, 'ORIGINAL'],
   ['Surtitre', SANS, 'Bold', 12, 16, 8, 'UPPER'],
-  ['Chiffre', SERIF, 'Semibold', 44, 52, 0, 'ORIGINAL'],
-  ['Rang', SERIF, 'Semibold', 34, 40, 0, 'ORIGINAL'],
+  ['Chiffre', TITRES, 'Bold', 44, 52, 0, 'ORIGINAL'],
+  ['Rang', TITRES, 'Bold', 34, 40, 0, 'ORIGINAL'],
 ];
 
 let V = {}, TS = {}, FP, DESK, MOB, FONTS;
@@ -185,7 +186,6 @@ function panel(name, p = 24) {
   const c = AL('VERTICAL', { name, gap: 16 });
   pad(c, p);
   c.fills = fill('couleur/papier');
-  stroke(c, 'couleur/filet');
   rad(c);
   return c;
 }
@@ -344,7 +344,7 @@ async function fondations() {
   const intro = AL('VERTICAL', { name: 'Introduction', gap: 8 }); append(board, intro);
   intro.appendChild(await txt('Charte de la plateforme', 'Surtitre', 'couleur/vert/700'));
   intro.appendChild(await txt('HIT-T Institute — fondations v2', 'Display'));
-  await para(intro, 'Style institutionnel : couleurs du logo, titres à empattements (Source Serif), texte courant en Source Sans, angles presque droits, filets fins, pas d\'ombres. Une seule couleur d\'accent (le vert du logo) ; pas de fonds teintés ni de pastilles.', 'Corps', 'couleur/encre-2');
+  await para(intro, 'Style institutionnel : couleurs du logo, police unique IBM Plex Sans, angles presque droits, aucune bordure de carte (le blanc se détache du fond crème), filets fins seulement pour séparer les lignes, pas d\'ombres. Une seule couleur d\'accent (le vert du logo) ; pas de fonds teintés ni de pastilles.', 'Corps', 'couleur/encre-2');
 
   // Couleurs
   const sCol = await section(board, 'Couleurs', 'Une seule couleur d\'accent : le vert du logo. L\'orange n\'apparaît que sur les prix promotionnels, le jaune que sous l\'onglet actif. Tout le reste est en neutres chauds.');
@@ -620,7 +620,7 @@ async function fondations() {
       r.layoutMode = mobile ? 'VERTICAL' : 'HORIZONTAL';
       r.resize(mobile ? 358 : 880, 10);
       if (mobile) { r.counterAxisSizingMode = 'FIXED'; r.primaryAxisSizingMode = 'AUTO'; } else { r.primaryAxisSizingMode = 'FIXED'; r.counterAxisSizingMode = 'AUTO'; }
-      r.itemSpacing = mobile ? 10 : 24; r.counterAxisAlignItems = 'MIN'; pad(r, mobile ? 16 : 24); r.fills = fill('couleur/papier'); stroke(r, 'couleur/filet'); rad(r);
+      r.itemSpacing = mobile ? 10 : 24; r.counterAxisAlignItems = 'MIN'; pad(r, mobile ? 16 : 24); r.fills = fill('couleur/papier'); rad(r);
       sList.appendChild(r);
       const rg = await txt('1', mobile ? 'Titre 1' : 'Rang', 'couleur/vert/700'); rg.name = 'Rang';
       const body = AL('VERTICAL', { name: 'Contenu', gap: 8 });
@@ -644,7 +644,7 @@ async function fondations() {
       for (const w of ['développement web', 'site web', 'programmation']) tags.appendChild(inst(mot, 'Commun=Oui', { 'Mot': w }));
       const info = await para(body, '3 semaines · 120 500 FCFA (prix promotionnel)', 'Petit', 'couleur/encre-2'); info.name = 'Infos';
       const side = AL('VERTICAL', { name: 'Avis', gap: 12 });
-      if (mobile) { rule(r); append(r, side); } else { r.appendChild(side); setW(side, 248); side.paddingLeft = 24; stroke(side, 'couleur/filet', 1, 'l'); side.layoutSizingVertical = 'FILL'; }
+      if (mobile) { append(r, side); side.paddingTop = 4; } else { r.appendChild(side); setW(side, 248); side.paddingLeft = 8; side.layoutSizingVertical = 'FILL'; }
       side.appendChild(await txt('Correspondance', 'Surtitre', 'couleur/discret'));
       await levelRow(side);
       const q = await para(side, retour === 'Aucun' ? 'Cette formation vous intéresse ?' : 'Votre avis (modifiable) :', 'Petit', 'couleur/discret'); q.name = 'Question';
@@ -668,7 +668,7 @@ async function fondations() {
   {
     const k = figma.createComponent(); k.name = 'Chiffre clé';
     k.layoutMode = 'VERTICAL'; k.resize(384, 10); k.counterAxisSizingMode = 'FIXED'; k.primaryAxisSizingMode = 'AUTO'; k.itemSpacing = 6;
-    pad(k, 24); k.paddingTop = 27; k.fills = fill('couleur/papier'); stroke(k, 'couleur/filet'); k.clipsContent = true;
+    pad(k, 24); k.paddingTop = 27; k.fills = fill('couleur/papier'); k.clipsContent = true;
     const bar = figma.createRectangle(); bar.name = 'Repère'; bar.fills = fill('couleur/vert/600');
     sList.appendChild(k);
     k.appendChild(bar); bar.layoutPositioning = 'ABSOLUTE'; bar.x = 0; bar.y = 0; bar.resize(384, 3); bar.constraints = { horizontal: 'STRETCH', vertical: 'MIN' };

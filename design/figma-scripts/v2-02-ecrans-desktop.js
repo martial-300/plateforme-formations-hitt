@@ -8,8 +8,9 @@ const load = async (p) => { if (p.loadAsync) await p.loadAsync(); };
 const goTo = async (p) => { if (figma.setCurrentPageAsync) await figma.setCurrentPageAsync(p); else figma.currentPage = p; };
 
 const PAGES = { fond: 'v2 · Fondations', desk: 'v2 · Écrans desktop', mob: 'v2 · Écrans mobile' };
-const SERIF = ['Source Serif 4', 'Source Serif Pro', 'Georgia'];
-const SANS = ['Source Sans 3', 'Source Sans Pro', 'Inter'];
+// Police unique de la plateforme (repli sur Inter si absente)
+const TITRES = ['IBM Plex Sans', 'Inter'];
+const SANS = ['IBM Plex Sans', 'Inter'];
 
 const COULEURS = {
   'couleur/vert/800': '#0F5236', 'couleur/vert/700': '#146B47', 'couleur/vert/600': '#1A8559', 'couleur/vert/100': '#D5E8DC', 'couleur/vert/50': '#EEF5F0',
@@ -23,10 +24,10 @@ const COULEURS = {
 const RAYONS = { 'rayon/petit': 2, 'rayon/moyen': 4 };
 // [nom, familles, graisse, taille, interligne, interlettrage %, casse]
 const STYLES = [
-  ['Display', SERIF, 'Semibold', 40, 48, 0, 'ORIGINAL'],
-  ['Titre 1', SERIF, 'Semibold', 30, 38, 0, 'ORIGINAL'],
-  ['Titre 2', SERIF, 'Semibold', 22, 30, 0, 'ORIGINAL'],
-  ['Marque', SERIF, 'Semibold', 19, 24, 0, 'ORIGINAL'],
+  ['Display', TITRES, 'Bold', 40, 48, -1, 'ORIGINAL'],
+  ['Titre 1', TITRES, 'Bold', 30, 38, -0.5, 'ORIGINAL'],
+  ['Titre 2', TITRES, 'Semibold', 22, 30, 0, 'ORIGINAL'],
+  ['Marque', TITRES, 'Bold', 19, 24, 0, 'ORIGINAL'],
   ['Titre 3', SANS, 'Semibold', 17, 24, 0, 'ORIGINAL'],
   ['Chapô', SANS, 'Regular', 18, 28, 0, 'ORIGINAL'],
   ['Corps', SANS, 'Regular', 15, 22, 0, 'ORIGINAL'],
@@ -35,8 +36,8 @@ const STYLES = [
   ['Petit', SANS, 'Regular', 13, 18, 0, 'ORIGINAL'],
   ['Petit fort', SANS, 'Semibold', 13, 18, 0, 'ORIGINAL'],
   ['Surtitre', SANS, 'Bold', 12, 16, 8, 'UPPER'],
-  ['Chiffre', SERIF, 'Semibold', 44, 52, 0, 'ORIGINAL'],
-  ['Rang', SERIF, 'Semibold', 34, 40, 0, 'ORIGINAL'],
+  ['Chiffre', TITRES, 'Bold', 44, 52, 0, 'ORIGINAL'],
+  ['Rang', TITRES, 'Bold', 34, 40, 0, 'ORIGINAL'],
 ];
 
 let V = {}, TS = {}, FP, DESK, MOB, FONTS;
@@ -185,7 +186,6 @@ function panel(name, p = 24) {
   const c = AL('VERTICAL', { name, gap: 16 });
   pad(c, p);
   c.fills = fill('couleur/papier');
-  stroke(c, 'couleur/filet');
   rad(c);
   return c;
 }
@@ -406,7 +406,7 @@ async function catalogueScreen(idx) {
   for (const [o, a] of [['Tous les domaines', true], ['SISG', false], ['IA · Data', false], ['TRIT', false]]) bar.appendChild(inst(S.tab, a ? 'État=Actif' : 'État=Inactif', { 'Libellé': o }));
   spacer(bar);
   const typ = inst(S.field, 'Type=Liste', { 'Libellé': 'Type de formation', 'Valeur': 'Tous les types' }); bar.appendChild(typ); setW(typ, 240); typ.paddingBottom = 10;
-  const list = AL('VERTICAL', { name: 'Liste', gap: 0 }); list.fills = fill('couleur/papier'); stroke(list, 'couleur/filet'); append(b, list);
+  const list = AL('VERTICAL', { name: 'Liste', gap: 0 }); list.fills = fill('couleur/papier'); append(b, list);
   const lh = AL('HORIZONTAL', { name: 'En-tête de liste', gap: 32 }); pad(lh, 12, 24); lh.fills = fill('couleur/fond-2'); stroke(lh, 'couleur/filet', 1, 'b'); append(list, lh);
   for (const [l, w] of [['Domaine', 150], ['Formation', null], ['Durée', 110], ['Tarif', 170], ['', 20]]) { const c = AL('HORIZONTAL', { name: l || 'Vide' }); if (l === 'Tarif') c.primaryAxisAlignItems = 'MAX'; lh.appendChild(c); if (w) setW(c, w); else c.layoutSizingHorizontal = 'FILL'; if (l) c.appendChild(await txt(l, 'Surtitre', 'couleur/discret')); }
   for (const f of CATALOGUE) append(list, await ligneFormation(S.row, f));
@@ -480,7 +480,7 @@ async function questionnaireScreen(idx) {
   const b3 = await block('3.', 'Vos contraintes');
   const tq = AL('VERTICAL', { name: 'Type souhaité', gap: 8 }); append(b3, tq);
   tq.appendChild(await txt('Type de formation souhaité', 'Libellé'));
-  const opts = AL('VERTICAL', { name: 'Options', gap: 0 }); stroke(opts, 'couleur/filet-fort'); rad(opts); append(tq, opts);
+  const opts = AL('VERTICAL', { name: 'Options', gap: 0 }); opts.fills = fill('couleur/papier'); append(tq, opts);
   let first = true;
   for (const [title, desc, sel] of [['Formation courte, à la carte', 'De 1 jour à 3 mois : un outil ou une compétence précise.', true], ['Parcours modulaire certifiant', 'De 2 à 9 mois : un métier complet.', false]]) {
     const o = AL('HORIZONTAL', { name: 'Option · ' + title, gap: 14 }); pad(o, 14, 16); o.counterAxisAlignItems = 'MIN';
@@ -559,7 +559,7 @@ async function adminScreen(idx) {
   ch.appendChild(inst(S.btn, 'Type=Principal', { 'Libellé': 'Ajouter une formation' }));
   const tabs = AL('HORIZONTAL', { name: 'Onglets', gap: 24 }); stroke(tabs, 'couleur/filet', 1, 'b'); append(cat, tabs);
   for (const [o, a] of [['Tous les domaines (86)', true], ['SISG (31)', false], ['IA · Data (24)', false], ['TRIT (31)', false]]) tabs.appendChild(inst(S.tab, a ? 'État=Actif' : 'État=Inactif', { 'Libellé': o }));
-  const tbl = AL('VERTICAL', { name: 'Tableau', gap: 0 }); tbl.fills = fill('couleur/papier'); stroke(tbl, 'couleur/filet'); append(cat, tbl);
+  const tbl = AL('VERTICAL', { name: 'Tableau', gap: 0 }); tbl.fills = fill('couleur/papier'); append(cat, tbl);
   const th = AL('HORIZONTAL', { name: 'En-tête tableau', gap: 16 }); pad(th, 12, 24); th.fills = fill('couleur/fond-2'); stroke(th, 'couleur/filet', 1, 'b'); append(tbl, th);
   for (const [l, w] of [['Intitulé', null], ['Domaine', 140], ['Type', 140], ['Durée', 100], ['Coût', 110], ['Prix promo', 110], ['Actions', 150]]) { const c = AL('HORIZONTAL', { name: l }); th.appendChild(c); if (w) setW(c, w); else c.layoutSizingHorizontal = 'FILL'; c.appendChild(await txt(l, 'Surtitre', 'couleur/discret')); }
   for (const [t, d, ty, du, co, pr] of [['Office Excel niveau intermédiaire 2010-2024', 'SISG', 'À la carte', '1 semaine', '40 500', '35 500'], ['Secrétariat-Bureautique (SB)', 'SISG', 'Modulaire', '6 mois', '120 000', '—'], ['Langage Python et l\'IA (Analyse des données)', 'IA-Data', 'À la carte', '2 jours', '90 500', '80 000'], ['Analyste développeur des systèmes IA', 'IA-Data', 'Modulaire', '6 mois', '250 000', '—'], ['Développement de site web avec PHP, HTML, CSS', 'TRIT', 'À la carte', '3 semaines', '125 000', '120 500'], ['Réseau et Cybersécurité', 'TRIT', 'Modulaire', '9 mois', '380 000', '—']]) {
@@ -579,7 +579,6 @@ async function adminScreen(idx) {
   ov.fills = [{ type: 'SOLID', color: hex('#1D1D1B'), opacity: 0.55 }];
   ov.layoutMode = 'VERTICAL'; ov.primaryAxisSizingMode = 'FIXED'; ov.counterAxisSizingMode = 'FIXED'; ov.counterAxisAlignItems = 'CENTER'; ov.paddingTop = 72;
   const md = panel('Fenêtre de modification', 0); md.itemSpacing = 0; ov.appendChild(md); setW(md, 720);
-  md.effects = [{ type: 'DROP_SHADOW', color: { r: 0, g: 0, b: 0, a: 0.18 }, offset: { x: 0, y: 12 }, radius: 32, spread: 0, visible: true, blendMode: 'NORMAL' }];
   const mh = AL('HORIZONTAL', { name: 'En-tête', gap: 16 }); mh.counterAxisAlignItems = 'CENTER'; pad(mh, 20, 32); mh.fills = fill('couleur/vert/700'); append(md, mh);
   mh.appendChild(await txt('Modifier une formation', 'Titre 2', 'couleur/blanc')); spacer(mh);
   mh.appendChild(await txt('Fermer', 'Libellé', 'couleur/vert/100'));
