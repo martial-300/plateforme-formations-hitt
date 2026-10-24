@@ -18,8 +18,7 @@ const COULEURS = {
   'couleur/encre': '#1D1D1B', 'couleur/encre-2': '#4A4844', 'couleur/discret': '#6E6A62', 'couleur/blanc': '#FFFFFF',
   'couleur/fond': '#F6F4EF', 'couleur/fond-2': '#EFECE4', 'couleur/papier': '#FFFFFF',
   'couleur/filet': '#DCD7CC', 'couleur/filet-fort': '#BDB6A8',
-  'couleur/domaine/sisg': '#B83A12', 'couleur/domaine/ia': '#5B4B8A', 'couleur/domaine/trit': '#1F5F8B',
-  'couleur/succes': '#2E7D32', 'couleur/succes-50': '#EAF3EA', 'couleur/danger': '#B3261E', 'couleur/danger-50': '#FBEAE9',
+  'couleur/danger': '#B3261E',
 };
 const RAYONS = { 'rayon/petit': 2, 'rayon/moyen': 4 };
 // [nom, familles, graisse, taille, interligne, interlettrage %, casse]
@@ -195,7 +194,7 @@ function panel(name, p = 24) {
 function encadre(name) {
   const c = AL('VERTICAL', { name, gap: 8 });
   c.paddingTop = c.paddingBottom = 16; c.paddingLeft = 20; c.paddingRight = 20;
-  c.fills = fill('couleur/vert/50');
+  c.fills = fill('couleur/papier');
   stroke(c, 'couleur/vert/600', 4, 'l');
   return c;
 }
@@ -485,7 +484,7 @@ async function questionnaireScreen(idx) {
   let first = true;
   for (const [title, desc, sel] of [['Formation courte, à la carte', 'De 1 jour à 3 mois : un outil ou une compétence précise.', true], ['Parcours modulaire certifiant', 'De 2 à 9 mois : un métier complet.', false]]) {
     const o = AL('HORIZONTAL', { name: 'Option · ' + title, gap: 14 }); pad(o, 14, 16); o.counterAxisAlignItems = 'MIN';
-    o.fills = sel ? fill('couleur/vert/50') : fill('couleur/papier');
+    o.fills = fill('couleur/papier');
     if (!first) stroke(o, 'couleur/filet', 1, 't');
     append(opts, o); first = false;
     const radio = figma.createEllipse(); radio.name = 'Bouton radio'; radio.resize(18, 18); radio.fills = fill('couleur/papier');
@@ -706,7 +705,7 @@ async function ecransMobile() {
   const opts = AL('VERTICAL', { name: 'Options', gap: 0 }); stroke(opts, 'couleur/filet-fort'); rad(opts); append(q3, opts);
   let first = true;
   for (const [title, desc, sel] of [['Formation courte, à la carte', 'De 1 jour à 3 mois.', true], ['Parcours modulaire certifiant', 'De 2 à 9 mois.', false]]) {
-    const o = AL('HORIZONTAL', { name: 'Option · ' + title, gap: 12 }); pad(o, 14); o.counterAxisAlignItems = 'MIN'; o.fills = sel ? fill('couleur/vert/50') : fill('couleur/papier');
+    const o = AL('HORIZONTAL', { name: 'Option · ' + title, gap: 12 }); pad(o, 14); o.counterAxisAlignItems = 'MIN'; o.fills = fill('couleur/papier');
     if (!first) stroke(o, 'couleur/filet', 1, 't');
     append(opts, o); first = false;
     const radio = figma.createEllipse(); radio.name = 'Bouton radio'; radio.resize(18, 18); radio.fills = fill('couleur/papier');

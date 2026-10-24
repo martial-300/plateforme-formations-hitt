@@ -18,8 +18,7 @@ const COULEURS = {
   'couleur/encre': '#1D1D1B', 'couleur/encre-2': '#4A4844', 'couleur/discret': '#6E6A62', 'couleur/blanc': '#FFFFFF',
   'couleur/fond': '#F6F4EF', 'couleur/fond-2': '#EFECE4', 'couleur/papier': '#FFFFFF',
   'couleur/filet': '#DCD7CC', 'couleur/filet-fort': '#BDB6A8',
-  'couleur/domaine/sisg': '#B83A12', 'couleur/domaine/ia': '#5B4B8A', 'couleur/domaine/trit': '#1F5F8B',
-  'couleur/succes': '#2E7D32', 'couleur/succes-50': '#EAF3EA', 'couleur/danger': '#B3261E', 'couleur/danger-50': '#FBEAE9',
+  'couleur/danger': '#B3261E',
 };
 const RAYONS = { 'rayon/petit': 2, 'rayon/moyen': 4 };
 // [nom, familles, graisse, taille, interligne, interlettrage %, casse]
@@ -195,7 +194,7 @@ function panel(name, p = 24) {
 function encadre(name) {
   const c = AL('VERTICAL', { name, gap: 8 });
   c.paddingTop = c.paddingBottom = 16; c.paddingLeft = 20; c.paddingRight = 20;
-  c.fills = fill('couleur/vert/50');
+  c.fills = fill('couleur/papier');
   stroke(c, 'couleur/vert/600', 4, 'l');
   return c;
 }
@@ -345,12 +344,12 @@ async function fondations() {
   const intro = AL('VERTICAL', { name: 'Introduction', gap: 8 }); append(board, intro);
   intro.appendChild(await txt('Charte de la plateforme', 'Surtitre', 'couleur/vert/700'));
   intro.appendChild(await txt('HIT-T Institute — fondations v2', 'Display'));
-  await para(intro, 'Style institutionnel : couleurs du logo, titres à empattements (Source Serif), texte courant en Source Sans, angles presque droits, filets fins, pas d\'ombres. L\'orange est réservé aux prix promotionnels et au domaine SISG.', 'Corps', 'couleur/encre-2');
+  await para(intro, 'Style institutionnel : couleurs du logo, titres à empattements (Source Serif), texte courant en Source Sans, angles presque droits, filets fins, pas d\'ombres. Une seule couleur d\'accent (le vert du logo) ; pas de fonds teintés ni de pastilles.', 'Corps', 'couleur/encre-2');
 
   // Couleurs
-  const sCol = await section(board, 'Couleurs', 'Vert, orange et jaune repris du logo ; neutres chauds pour le fond et le texte.');
+  const sCol = await section(board, 'Couleurs', 'Une seule couleur d\'accent : le vert du logo. L\'orange n\'apparaît que sur les prix promotionnels, le jaune que sous l\'onglet actif. Tout le reste est en neutres chauds.');
   const sw = AL('HORIZONTAL', { name: 'Nuancier', gap: 16 }); sw.layoutWrap = 'WRAP'; sw.counterAxisSpacing = 16; append(sCol, sw);
-  for (const n of ['couleur/vert/800', 'couleur/vert/700', 'couleur/vert/600', 'couleur/vert/100', 'couleur/vert/50', 'couleur/orange/700', 'couleur/orange/600', 'couleur/jaune/500', 'couleur/encre', 'couleur/encre-2', 'couleur/discret', 'couleur/filet', 'couleur/fond', 'couleur/domaine/ia', 'couleur/domaine/trit']) {
+  for (const n of ['couleur/vert/800', 'couleur/vert/700', 'couleur/vert/600', 'couleur/vert/100', 'couleur/orange/700', 'couleur/jaune/500', 'couleur/encre', 'couleur/encre-2', 'couleur/discret', 'couleur/filet', 'couleur/fond']) {
     const c = AL('VERTICAL', { name: n, gap: 8 });
     const chip = figma.createRectangle(); chip.name = 'Échantillon'; chip.resize(128, 72); chip.fills = fill(n); chip.strokes = fill('couleur/filet'); chip.strokeWeight = 1;
     c.appendChild(chip);
@@ -454,14 +453,13 @@ async function fondations() {
   }
 
   // Étiquettes, mots-clés, onglets
-  const sTag = await section(board, 'Étiquettes, mots-clés et onglets', 'Le domaine est signalé par un carré de couleur et un surtitre, sans pastille.');
+  const sTag = await section(board, 'Étiquettes, mots-clés et onglets', 'Le domaine est écrit en surtitre, sans couleur propre. Les mots-clés sont du texte, pas des pastilles.');
   const tr = AL('HORIZONTAL', { name: 'Ligne', gap: 48 }); tr.counterAxisAlignItems = 'CENTER'; append(sTag, tr, null);
   {
     const vs = [];
-    for (const [d, label, c] of [['SISG', 'SISG', 'couleur/domaine/sisg'], ['IA-Data', 'IA · Data', 'couleur/domaine/ia'], ['TRIT', 'TRIT', 'couleur/domaine/trit']]) {
+    for (const [d, label, c] of [['SISG', 'SISG', 'couleur/vert/700'], ['IA-Data', 'IA · Data', 'couleur/vert/700'], ['TRIT', 'TRIT', 'couleur/vert/700']]) {
       const e = figma.createComponent(); e.name = 'Domaine=' + d;
       e.layoutMode = 'HORIZONTAL'; e.primaryAxisSizingMode = 'AUTO'; e.counterAxisSizingMode = 'AUTO'; e.counterAxisAlignItems = 'CENTER'; e.itemSpacing = 6; e.fills = [];
-      const sq = figma.createRectangle(); sq.name = 'Repère'; sq.resize(8, 8); sq.fills = fill(c); e.appendChild(sq);
       e.appendChild(await txt(label, 'Surtitre', c));
       vs.push(e);
     }
@@ -470,15 +468,15 @@ async function fondations() {
   }
   {
     const vs = [];
-    for (const [v, bg, fg, style] of [['Oui', 'couleur/vert/50', 'couleur/vert/700', 'Petit fort'], ['Non', 'couleur/fond-2', 'couleur/encre-2', 'Petit']]) {
+    for (const [v, bg, fg, style] of [['Oui', null, 'couleur/encre', 'Petit fort'], ['Non', null, 'couleur/encre-2', 'Petit']]) {
       const e = figma.createComponent(); e.name = 'Commun=' + v;
-      e.layoutMode = 'HORIZONTAL'; e.primaryAxisSizingMode = 'AUTO'; e.counterAxisSizingMode = 'AUTO'; e.fills = fill(bg); pad(e, 3, 8); rad(e);
-      if (v === 'Oui') stroke(e, 'couleur/vert/100');
+      e.layoutMode = 'HORIZONTAL'; e.primaryAxisSizingMode = 'AUTO'; e.counterAxisSizingMode = 'AUTO'; e.fills = []; e.paddingTop = 0; e.paddingBottom = 2;
+      stroke(e, v === 'Oui' ? 'couleur/vert/600' : 'couleur/filet-fort', 1, 'b');
       const t = await txt('mot-clé', style, fg); t.name = 'Mot'; e.appendChild(t);
       vs.push(e);
     }
     const set = figma.combineAsVariants(vs, tr); set.name = 'Mot-clé';
-    set.layoutMode = 'HORIZONTAL'; set.itemSpacing = 12; set.counterAxisAlignItems = 'CENTER'; set.primaryAxisSizingMode = 'AUTO'; set.counterAxisSizingMode = 'AUTO'; set.fills = [];
+    set.layoutMode = 'HORIZONTAL'; set.itemSpacing = 16; set.counterAxisAlignItems = 'CENTER'; set.primaryAxisSizingMode = 'AUTO'; set.counterAxisSizingMode = 'AUTO'; set.fills = [];
     const k = set.addComponentProperty('Mot', 'TEXT', 'mot-clé');
     for (const v of set.children) v.findOne((n) => n.type === 'TEXT').componentPropertyReferences = { characters: k };
     set.description = 'Commun=Oui : mot-clé présent à la fois dans le profil et dans la formation (explication RF-09).';
@@ -601,11 +599,11 @@ async function fondations() {
   // Recommandations (desktop + mobile)
   const fbBtn = async (label, ic, state) => {
     const b = AL('HORIZONTAL', { name: label, gap: 8 }); b.counterAxisAlignItems = 'CENTER'; b.primaryAxisAlignItems = 'CENTER'; pad(b, 9, 12); rad(b);
-    const fg = state === 'oui' ? 'couleur/succes' : state === 'non' ? 'couleur/danger' : 'couleur/encre';
-    b.fills = state === 'oui' ? fill('couleur/succes-50') : state === 'non' ? fill('couleur/danger-50') : fill('couleur/papier');
-    stroke(b, state === 'oui' ? 'couleur/succes' : state === 'non' ? 'couleur/danger' : 'couleur/filet-fort');
-    b.appendChild(await icon(ic, 16, fg));
-    b.appendChild(await txt(label, 'Petit fort', fg));
+    const chosen = state !== 'neutre';
+    b.fills = chosen ? fill(state === 'oui' ? 'couleur/vert/700' : 'couleur/encre-2') : fill('couleur/papier');
+    if (!chosen) stroke(b, 'couleur/filet-fort');
+    if (chosen) b.appendChild(await icon('check', 16, 'couleur/blanc'));
+    b.appendChild(await txt(label, 'Petit fort', chosen ? 'couleur/blanc' : 'couleur/encre'));
     return b;
   };
   const levelRow = async (parent) => {
@@ -642,20 +640,20 @@ async function fondations() {
       const de = await para(body, 'Créer des sites web dynamiques avec HTML, CSS et PHP.', mobile ? 'Petit' : 'Corps', 'couleur/encre-2'); de.name = 'Description';
       const why = AL('VERTICAL', { name: 'Mots en commun', gap: 6 }); append(body, why);
       why.appendChild(await txt('Mots en commun avec votre profil', 'Petit', 'couleur/discret'));
-      const tags = AL('HORIZONTAL', { name: 'Mots-clés', gap: 6 }); tags.layoutWrap = 'WRAP'; tags.counterAxisSpacing = 6; append(why, tags);
+      const tags = AL('HORIZONTAL', { name: 'Mots-clés', gap: 6 }); tags.layoutWrap = 'WRAP'; tags.counterAxisSpacing = 8; tags.itemSpacing = 14; append(why, tags);
       for (const w of ['développement web', 'site web', 'programmation']) tags.appendChild(inst(mot, 'Commun=Oui', { 'Mot': w }));
       const info = await para(body, '3 semaines · 120 500 FCFA (prix promotionnel)', 'Petit', 'couleur/encre-2'); info.name = 'Infos';
       const side = AL('VERTICAL', { name: 'Avis', gap: 12 });
       if (mobile) { rule(r); append(r, side); } else { r.appendChild(side); setW(side, 248); side.paddingLeft = 24; stroke(side, 'couleur/filet', 1, 'l'); side.layoutSizingVertical = 'FILL'; }
       side.appendChild(await txt('Correspondance', 'Surtitre', 'couleur/discret'));
       await levelRow(side);
-      const q = await para(side, retour === 'Aucun' ? 'Cette formation vous intéresse ?' : 'Merci, votre avis est enregistré.', 'Petit', 'couleur/discret'); q.name = 'Question';
+      const q = await para(side, retour === 'Aucun' ? 'Cette formation vous intéresse ?' : 'Votre avis (modifiable) :', 'Petit', 'couleur/discret'); q.name = 'Question';
       const btns = AL(mobile ? 'HORIZONTAL' : 'VERTICAL', { name: 'Boutons', gap: 8 }); append(side, btns);
       const b1 = await fbBtn('Elle me correspond', 'pouce-haut', retour === 'Pertinent' ? 'oui' : 'neutre');
       const b2 = await fbBtn('Pas pour moi', 'pouce-bas', retour === 'Non pertinent' ? 'non' : 'neutre');
       append(btns, b1); append(btns, b2);
-      if (retour === 'Pertinent') b2.opacity = 0.45;
-      if (retour === 'Non pertinent') b1.opacity = 0.45;
+      if (retour === 'Pertinent') b2.visible = false;
+      if (retour === 'Non pertinent') b1.visible = false;
       vs.push(r);
     }
     const set = figma.combineAsVariants(vs, sList); set.name = mobile ? 'Recommandation mobile' : 'Recommandation';
