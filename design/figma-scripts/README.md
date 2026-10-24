@@ -1,6 +1,6 @@
 # Scripts Figma (Scripter)
 
-Scripts autonomes à coller dans le plugin **Scripter** (Figma navigateur ou desktop), dans le fichier **Plateforme formations HIT-T — Maquettes MVP**. Chaque script peut être relancé : ce qui existe déjà n'est pas recréé.
+Scripts autonomes à coller dans le plugin **Scripter** (Figma navigateur ou desktop), dans le fichier **[Plateforme formations HIT-T — Maquettes MVP](https://www.figma.com/design/kvetFqrr0ID67PZe0JH6Jx/Plateforme-formations-HIT-T-%E2%80%94-Maquettes-MVP)**. Chaque script peut être relancé : ce qui existe déjà n'est pas recréé.
 
 ## Design v2 — institutionnel (à utiliser)
 
