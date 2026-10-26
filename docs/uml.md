@@ -2,29 +2,36 @@
 
 Livrable « Diagrammes UML » du cahier des charges, à jour de la v1.1 (aperçu visiteur RF-12, connexion Google RF-13).
 
-Deux formats pour chaque diagramme :
+Trois formats pour chaque diagramme :
 
-- **Mermaid** (ci-dessous) : affiché directement par GitHub, pratique pour relire.
-- **PlantUML** ([`docs/uml/`](uml/)) : notation UML complète (acteurs, `<<include>>` / `<<extend>>`, multiplicités…), à exporter en image pour le mémoire.
+- **Images PNG** ([`docs/uml/images/`](uml/images/)) : à insérer dans le mémoire (résolution × 2). Les SVG sont à côté, pour un rendu vectoriel.
+- **Mermaid** (sous chaque image) : version texte affichée par GitHub, pratique pour relire et modifier.
+- **PlantUML** ([`docs/uml/`](uml/)) : sources en notation UML complète, si vous préférez les retravailler avec PlantUML.
 
-| N° | Diagramme | Source PlantUML |
-|---|---|---|
-| 1 | Cas d'utilisation | [`01-cas-utilisation.puml`](uml/01-cas-utilisation.puml) |
-| 2 | Classes | [`02-classes.puml`](uml/02-classes.puml) |
-| 3 | Séquence « Obtenir des recommandations » | [`03-sequence-recommandations.puml`](uml/03-sequence-recommandations.puml) |
-| 4 | Séquence « Connexion avec Google » | [`04-sequence-google.puml`](uml/04-sequence-google.puml) |
-| 5 | Séquence « Essayer sans compte » | [`05-sequence-apercu.puml`](uml/05-sequence-apercu.puml) |
-| 6 | Activité : parcours d'un apprenant | [`06-activite-parcours.puml`](uml/06-activite-parcours.puml) |
-| 7 | États d'une recommandation | [`07-etats-recommandation.puml`](uml/07-etats-recommandation.puml) |
-| 8 | Déploiement | [`08-deploiement.puml`](uml/08-deploiement.puml) |
+| N° | Diagramme | Image | Source PlantUML |
+|---|---|---|---|
+| 1 | Cas d'utilisation | [PNG](uml/images/01-cas-utilisation.png) | [`01-cas-utilisation.puml`](uml/01-cas-utilisation.puml) |
+| 2 | Classes | [PNG](uml/images/02-classes.png) | [`02-classes.puml`](uml/02-classes.puml) |
+| 3 | Séquence « Obtenir des recommandations » | [PNG](uml/images/03-sequence-recommandations.png) | [`03-sequence-recommandations.puml`](uml/03-sequence-recommandations.puml) |
+| 4 | Séquence « Connexion avec Google » | [PNG](uml/images/04-sequence-google.png) | [`04-sequence-google.puml`](uml/04-sequence-google.puml) |
+| 5 | Séquence « Essayer sans compte » | [PNG](uml/images/05-sequence-apercu.png) | [`05-sequence-apercu.puml`](uml/05-sequence-apercu.puml) |
+| 6 | Activité : parcours d'un apprenant | [PNG](uml/images/06-activite-parcours.png) | [`06-activite-parcours.puml`](uml/06-activite-parcours.puml) |
+| 7 | États d'une recommandation | [PNG](uml/images/07-etats-recommandation.png) | [`07-etats-recommandation.puml`](uml/07-etats-recommandation.puml) |
+| 8 | Déploiement | [PNG](uml/images/08-deploiement.png) | [`08-deploiement.puml`](uml/08-deploiement.puml) |
 
-**Exporter les images PlantUML** (PNG ou SVG) :
+**Régénérer les images** après un changement du modèle : modifier `docs/uml/outils/sequences.py` ou `statiques.py`, puis
 
-- VS Code : extension « PlantUML » (jebbs), clic droit → *Export Current Diagram* ; ou
-- en ligne : coller le contenu du fichier (et celui de `_style.iuml` à la place de la ligne `!include`) sur <https://www.plantuml.com/plantuml> ; ou
-- en local : `java -jar plantuml.jar -tpng docs/uml/*.puml` (Java + [PlantUML](https://plantuml.com/download)).
+```bash
+cd docs/uml/outils
+python3 sequences.py ../images && python3 statiques.py ../images
+CHROME=/chemin/vers/chrome ./render.sh "$PWD"/../images/*.svg   # SVG → PNG (× 2)
+```
 
 ## 1. Cas d'utilisation
+
+![Cas d'utilisation](uml/images/01-cas-utilisation.png)
+
+<details><summary>Version Mermaid</summary>
 
 ```mermaid
 flowchart LR
@@ -59,9 +66,15 @@ flowchart LR
     UC6 --- G
 ```
 
+</details>
+
 L'apprenant hérite des cas du visiteur. Les routes administrateur sont protégées (RF-03) ; l'administrateur se connecte uniquement par email et mot de passe. Le rôle Conseiller pédagogique est reporté en V2.
 
 ## 2. Classes
+
+![Classes](uml/images/02-classes.png)
+
+<details><summary>Version Mermaid</summary>
 
 ```mermaid
 classDiagram
@@ -149,9 +162,15 @@ classDiagram
     Resultat --> "1" Formation
 ```
 
+</details>
+
 Règle : `motDePasseHash` ou `googleId` est obligatoirement renseigné (contrainte `CHECK` en base). `correspondance()` traduit le score : ≥ 0,40 « Très proche », ≥ 0,30 « Proche », sinon « Peut vous intéresser » (seuils à calibrer en S5).
 
 ## 3. Séquence « Obtenir des recommandations »
+
+![Séquence « Obtenir des recommandations »](uml/images/03-sequence-recommandations.png)
+
+<details><summary>Version Mermaid</summary>
 
 ```mermaid
 sequenceDiagram
@@ -190,7 +209,13 @@ sequenceDiagram
     API-->>UI: 200
 ```
 
+</details>
+
 ## 4. Séquence « Connexion avec Google »
+
+![Séquence « Connexion avec Google »](uml/images/04-sequence-google.png)
+
+<details><summary>Version Mermaid</summary>
 
 ```mermaid
 sequenceDiagram
@@ -221,7 +246,13 @@ sequenceDiagram
     end
 ```
 
+</details>
+
 ## 5. Séquence « Essayer sans compte »
+
+![Séquence « Essayer sans compte »](uml/images/05-sequence-apercu.png)
+
+<details><summary>Version Mermaid</summary>
 
 ```mermaid
 sequenceDiagram
@@ -245,7 +276,13 @@ sequenceDiagram
     UI-->>V: Questionnaire pré-rempli
 ```
 
+</details>
+
 ## 6. Activité : parcours d'un apprenant
+
+![Activité : parcours d'un apprenant](uml/images/06-activite-parcours.png)
+
+<details><summary>Version Mermaid</summary>
 
 ```mermaid
 flowchart TD
@@ -266,7 +303,13 @@ flowchart TD
     D3 -- oui --> A11[Contacte le cabinet pour s'inscrire] --> F((Fin))
 ```
 
+</details>
+
 ## 7. États d'une recommandation
+
+![États d'une recommandation](uml/images/07-etats-recommandation.png)
+
+<details><summary>Version Mermaid</summary>
 
 ```mermaid
 stateDiagram-v2
@@ -283,7 +326,13 @@ stateDiagram-v2
     NonPertinente --> [*] : questionnaire resoumis ou formation supprimée
 ```
 
+</details>
+
 ## 8. Déploiement
+
+![Déploiement](uml/images/08-deploiement.png)
+
+<details><summary>Version Mermaid</summary>
 
 ```mermaid
 flowchart LR
@@ -296,3 +345,5 @@ flowchart LR
     NAV -. jeton d'identité .-> GOO[Google Identity Services]
     BE -. vérification du jeton .-> GOO
 ```
+
+</details>
