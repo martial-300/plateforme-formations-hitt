@@ -1,0 +1,104 @@
+@startuml 02-classes
+!include _style.iuml
+title Diagramme de classes — modèle du domaine et moteur
+
+enum Role {
+  apprenant
+  administrateur
+}
+enum Domaine {
+  SISG
+  IA_Data
+  TRIT
+}
+enum TypeFormation {
+  carte
+  modulaire
+}
+enum UniteDuree {
+  heure
+  jour
+  semaine
+  mois
+}
+enum Retour {
+  aucun
+  pertinent
+  non_pertinent
+}
+
+class Utilisateur {
+  - id : UUID
+  - nom : String
+  - prenom : String
+  - email : String {unique}
+  - motDePasseHash : String [0..1]
+  - googleId : String [0..1] {unique}
+  - role : Role
+  - dateCreation : DateTime
+  + verifierMotDePasse(mdp : String) : Boolean
+}
+note right of Utilisateur
+  motDePasseHash ou googleId
+  est obligatoirement renseigné.
+end note
+
+class ProfilApprenant {
+  - id : UUID
+  - niveauEtudes : String
+  - competences : String
+  - centresInteret : String
+  - objectifProfessionnel : String
+  - typeSouhaite : TypeFormation
+  - budgetMaxFcfa : Integer
+  - dateMaj : DateTime
+  + texteMoteur() : String
+}
+
+class Formation {
+  - id : UUID
+  - intitule : String
+  - description : String
+  - domaine : Domaine
+  - type : TypeFormation
+  - dureeValeur : Decimal
+  - dureeUnite : UniteDuree
+  - coutFcfa : Integer
+  - coutPromoFcfa : Integer [0..1]
+  - motsCles : String [1..*]
+  + texteMoteur() : String
+  + prixEffectif() : Integer
+}
+
+class Recommandation {
+  - id : UUID
+  - score : Decimal {0..1}
+  - motsClesCommuns : String [*]
+  - retour : Retour
+  - dateGeneration : DateTime
+  + correspondance() : String
+}
+
+class MoteurRecommandation <<service>> {
+  - vectoriseur : TfidfVectorizer
+  + recommander(texte : String, type : TypeFormation, budget : Integer, k : Integer) : Resultat [0..k]
+}
+
+class Resultat <<valeur>> {
+  + score : Decimal
+  + motsClesCommuns : String [*]
+}
+
+Utilisateur "1" -- "0..1" ProfilApprenant : possède >
+Utilisateur "1" -- "0..5" Recommandation : reçoit >
+Formation "1" -- "0..*" Recommandation : < concerne
+MoteurRecommandation ..> Formation : <<use>>
+MoteurRecommandation ..> Resultat : <<create>>
+Resultat --> "1" Formation
+Utilisateur ..> Role
+Formation ..> Domaine
+Formation ..> TypeFormation
+Formation ..> UniteDuree
+Recommandation ..> Retour
+ProfilApprenant ..> TypeFormation
+@enduml

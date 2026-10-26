@@ -1,0 +1,51 @@
+@startuml 03-sequence-recommandations
+!include _style.iuml
+title Séquence « Obtenir des recommandations » (RF-06 à RF-10)
+autonumber
+
+actor Apprenant as A
+box "Navigateur" #F6F4EF
+  participant "Frontend React" as UI
+end box
+box "Serveur (VPS)" #F6F4EF
+  participant "API FastAPI" as API
+  participant "MoteurRecommandation" as M
+  database "PostgreSQL" as DB
+end box
+
+A -> UI : Remplit le questionnaire et valide
+UI -> UI : Contrôle des champs (obligatoires, budget numérique)
+UI -> API : PUT /api/v1/profil (JWT, réponses)
+activate API
+API -> API : Vérifie le JWT et valide les données
+alt Données invalides
+  API --> UI : 422 + messages d'erreur
+  UI --> A : Affiche les champs à corriger
+else Données valides
+  API -> DB : INSERT ou UPDATE profils_apprenants
+  API -> DB : SELECT formations
+  DB --> API : 86 formations
+  API -> M : recommander(texte du profil, type, budget, k = 5)
+  activate M
+  M -> M : TF-IDF + similarité cosinus
+  M -> M : Filtre type et budget, garde les 5 meilleurs scores
+  M -> M : Calcule les mots-clés communs
+  M --> API : 0 à 5 résultats
+  deactivate M
+  API -> DB : DELETE anciennes recommandations\nINSERT nouvelles (une transaction)
+  alt Aucun résultat
+    API --> UI : 200 { recommandations : [] }
+    UI --> A : Écran « Aucune formation ne correspond »
+  else Au moins un résultat
+    API --> UI : 200 { profil, recommandations }
+    UI --> A : 5 formations classées, correspondance et mots en commun
+  end
+end
+deactivate API
+
+A -> UI : Clique « Elle me correspond »
+UI -> API : POST /api/v1/recommandations/{id}/retour { pertinent }
+API -> DB : UPDATE recommandations SET retour
+API --> UI : 200
+UI --> A : Avis enregistré (modifiable)
+@enduml

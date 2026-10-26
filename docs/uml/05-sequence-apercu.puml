@@ -1,0 +1,28 @@
+@startuml 05-sequence-apercu
+!include _style.iuml
+title Séquence « Essayer sans compte » (RF-12)
+autonumber
+
+actor Visiteur as V
+participant "Frontend React" as UI
+participant "API FastAPI" as API
+participant "MoteurRecommandation" as M
+database "PostgreSQL" as DB
+
+V -> UI : Répond aux 3 questions\n(ce qu'il aimerait apprendre, format, budget)
+UI -> API : POST /api/v1/recommandations/apercu
+activate API
+API -> API : Limite d'appels par adresse IP
+API -> DB : SELECT formations
+DB --> API : 86 formations
+API -> M : recommander(réponse, type, budget, k = 3)
+M --> API : 3 résultats
+API --> UI : 200 { 3 formations, sans description }
+deactivate API
+note right of API : Aucune écriture en base
+UI -> UI : Garde les 3 réponses en mémoire de session
+UI --> V : Aperçu des 3 formations + invitation à créer un compte
+
+V -> UI : « Créer mon compte et voir les 5 formations »
+UI --> V : Inscription, puis questionnaire pré-rempli\navec les réponses de l'essai
+@enduml

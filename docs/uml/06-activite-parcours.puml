@@ -1,0 +1,37 @@
+@startuml 06-activite-parcours
+!include _style.iuml
+title Diagramme d'activité — parcours d'un apprenant
+
+|Visiteur|
+start
+:Arrive sur l'accueil;
+if (Sait déjà ce qu'il cherche ?) then (oui)
+  :Parcourt le catalogue\net les fiches formations;
+else (non)
+  :Essaie sans compte\n(3 questions);
+  :Voit 3 formations;
+endif
+:Crée un compte\n(email ou Google);
+|Apprenant|
+:Remplit le questionnaire\n(réponses de l'essai reprises);
+|Plateforme|
+:Calcule les recommandations\n(type + budget, TF-IDF);
+if (Formation(s) trouvée(s) ?) then (oui)
+  :Affiche jusqu'à 5 formations\nclassées et expliquées;
+  |Apprenant|
+  :Donne son avis sur chaque formation;
+  if (Satisfait ?) then (oui)
+    :Contacte le cabinet\npour s'inscrire;
+    stop
+  else (non)
+    :Modifie ses réponses;
+    detach
+  endif
+else (non)
+  |Plateforme|
+  :Explique pourquoi\net propose d'élargir les critères;
+  |Apprenant|
+  :Modifie ses réponses;
+  detach
+endif
+@enduml

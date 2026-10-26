@@ -1,0 +1,52 @@
+@startuml 01-cas-utilisation
+!include _style.iuml
+title Diagramme de cas d'utilisation — Plateforme de recommandation HIT-T (MVP)
+left to right direction
+
+actor "Visiteur" as V
+actor "Apprenant" as A
+actor "Administrateur" as AD
+actor "Google\n(fournisseur d'identité)" as G <<système>>
+A -|> V
+
+rectangle "Plateforme HIT-T" {
+  usecase "Consulter le catalogue\n(RF-05)" as UC1
+  usecase "Filtrer par domaine\net par type" as UC2
+  usecase "Voir le détail\nd'une formation" as UC3
+  usecase "Essayer sans compte :\naperçu de 3 formations\n(RF-12)" as UC4
+  usecase "Créer un compte\n(RF-01)" as UC5
+  usecase "S'authentifier avec Google\n(RF-13)" as UC6
+  usecase "Se connecter /\nse déconnecter (RF-02)" as UC7
+  usecase "Remplir ou modifier\nle questionnaire\n(RF-06, RF-07)" as UC8
+  usecase "Obtenir 5 recommandations\nexpliquées (RF-08, RF-09)" as UC9
+  usecase "Donner un avis sur\nune recommandation (RF-10)" as UC10
+  usecase "Gérer le catalogue\n(RF-04)" as UC11
+  usecase "Consulter les\nchiffres clés (RF-11)" as UC12
+}
+
+V --> UC1
+V --> UC3
+V --> UC4
+V --> UC5
+V --> UC7
+A --> UC8
+A --> UC10
+AD --> UC7
+AD --> UC11
+AD --> UC12
+
+UC2 .> UC1 : <<extend>>
+UC6 .> UC5 : <<extend>>
+UC6 .> UC7 : <<extend>>
+UC8 .> UC9 : <<include>>
+UC6 --> G
+UC11 .> UC7 : <<include>>
+UC12 .> UC7 : <<include>>
+
+note right of AD
+  Routes réservées au rôle
+  administrateur (RF-03).
+  Connexion par email et
+  mot de passe uniquement.
+end note
+@enduml

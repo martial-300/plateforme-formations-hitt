@@ -1,0 +1,25 @@
+@startuml 08-deploiement
+!include _style.iuml
+title Diagramme de déploiement — MVP
+
+node "Poste de l'utilisateur" {
+  component "Navigateur\n(ordinateur ou mobile)" as NAV
+}
+cloud "Google\nIdentity Services" as GOO
+
+node "VPS Linux" {
+  node "Docker Compose" {
+    component "Nginx\n(HTTPS, Let's Encrypt)" as NGX
+    component "Frontend\nReact + TypeScript (Vite)\nfichiers statiques" as FE
+    component "Backend\nPython 3.11 · FastAPI\nSQLAlchemy · Scikit-learn" as BE
+    database "PostgreSQL 15\n4 tables" as PG
+  }
+}
+
+NAV --> NGX : HTTPS 443
+NGX --> FE : /
+NGX --> BE : /api/v1
+BE --> PG : SQL (ORM)
+NAV ..> GOO : connexion Google\n(jeton d'identité)
+BE ..> GOO : vérification du jeton\n(HTTPS)
+@enduml

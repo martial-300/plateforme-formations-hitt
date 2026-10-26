@@ -93,7 +93,7 @@ Le lancement du backend et du frontend est décrit dans [backend/README.md](back
 | [Modèle de données](docs/modele-donnees.md) | 4 tables, diagramme entité-relation |
 | [API REST](docs/api.md) | 13 endpoints, exemples de requêtes / réponses |
 | [Moteur de recommandation](docs/moteur-recommandation.md) | Algorithme TF-IDF + cosinus, pseudo-code |
-| [Diagrammes UML](docs/uml.md) | Cas d'utilisation, classes, séquence « obtenir des recommandations » |
+| [Diagrammes UML](docs/uml.md) | 8 diagrammes : cas d'utilisation, classes, 3 séquences, activité, états, déploiement (Mermaid + sources PlantUML) |
 | [Évaluation](docs/evaluation.md) | Protocole précision@5, panel d'apprenants |
 | [Déploiement](docs/deploiement.md) | VPS, Docker Compose, Nginx, HTTPS |
 | [Planning](docs/planning.md) | 10 semaines, backlog par sprint |
