@@ -23,6 +23,7 @@ nano .env    # mots de passe forts, JWT_SECRET aléatoire, DOMAINE, ADMIN_*
 
 # 3. Lancer
 docker compose up -d --build
+# db (5432) et backend (8000) ne sont publiés que sur 127.0.0.1 : seul nginx expose 80 et 443.
 
 # 4. Certificat HTTPS (première fois)
 sudo apt install certbot
