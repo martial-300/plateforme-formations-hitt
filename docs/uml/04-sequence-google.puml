@@ -1,0 +1,33 @@
+@startuml 04-sequence-google
+!include _style.iuml
+title Séquence « Connexion avec Google » (RF-13)
+autonumber
+
+actor Visiteur as V
+participant "Frontend React" as UI
+participant "Google Identity\nServices" as G
+participant "API FastAPI" as API
+database "PostgreSQL" as DB
+
+V -> UI : Clique « Continuer avec Google »
+UI -> G : Ouvre la fenêtre de connexion Google
+V -> G : Choisit son compte, accepte le partage\n(nom, prénom, email)
+G --> UI : Jeton d'identité (id_token)
+UI -> API : POST /api/v1/auth/google { id_token }
+activate API
+API -> G : Vérifie signature, audience (GOOGLE_CLIENT_ID),\nexpiration, email vérifié
+alt Jeton invalide ou email non vérifié
+  API --> UI : 401
+  UI --> V : Message d'erreur, connexion par email possible
+else Compte administrateur
+  API --> UI : 403 (administrateur : email et mot de passe uniquement)
+else Jeton valide
+  API -> DB : Cherche l'utilisateur par google_id, sinon par email
+  opt Utilisateur inconnu
+    API -> DB : INSERT utilisateur (rôle apprenant, sans mot de passe)
+  end
+  API --> UI : 200 { access_token (JWT), nouveau_compte }
+  UI --> V : Questionnaire (nouveau compte)\nou recommandations (compte existant)
+end
+deactivate API
+@enduml

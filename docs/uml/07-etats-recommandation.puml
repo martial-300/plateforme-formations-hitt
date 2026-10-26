@@ -1,0 +1,23 @@
+@startuml 07-etats-recommandation
+!include _style.iuml
+title Diagramme d'états — une recommandation
+
+state "Sans avis\n(retour = aucun)" as SansAvis
+state "Pertinente\n(retour = pertinent)" as Pertinente
+state "Non pertinente\n(retour = non_pertinent)" as NonPertinente
+
+[*] --> SansAvis : générée à la soumission\ndu questionnaire
+SansAvis --> Pertinente : « Elle me correspond »
+SansAvis --> NonPertinente : « Pas pour moi »
+Pertinente --> NonPertinente : change d'avis
+NonPertinente --> Pertinente : change d'avis
+
+SansAvis --> [*] : questionnaire resoumis\nou formation supprimée
+Pertinente --> [*] : questionnaire resoumis\nou formation supprimée
+NonPertinente --> [*] : questionnaire resoumis\nou formation supprimée
+
+note right of Pertinente
+  Les avis alimentent le taux
+  de retours « pertinent » (RF-11).
+end note
+@enduml
