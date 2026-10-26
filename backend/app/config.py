@@ -11,6 +11,9 @@ def _obligatoire(nom: str) -> str:
     return valeur
 
 
+SECRET_EXEMPLE = "generer-avec-openssl-rand-hex-32"
+
+
 @dataclass(frozen=True)
 class Parametres:
     database_url: str = field(default_factory=lambda: _obligatoire("DATABASE_URL"))
@@ -26,6 +29,11 @@ class Parametres:
         ]
     )
     google_client_id: str = field(default_factory=lambda: os.environ.get("GOOGLE_CLIENT_ID", ""))
+
+    def __post_init__(self) -> None:
+        # Un secret court ou recopié de .env.example permettrait de forger des JWT.
+        if len(self.jwt_secret) < 32 or self.jwt_secret == SECRET_EXEMPLE:
+            raise RuntimeError("JWT_SECRET trop faible : générer avec `openssl rand -hex 32`")
 
 
 parametres = Parametres()

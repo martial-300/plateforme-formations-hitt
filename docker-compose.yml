@@ -1,7 +1,8 @@
 # HIT-T Reco — Docker Compose
 # Développement : `docker compose up -d db`, puis backend (uvicorn) et frontend (npm run dev)
-# en local. `docker compose up -d --build` lance aussi backend et frontend en conteneurs ;
-# nginx (production) reste commenté jusqu'au déploiement (S7).
+# en local. `docker compose up -d --build` construit aussi backend et frontend ; le frontend
+# conteneurisé n'est joignable que derrière nginx (production, S7).
+# Ports publiés sur 127.0.0.1 uniquement : en production, seul nginx expose 80 et 443.
 
 services:
   db:
@@ -16,7 +17,7 @@ services:
       # Exécutés au premier démarrage uniquement (volume vide), par ordre alphabétique
       - ./database:/docker-entrypoint-initdb.d:ro
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hitt} -d ${POSTGRES_DB:-hitt}"]
       interval: 5s
@@ -32,7 +33,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
 
   frontend:
     build:

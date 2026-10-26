@@ -20,13 +20,13 @@ VITE_API_URL=http://localhost:8000/api/v1
 
 ## Organisation
 
-| Dossier | Contenu |
-|---|---|
-| `src/api/` | Client HTTP (`appelApi`, jeton, gestion du 401) et types de [docs/api.md](../docs/api.md) |
-| `src/auth/` | Contexte d'auth, `useAuth`, `RouteProtegee` |
-| `src/pages/` | Écrans (provisoirement `PageEnConstruction`) |
-| `src/components/` | Composants partagés (en-tête…) |
-| `src/styles/global.css` | Tokens de la charte v2 |
+| Dossier                 | Contenu                                                                                   |
+| ----------------------- | ----------------------------------------------------------------------------------------- |
+| `src/api/`              | Client HTTP (`appelApi`, jeton, gestion du 401) et types de [docs/api.md](../docs/api.md) |
+| `src/auth/`             | Contexte d'auth, `useAuth`, `RouteProtegee`                                               |
+| `src/pages/`            | Écrans (provisoirement `PageEnConstruction`)                                              |
+| `src/components/`       | Composants partagés (en-tête…)                                                            |
+| `src/styles/global.css` | Tokens de la charte v2                                                                    |
 
 ## Pages
 
@@ -34,6 +34,7 @@ VITE_API_URL=http://localhost:8000/api/v1
 | ---------------------------- | ------------------------------------------ | -------------- |
 | `/connexion`, `/inscription` | Connexion / Inscription                    | Public         |
 | `/` , `/formations/:id`      | Catalogue + détail                         | Public         |
+| `/essai`                     | Essayer sans compte (aperçu, RF-12)        | Public         |
 | `/questionnaire`             | Questionnaire                              | Apprenant      |
 | `/recommandations`           | Mes recommandations                        | Apprenant      |
 | `/admin`                     | Administration (catalogue + chiffres clés) | Administrateur |

@@ -16,7 +16,7 @@ flowchart LR
 
 | Couche | Technologie | Responsabilité |
 |---|---|---|
-| Frontend | React 18 + TypeScript + Vite | 5 pages, appels REST, stockage du JWT |
+| Frontend | React 18 + TypeScript + Vite | Pages publiques (dont l'essai sans compte, RF-12), apprenant et admin ; appels REST, stockage du JWT |
 | Backend | Python 3.11, FastAPI, SQLAlchemy, Pydantic | Authentification, règles métier, API |
 | Moteur IA | Scikit-learn (TF-IDF, cosinus) | Calcul du top 5 à chaque soumission |
 | Données | PostgreSQL 15 | 4 tables, catalogue réel chargé par script SQL |
@@ -58,7 +58,7 @@ backend/
 frontend/
 ├── src/
 │   ├── api/                 # client HTTP (fetch/axios) + types
-│   ├── pages/               # Login, Catalogue, Questionnaire, Recommandations, Admin
+│   ├── pages/               # Connexion, Catalogue, Essai, Questionnaire, Recommandations, Admin
 │   ├── components/
 │   └── auth/                # contexte d'authentification, routes protégées
 ├── package.json

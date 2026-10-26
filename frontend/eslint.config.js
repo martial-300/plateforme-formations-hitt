@@ -21,6 +21,10 @@ export default tseslint.config(
           selector: "JSXAttribute[name.name='dangerouslySetInnerHTML']",
           message: "Pas de rendu HTML des données du catalogue ou du profil.",
         },
+        {
+          selector: "MemberExpression[property.name=/^(innerHTML|outerHTML)$/]",
+          message: "Pas de rendu HTML des données du catalogue ou du profil.",
+        },
       ],
     },
   },
