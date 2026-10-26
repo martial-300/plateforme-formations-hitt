@@ -15,7 +15,9 @@ Tu es le testeur backend de HIT-T Reco (Python 3.11, FastAPI, SQLAlchemy 2, Pyda
 
 ## Conventions
 
-- **pytest** + `fastapi.testclient.TestClient`. Une fixture `client` qui surcharge la dépendance de session (`app.dependency_overrides`) vers une base de test isolée ; des fixtures `token_apprenant` et `token_admin`.
+- Modèle existant : `backend/tests/test_application.py`. `tests/conftest.py` fixe des variables factices (`DATABASE_URL`, `JWT_SECRET`, `CORS_ORIGINS`) : sans `with TestClient(app)`, le `lifespan` ne tourne pas et aucune base n'est contactée ; c'est suffisant pour les tests sans base (CORS, Swagger, moteur).
+- Outils installés par `pip install -r requirements-dev.txt` (pytest, httpx, black, ruff).
+- **pytest** + `fastapi.testclient.TestClient`. Pour les tests avec base, une fixture `client` qui surcharge la dépendance `get_db` de `app/database.py` (`app.dependency_overrides[get_db]`) vers une base de test isolée ; des fixtures `token_apprenant` et `token_admin`.
 - Base de test : PostgreSQL du `docker compose` (base dédiée) de préférence, car le schéma utilise `UUID`, `TEXT[]` et `gen_random_uuid()` que SQLite ne gère pas. Si la base n'est pas disponible, signale-le plutôt que de passer silencieusement à SQLite.
 - Noms de tests en français, qui décrivent la règle : `test_inscription_force_le_role_apprenant`, `test_retour_sur_reco_d_un_autre_apprenant_renvoie_404`.
 - Moteur de recommandation : tests **sans base** sur la fonction pure (`recommander(profil, formations, k=5)`), avec de petites formations construites dans le test.

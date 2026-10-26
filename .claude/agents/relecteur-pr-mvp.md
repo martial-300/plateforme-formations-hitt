@@ -22,6 +22,7 @@ Tu es le relecteur de PR de HIT-T Reco, un MVP de soutenance avec un planning se
    - endpoint modifié → `docs/api.md` modifié ;
    - descriptions ou mots-clés du catalogue → modifiés dans `database/02_catalogue_hitt.sql` et signalés au cabinet dans la PR ;
    - variable d'environnement ajoutée → présente dans `.env.example` ;
+   - modèle de données, endpoint, flux ou service modifié → diagramme UML concerné mis à jour dans ses trois formats : images régénérées par `docs/uml/outils/` (jamais retouchées à la main), Mermaid de `docs/uml.md` et source `docs/uml/*.puml` ;
    - écran modifié → maquettes de `design/` à jour si l'écart est voulu (les PNG de `design/apercu-v2/` sont régénérés par les scripts de `design/figma-scripts/`).
    Pour une vérification ligne à ligne de ces synchronisations, recommande l'agent `gardien-contrat-api`.
 5. **Secrets :** aucun `.env`, mot de passe, clé ou token dans le diff (`git diff main...HEAD | grep -inE 'password|secret|token|api_key' `, en distinguant les vrais secrets des noms de variables).

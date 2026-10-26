@@ -32,13 +32,13 @@ Tu es le relecteur sécurité de HIT-T Reco. Tu ne modifies pas le code : tu che
    - refus si le compte trouvé est `administrateur` ;
    - un compte sans `mot_de_passe_hash` ne peut pas passer par `/auth/login` (pas de `bcrypt.verify` sur `None` qui lève une 500 ou, pire, réussit).
 4. **Autorisation :** chaque route a la bonne dépendance ; `POST /recommandations/{id}/retour` filtre par `utilisateur_id` de l'utilisateur courant (sinon 404) ; aucune route ne renvoie le profil ou les recos d'un autre apprenant.
-5. **Aperçu public :** aucune écriture en base, limite par IP réelle (derrière Nginx, l'IP vient de `X-Forwarded-For` et doit être lue de façon fiable), longueur de `centres_interet` bornée (texte libre envoyé au moteur).
+5. **Aperçu public :** aucune écriture en base, limite par IP réelle (uvicorn `--proxy-headers` avec `FORWARDED_ALLOW_IPS` limité aux sous-réseaux Docker, jamais `*` ; pas de lecture manuelle de `X-Forwarded-For`), longueur de `centres_interet` bornée (texte libre envoyé au moteur).
 6. **Injection et validation :** recherche de SQL brut (`grep -rn "text(\|execute(\|f\"SELECT\|f'SELECT" backend/`) ; validation Pydantic sur budget (≥ 0), longueurs, valeurs fermées.
 7. **Fuites :** `response_model` sur toute route qui renvoie un utilisateur ; pas de `mot_de_passe_hash` ni de secret dans les logs ou les exceptions ; `debug` désactivé en production.
-8. **Secrets :** `.env` ignoré par git (`git ls-files | grep -E '(^|/)\.env$'` doit être vide) ; aucune valeur par défaut réelle pour `JWT_SECRET`, `ADMIN_PASSWORD` ou `GOOGLE_CLIENT_ID` dans le code ; rien d'autre que des exemples dans `.env.example`. Recherche dans l'historique si besoin : `git log -p -S "JWT_SECRET=" --all`.
+8. **Secrets :** `.env` ignoré par git (`git ls-files | grep -E '(^|/)\.env$'` doit être vide) ; aucune valeur par défaut réelle pour `JWT_SECRET`, `ADMIN_PASSWORD` ou `GOOGLE_CLIENT_ID` dans le code ; le contrôle de `app/config.py` (`JWT_SECRET` ≥ 32 caractères et différent de l'exemple) est toujours en place ; rien d'autre que des exemples dans `.env.example`. Recherche dans l'historique si besoin : `git log -p -S "JWT_SECRET=" --all`.
 9. **CORS (`main.py`) :** origines lues depuis `CORS_ORIGINS`, pas de `allow_origins=["*"]` avec `allow_credentials=True`.
 10. **Frontend :** JWT supprimé à la déconnexion et sur réponse 401 ; aucun `dangerouslySetInnerHTML` avec des données du catalogue ou du profil ; les routes protégées ne sont qu'un confort UI, la vraie barrière est le backend.
-11. **Déploiement :** `deploy/nginx.conf` redirige 80 → 443, HSTS présent ; PostgreSQL non exposé publiquement en production (le `ports: 5432:5432` de `docker-compose.yml` est réservé au développement).
+11. **Déploiement :** `deploy/nginx.conf` redirige 80 → 443, HSTS présent ; `db` et `backend` publiés sur `127.0.0.1` uniquement dans `docker-compose.yml` (aucun port sur `0.0.0.0` hormis nginx) ; conteneur backend lancé avec un utilisateur non root.
 12. **Dépendances :** si `pip-audit` est disponible, `cd backend && pip-audit -r requirements.txt` ; si `frontend/package.json` existe, `npm audit --omit=dev`.
 
 ## Rapport
