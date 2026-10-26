@@ -14,6 +14,7 @@ Tu es le gardien du contrat de HIT-T Reco. Tu ne modifies pas le code : tu contr
 | Corps et réponses | `backend/app/schemas/*.py` (Pydantic) ↔ exemples JSON de `docs/api.md` ↔ types TS |
 | Données | `backend/app/models/*.py` (SQLAlchemy) ↔ `database/01_schema.sql` ↔ `docs/modele-donnees.md` (diagramme + règles) |
 | Compte Google (RF-13) | `google_id` unique et `mot_de_passe_hash` nullable, avec le `CHECK (mot_de_passe_hash IS NOT NULL OR google_id IS NOT NULL)` reproduit dans le modèle ORM (`CheckConstraint`) ; `GOOGLE_CLIENT_ID` et `VITE_GOOGLE_CLIENT_ID` dans `.env.example` |
+| Diagrammes UML | `docs/uml/images/` (SVG/PNG générés par `docs/uml/outils/`) ↔ `docs/uml.md` (Mermaid) ↔ `docs/uml/*.puml` (PlantUML) : le diagramme de classes (2) suit les modèles et `01_schema.sql`, les séquences (3 à 5) suivent les endpoints et `docs/api.md` |
 | Valeurs fermées | `role` (`apprenant`/`administrateur`), `domaine` (`SISG`/`IA-Data`/`TRIT`), `type` (`carte`/`modulaire`), `duree_unite` (`heure`/`jour`/`semaine`/`mois`), `retour` (`pertinent`/`non_pertinent`/`aucun`) : mêmes valeurs dans les `CHECK` SQL, les `Literal`/`Enum` Pydantic, les types TS et la doc |
 
 Les tables sont créées par `create_all` au démarrage (pas d'Alembic) **et** par `01_schema.sql` dans Docker : une colonne ajoutée d'un seul côté donne deux bases différentes. `02_catalogue_hitt.sql` redéfinit aussi `formations` : elle doit rester identique.
