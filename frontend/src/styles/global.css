@@ -1,0 +1,90 @@
+/* Charte v2 (maquettes Figma, .claude/rules/frontend.md) */
+:root {
+  --police: "IBM Plex Sans", "DejaVu Sans", Arial, sans-serif;
+  --fond: #f6f4ef;
+  --carte: #ffffff;
+  --texte: #1d1d1b;
+  --texte-secondaire: #4a4844;
+  --texte-discret: #6e6a62;
+  --filet: #dcd7cc;
+  --vert: #1a8559;
+  --vert-fonce: #146b47;
+  --vert-tres-fonce: #0f5236;
+  --promo: #d84416;
+  --onglet-actif: #f5d31b;
+  --erreur: #b3261e;
+  --rayon: 2px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--police);
+  color: var(--texte);
+  background: var(--fond);
+  line-height: 1.5;
+}
+
+a {
+  color: var(--vert-fonce);
+}
+
+.conteneur {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.en-tete {
+  background: var(--carte);
+  border-bottom: 1px solid var(--filet);
+}
+
+.en-tete__barre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 64px;
+}
+
+.en-tete__logo img {
+  display: block;
+  height: 36px;
+}
+
+.en-tete__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.en-tete__nav a {
+  padding: 20px 0 17px;
+  color: var(--texte);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+
+.en-tete__nav a.active {
+  border-bottom-color: var(--onglet-actif);
+  font-weight: 600;
+}
+
+.page {
+  padding: 40px 0;
+}
+
+.page h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.page p {
+  color: var(--texte-secondaire);
+}

@@ -1,6 +1,7 @@
 # HIT-T Reco — Docker Compose
-# Développement : `docker compose up -d db` suffit tant que backend/ et frontend/
-# n'ont pas encore de Dockerfile. Décommenter les services au fur et à mesure.
+# Développement : `docker compose up -d db`, puis backend (uvicorn) et frontend (npm run dev)
+# en local. `docker compose up -d --build` lance aussi backend et frontend en conteneurs ;
+# nginx (production) reste commenté jusqu'au déploiement (S7).
 
 services:
   db:
@@ -21,26 +22,27 @@ services:
       interval: 5s
       retries: 10
 
-  # backend:
-  #   build: ./backend
-  #   restart: unless-stopped
-  #   env_file: .env
-  #   environment:
-  #     DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-hitt}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-hitt}
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
-  #   ports:
-  #     - "8000:8000"
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-hitt}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-hitt}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
 
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #     args:
-  #       VITE_API_URL: ${VITE_API_URL:-/api/v1}
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - backend
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:-/api/v1}
+        VITE_GOOGLE_CLIENT_ID: ${VITE_GOOGLE_CLIENT_ID:-}
+    restart: unless-stopped
+    depends_on:
+      - backend
 
   # nginx:   # production uniquement
   #   image: nginx:1.27-alpine
