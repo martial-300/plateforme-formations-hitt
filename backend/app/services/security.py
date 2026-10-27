@@ -1,7 +1,9 @@
 """Sécurité (RF-03) : hachage bcrypt, JWT HS256 et dépendances d'accès aux routes."""
 
+import secrets
 import uuid
 from datetime import UTC, datetime, timedelta
+from functools import cache
 from typing import Annotated
 
 import jwt
@@ -24,6 +26,12 @@ _schema_bearer = HTTPBearer(auto_error=False)
 
 def hacher_mot_de_passe(mot_de_passe: str) -> str:
     return _contexte_mdp.hash(mot_de_passe)
+
+
+@cache
+def hash_leurre() -> str:
+    """Hash comparé quand l'email est inconnu : la connexion prend toujours le même temps."""
+    return hacher_mot_de_passe(secrets.token_urlsafe(16))
 
 
 def verifier_mot_de_passe(mot_de_passe: str, mot_de_passe_hash: str | None) -> bool:

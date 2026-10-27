@@ -2,6 +2,7 @@ import os
 from collections.abc import Iterator
 
 import pytest
+from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import OperationalError
@@ -58,3 +59,14 @@ def db(moteur_test: Engine) -> Iterator[Session]:
     session.close()
     transaction.rollback()
     connexion.close()
+
+
+@pytest.fixture
+def client(db: Session) -> Iterator[TestClient]:
+    """Client de l'API dont `get_db` pointe sur la session isolée du test."""
+    from app.database import get_db
+    from app.main import app
+
+    app.dependency_overrides[get_db] = lambda: db
+    yield TestClient(app)
+    app.dependency_overrides.clear()

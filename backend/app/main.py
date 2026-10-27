@@ -8,14 +8,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app import models  # noqa: F401  (enregistre les modèles dans Base.metadata)
 from app.config import parametres
-from app.database import Base, engine
+from app.database import Base, SessionLocal, engine
+from app.routers import auth, users
+from app.services.comptes import creer_admin_si_absent
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     # Pas d'Alembic dans le MVP : les tables manquantes sont créées au démarrage.
-    # Le compte administrateur (ADMIN_*) sera créé ici en S2, avec le modèle Utilisateur.
     Base.metadata.create_all(engine)
+    with SessionLocal() as db:
+        creer_admin_si_absent(db, parametres)
     yield
 
 
@@ -36,5 +39,7 @@ app.add_middleware(
 
 api = APIRouter(prefix="/api/v1")
 # Routers ajoutés au fil des sprints (docs/api.md) : auth, users, formations, profil,
-# recommandations, admin.
+# recommandations, admin. Chacun ajoute ses lignes sans réorganiser celles de l'autre.
+api.include_router(auth.router)
+api.include_router(users.router)
 app.include_router(api)
