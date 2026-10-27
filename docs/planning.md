@@ -20,14 +20,14 @@ Méthode : **Scrum allégé**, sprints d'une semaine, démo aux encadreurs en fi
 
 Deux développeurs, chacun responsable de **fonctionnalités complètes** : API, page, tests et mise à jour de la doc. Les deux travaillent en parallèle sans s'attendre, et chacun présente ses fonctionnalités aux démos.
 
-- **Dev 1** — BenKL404 : comptes et sécurité, administration, aperçu visiteur, déploiement.
-- **Dev 2** — nouveau membre (compte GitHub à ajouter) : catalogue public, questionnaire, moteur de recommandation et son évaluation.
+- **Dev 1** — BenKL404 : comptes et sécurité, administration, aperçu visiteur, déploiement. Issues : label [`dev-1`](https://github.com/martial-300/plateforme-formations-hitt/issues?q=label%3Adev-1).
+- **Dev 2** — TheRossDjickso : catalogue public, questionnaire, moteur de recommandation et son évaluation. Issues : label [`dev-2`](https://github.com/martial-300/plateforme-formations-hitt/issues?q=label%3Adev-2).
 
 Dev 2 commence par le catalogue public, simple et sans authentification, pour prendre en main le dépôt pendant que Dev 1 pose les fondations des comptes.
 
 ### Par sprint
 
-| Sprint | Dev 1 — BenKL404 | Dev 2 |
+| Sprint | Dev 1 — BenKL404 | Dev 2 — TheRossDjickso |
 |---|---|---|
 | S2 | Modèle `Utilisateur` ; `services/security.py` (bcrypt, JWT, `get_current_user`, `require_admin`) ; `/auth/register`, `/auth/login`, `/users/me` ; compte admin créé au démarrage (RF-01 à RF-03) | Modèle `Formation` ; `GET /formations` (filtres `domaine`, `type`) et `GET /formations/{id}` (RF-05) ; prise en main du dépôt et des agents Claude |
 | S3 | `POST/PUT/DELETE /formations` réservés à l'admin (RF-04) ; `/auth/google` (RF-13) ; pages Connexion et Inscription avec le bouton Google | Pages Catalogue (liste, onglets domaine, filtre type) et Détail d'une formation (RF-05), desktop et mobile |
