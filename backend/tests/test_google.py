@@ -3,7 +3,7 @@
 import dataclasses
 
 import pytest
-from google.auth.exceptions import TransportError
+from google.auth.exceptions import GoogleAuthError, TransportError
 from sqlalchemy import select
 
 from app.config import parametres
@@ -206,6 +206,13 @@ def test_verification_email_non_verifie_ou_identite_incomplete(verification, inf
 def test_verification_jeton_rejete_par_google_auth(verification):
     _, resultat = verification
     resultat["valeur"] = ValueError("Token used too late")
+    with pytest.raises(JetonGoogleInvalide):
+        identite_google.verifier_jeton("jeton")
+
+
+def test_verification_mauvais_emetteur_refuse_sans_erreur_500(verification):
+    _, resultat = verification
+    resultat["valeur"] = GoogleAuthError("Wrong issuer")
     with pytest.raises(JetonGoogleInvalide):
         identite_google.verifier_jeton("jeton")
 

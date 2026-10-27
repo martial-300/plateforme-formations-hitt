@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 
-from google.auth.exceptions import TransportError
+from google.auth.exceptions import GoogleAuthError, TransportError
 from google.auth.transport import requests as transport_google
 from google.oauth2 import id_token
 
@@ -40,7 +40,8 @@ def verifier_jeton(jeton: str) -> IdentiteGoogle:
         )
     except TransportError as exc:
         raise ConnexionGoogleIndisponible from exc
-    except ValueError as exc:  # signature, audience, émetteur ou expiration
+    # Un mauvais émetteur (iss) lève GoogleAuthError, qui n'hérite pas de ValueError.
+    except (ValueError, GoogleAuthError) as exc:  # signature, audience, émetteur, expiration
         raise JetonGoogleInvalide from exc
 
     email = (infos.get("email") or "").strip().lower()
