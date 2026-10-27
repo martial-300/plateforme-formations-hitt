@@ -108,7 +108,7 @@ Même format que la réponse de `POST /auth/register` :
 
 ### `GET /formations?domaine=TRIT&type=carte`
 
-Paramètres optionnels : `domaine` (`SISG` | `IA-Data` | `TRIT`), `type` (`carte` | `modulaire`).
+Public. Paramètres optionnels : `domaine` (`SISG` | `IA-Data` | `TRIT`), `type` (`carte` | `modulaire`) ; une autre valeur → `422`. Formations triées par domaine, type puis intitulé ; liste vide si aucune ne correspond.
 
 ```json
 [
@@ -118,7 +118,7 @@ Paramètres optionnels : `domaine` (`SISG` | `IA-Data` | `TRIT`), `type` (`carte
     "description": "Créer des sites web dynamiques avec HTML, CSS et PHP.",
     "domaine": "TRIT",
     "type": "carte",
-    "duree_valeur": 3,
+    "duree_valeur": 3.0,
     "duree_unite": "semaine",
     "cout_fcfa": 125000,
     "cout_promo_fcfa": 120500,
@@ -126,6 +126,12 @@ Paramètres optionnels : `domaine` (`SISG` | `IA-Data` | `TRIT`), `type` (`carte
   }
 ]
 ```
+
+`duree_valeur` est un nombre (`0.5` pour une demi-semaine) ; `cout_promo_fcfa` vaut `null` pour les formations modulaires.
+
+### `GET /formations/{id}`
+
+Public. `200 OK` → une formation, au même format qu'un élément de la liste. `404` « Formation introuvable » si l'id n'existe pas, `422` s'il n'est pas un UUID.
 
 ### `POST /formations` / `PUT /formations/{id}` (admin)
 
@@ -187,7 +193,7 @@ Aperçu pour un visiteur sans compte. Même moteur que `PUT /profil`, mais avec 
 {
   "recommandations": [
     { "rang": 1, "score": 0.48, "mots_cles_communs": ["développement web", "site web", "programmation"],
-      "formation": { "id": "…", "intitule": "Développement de site web avec PHP, HTML, CSS", "domaine": "TRIT", "type": "carte", "duree_valeur": 3, "duree_unite": "semaine", "cout_fcfa": 125000, "cout_promo_fcfa": 120500 } }
+      "formation": { "id": "…", "intitule": "Développement de site web avec PHP, HTML, CSS", "domaine": "TRIT", "type": "carte", "duree_valeur": 3.0, "duree_unite": "semaine", "cout_fcfa": 125000, "cout_promo_fcfa": 120500 } }
   ]
 }
 ```
