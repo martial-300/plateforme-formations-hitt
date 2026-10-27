@@ -31,3 +31,20 @@ Préfixes : `feat`, `fix`, `docs`, `test`, `refactor`, `chore`.
 
 - Python : PEP 8, formatage `black`, lint `ruff`.
 - TypeScript : ESLint + Prettier (configuration Vite par défaut).
+
+## Claude Code
+
+Toute l'équipe travaille avec la même configuration, versionnée dans le dépôt : `CLAUDE.md`, `.claude/settings.json` (permissions, interdictions, hooks), `.claude/rules/`, `.claude/agents/`, `.claude/skills/`.
+
+Mise en place, une fois par poste :
+
+```bash
+uv tool install "graphifyy[sql]==0.9.71"   # appelé par les hooks de .claude/settings.json (paquet « graphifyy », deux y ; [sql] pour lire database/*.sql)
+graphify update .                   # génère graphify-out/ (non versionné)
+graphify hook install               # met le graphe à jour après chaque commit
+```
+
+- Chacun utilise son propre compte GitHub et son propre compte Claude ; pas de compte partagé.
+- Connecteur Figma : chacun connecte son compte Figma dans Claude et doit avoir accès au fichier des maquettes (lien dans `CLAUDE.md`).
+- Pas de `.claude/settings.local.json` ni de réglage personnel qui change le comportement de Claude sur le projet : une modification de la configuration passe par une PR.
+- Une décision prise hors du dépôt (route, nom de champ, choix d'interface) est consignée dans `docs/` ou dans une issue : c'est la seule mémoire partagée par les deux Claude.

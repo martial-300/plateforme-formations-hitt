@@ -28,3 +28,8 @@ Thumbs.db
 deploy/certbot/
 *.sql.gz
 sauvegarde_*.sql
+
+# Claude Code : réglages personnels interdits (seul .claude/settings.json fait foi),
+# graphe graphify régénéré par chacun (voir CONTRIBUTING.md)
+.claude/settings.local.json
+graphify-out/
