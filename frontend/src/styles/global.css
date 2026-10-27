@@ -272,6 +272,11 @@ a {
   background: var(--vert-fonce);
 }
 
+.bouton:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
 .bouton--secondaire {
   color: var(--vert-fonce);
   background: var(--carte);
@@ -545,4 +550,243 @@ a {
 
 .page p {
   color: var(--texte-secondaire);
+}
+
+/* --- Connexion et inscription (écrans 01, 02, 14, 15, M5) --------------------------------- */
+
+.compte {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
+  gap: 96px;
+  align-items: start;
+  padding-top: 56px;
+  padding-bottom: 72px;
+}
+
+.compte__surtitre {
+  margin: 0 0 24px;
+  color: var(--vert-fonce);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.compte__accroche {
+  margin: 0 0 24px;
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.compte__texte {
+  margin: 0 0 24px;
+  color: var(--texte-secondaire);
+}
+
+.compte__etapes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: etape;
+}
+
+.compte__etapes li {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  padding: 18px 0;
+  border-top: 1px solid var(--filet);
+  counter-increment: etape;
+}
+
+.compte__etapes li::before {
+  content: counter(etape);
+  grid-row: span 2;
+  color: var(--vert-fonce);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.compte__etapes strong {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.compte__etapes span {
+  color: var(--texte-secondaire);
+}
+
+.compte__formulaire {
+  padding: 40px;
+  background: var(--carte);
+  border-radius: var(--rayon);
+}
+
+.compte__titre {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--filet);
+}
+
+.compte__titre h1 {
+  margin: 0 0 8px;
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.compte__titre p,
+.compte__bascule {
+  margin: 0;
+  color: var(--texte-secondaire);
+}
+
+.compte__bascule {
+  margin-top: 24px;
+}
+
+.compte__bascule a {
+  font-weight: 600;
+}
+
+.compte__note {
+  margin: 0;
+  color: var(--texte-discret);
+  font-size: 14px;
+}
+
+.bouton-google {
+  display: flex;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.separateur {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 20px;
+  color: var(--texte-discret);
+  font-size: 13px;
+}
+
+.separateur::before,
+.separateur::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--filet);
+}
+
+.formulaire {
+  display: grid;
+  gap: 20px;
+}
+
+.formulaire__ligne {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.champ label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.champ input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--texte);
+  background: var(--carte);
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon);
+}
+
+.champ input:focus {
+  outline: 2px solid var(--vert);
+  outline-offset: -1px;
+}
+
+.champ input[aria-invalid="true"] {
+  border-color: var(--erreur);
+}
+
+.champ__aide,
+.champ__erreur {
+  margin: 6px 0 0;
+  font-size: 13px;
+}
+
+.champ__aide {
+  color: var(--texte-discret);
+}
+
+.champ__erreur {
+  color: var(--erreur);
+}
+
+.alerte {
+  padding: 14px 18px;
+  border-left: 3px solid var(--erreur);
+}
+
+.alerte p {
+  margin: 0;
+  color: var(--texte-secondaire);
+  font-size: 13px;
+}
+
+.alerte .alerte__titre {
+  margin-bottom: 4px;
+  color: var(--erreur);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.alerte .alerte__titre:last-child {
+  margin-bottom: 0;
+}
+
+/* Mobile (M5) : formulaire seul, titre hors de la carte, lien de bascule sous la carte. */
+@media (max-width: 860px) {
+  .compte {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-top: 24px;
+    padding-bottom: 40px;
+  }
+
+  .compte__presentation {
+    display: none;
+  }
+
+  .compte__formulaire {
+    padding: 0;
+    background: none;
+  }
+
+  .compte__titre {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .compte__titre h1 {
+    font-size: 30px;
+  }
+
+  .compte__corps {
+    padding: 20px;
+    background: var(--carte);
+    border-radius: var(--rayon);
+  }
+}
+
+@media (max-width: 420px) {
+  .formulaire__ligne {
+    grid-template-columns: 1fr;
+  }
 }
