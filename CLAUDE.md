@@ -1,6 +1,38 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 HIT-T Reco : MVP de soutenance qui recommande à un apprenant 5 formations du catalogue HIT-T Institute (TF-IDF + cosinus). Stack : FastAPI + SQLAlchemy + Scikit-learn, React 18 + TypeScript + Vite, PostgreSQL 15, Docker Compose. Tout est en français (code métier, docs, commits).
+
+## Commandes
+
+Développement : la base tourne dans Docker, backend et frontend en local. `./lancer.sh` lance les trois d'un coup (charge `.env` : c'est l'utilisateur qui le lance), `./arreter.sh` les arrête (données conservées) ; à la main :
+
+```bash
+docker compose up -d db                     # PostgreSQL + catalogue (86 formations)
+cd backend && uvicorn app.main:app --reload --port 8000   # après `set -a && . ../.env && set +a` (lancé par l'utilisateur, .env n'est pas lu)
+cd frontend && npm run dev                  # http://localhost:5173, API lue dans VITE_API_URL (frontend/.env.local)
+```
+
+Vérifications (à lancer avant chaque commit) :
+
+```bash
+cd backend && black --check . && ruff check . && pytest -q
+cd backend && pytest tests/test_application.py::test_cors_limite_aux_origines_configurees   # un seul test
+cd frontend && npm run lint && npm run build   # ESLint + Prettier, puis tsc -b + build
+```
+
+Évaluation du moteur (une fois écrite) : `cd backend && python -m tests.evaluation.precision_at_5` (protocole dans `docs/evaluation.md`).
+
+## Architecture et pièges
+
+- **Config à l'import** : `app/config.py` instancie `parametres` dès l'import et lève une erreur si `DATABASE_URL` ou `JWT_SECRET` manque, si `JWT_SECRET` fait moins de 32 caractères ou vaut la valeur de `.env.example`, ou si `ADMIN_EMAIL` est rempli avec un `ADMIN_PASSWORD` de moins de 8 caractères, de plus de 72 octets ou égal à celui de `.env.example`. Les tests tournent sans `.env` grâce aux valeurs factices posées dans `tests/conftest.py`.
+- **Tests et base** : `TestClient(app)` sans `with` ne déclenche pas le `lifespan`, donc pas de connexion PostgreSQL. Les tests qui ont besoin d'une base utilisent les fixtures `db` et `client` de `tests/conftest.py` : base jetable `db-test` (`docker compose --profile test up -d db-test`, port 55432), `get_db` surchargé, tout annulé à la fin de chaque test. Le nom de la base doit finir par `_test`, sinon les tests refusent de s'exécuter.
+- **Schéma** : pas d'Alembic ; le `lifespan` fait `Base.metadata.create_all`, puis crée le compte admin `ADMIN_*` s'il n'existe pas. Un modèle ORM n'est pris en compte que s'il est importé dans `app/models/__init__.py` (importé par `main.py`). `database/*.sql` ne s'exécute qu'au premier démarrage du volume `pgdata` : modifier ces fichiers n'a aucun effet sur une base existante sans recréer le volume (action destructrice, à confirmer).
+- **API** : tous les routers sont montés sous `/api/v1` dans `main.py` ; CORS limité à `CORS_ORIGINS`, méthodes GET/POST/PUT/DELETE, en-têtes `Authorization` et `Content-Type` seulement.
+- **Frontend** : tout appel passe par `appelApi` (`src/api/client.ts`) ; le JWT est en `localStorage` (`hitt.jeton`), un 401 le supprime et déclenche la déconnexion via `quandNonAuthentifie` (branché par `ContexteAuth`). Les types de `src/api/types.ts` suivent `docs/api.md`. Pages protégées par `RouteProtegee`.
+- **Docker** : le conteneur frontend n'est joignable que derrière Nginx (production, S7) ; les ports sont publiés sur 127.0.0.1 uniquement.
+- Les routers, services (`security.py`, `recommandation.py`) et pages arrivent sprint par sprint : voir `docs/planning.md` pour savoir ce qui est attendu à quel moment.
 
 ## Références
 
