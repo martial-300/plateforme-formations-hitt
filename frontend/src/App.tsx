@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { FournisseurAuth } from "./auth/ContexteAuth";
 import { RouteProtegee } from "./auth/RouteProtegee";
 import { EnTete } from "./components/EnTete";
+import { PageCatalogue } from "./pages/PageCatalogue";
+import { PageDetailFormation } from "./pages/PageDetailFormation";
 import { PageEnConstruction as Page } from "./pages/PageEnConstruction";
 
 export default function App() {
@@ -10,11 +12,8 @@ export default function App() {
       <FournisseurAuth>
         <EnTete />
         <Routes>
-          <Route path="/" element={<Page titre="Catalogue" exigence="RF-05" sprint="S3" />} />
-          <Route
-            path="/formations/:id"
-            element={<Page titre="Détail d'une formation" exigence="RF-05" sprint="S3" />}
-          />
+          <Route path="/" element={<PageCatalogue />} />
+          <Route path="/formations/:id" element={<PageDetailFormation />} />
           <Route
             path="/essai"
             element={<Page titre="Essayer sans compte" exigence="RF-12" sprint="S5" />}
