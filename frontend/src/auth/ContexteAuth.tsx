@@ -14,9 +14,12 @@ export function FournisseurAuth({ children }: { children: ReactNode }) {
 
   const chargerCompte = useCallback(async () => {
     try {
-      setUtilisateur(await appelApi<Utilisateur>("/users/me"));
+      const compte = await appelApi<Utilisateur>("/users/me");
+      setUtilisateur(compte);
+      return compte;
     } catch {
       deconnecter();
+      return null;
     } finally {
       setChargement(false);
     }
@@ -25,7 +28,7 @@ export function FournisseurAuth({ children }: { children: ReactNode }) {
   const connecter = useCallback(
     async (accessToken: string) => {
       jeton.enregistrer(accessToken);
-      await chargerCompte();
+      return chargerCompte();
     },
     [chargerCompte],
   );

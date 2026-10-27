@@ -2,7 +2,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { FournisseurAuth } from "./auth/ContexteAuth";
 import { RouteProtegee } from "./auth/RouteProtegee";
 import { EnTete } from "./components/EnTete";
+import { PageConnexion } from "./pages/PageConnexion";
 import { PageEnConstruction as Page } from "./pages/PageEnConstruction";
+import { PageInscription } from "./pages/PageInscription";
 
 export default function App() {
   return (
@@ -19,14 +21,8 @@ export default function App() {
             path="/essai"
             element={<Page titre="Essayer sans compte" exigence="RF-12" sprint="S5" />}
           />
-          <Route
-            path="/connexion"
-            element={<Page titre="Connexion" exigence="RF-02, RF-13" sprint="S3" />}
-          />
-          <Route
-            path="/inscription"
-            element={<Page titre="Inscription" exigence="RF-01, RF-13" sprint="S3" />}
-          />
+          <Route path="/connexion" element={<PageConnexion />} />
+          <Route path="/inscription" element={<PageInscription />} />
           <Route
             path="/questionnaire"
             element={
