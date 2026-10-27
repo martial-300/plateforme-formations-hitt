@@ -25,7 +25,10 @@ Au démarrage, l'application crée les tables manquantes (`Base.metadata.create_
 
 ## Tests et style
 
+Les tests utilisent une base PostgreSQL jetable (service `db-test`, port 55432, identifiants de test) ; chaque test est annulé à la fin, la base de développement n'est jamais touchée.
+
 ```bash
+docker compose --profile test up -d db-test         # une fois, depuis la racine du dépôt
 black --check . && ruff check . && pytest -q
 python -m tests.evaluation.precision_at_5    # évaluation du moteur (voir docs/evaluation.md)
 ```
