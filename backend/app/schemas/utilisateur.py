@@ -40,6 +40,14 @@ class JetonSortie(BaseModel):
     token_type: Literal["bearer"] = "bearer"
 
 
+class ConnexionGoogleEntree(BaseModel):
+    id_token: Annotated[str, Field(min_length=1, max_length=4096)]
+
+
+class JetonGoogleSortie(JetonSortie):
+    nouveau_compte: bool
+
+
 class UtilisateurSortie(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

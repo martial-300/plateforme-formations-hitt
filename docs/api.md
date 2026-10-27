@@ -31,10 +31,11 @@ La déconnexion (RF-02) est gérée côté frontend : suppression du JWT stocké
 |---|---|
 | 400 | Données invalides (ex. budget négatif) |
 | 401 | JWT absent, expiré ou invalide ; identifiants incorrects |
-| 403 | Rôle insuffisant (route admin appelée par un apprenant) |
+| 403 | Rôle insuffisant (route admin appelée par un apprenant) ; administrateur sur `/auth/google` |
 | 404 | Ressource introuvable |
 | 409 | Email déjà utilisé |
 | 422 | Erreur de validation Pydantic (format FastAPI) |
+| 503 | Service externe indisponible (connexion Google non configurée ou Google injoignable) |
 
 Format d'erreur : `{"detail": "message"}`.
 
@@ -79,13 +80,20 @@ Le frontend affiche le bouton **Google Identity Services** (« Continuer avec Go
 Le backend :
 
 1. vérifie le jeton auprès de Google (bibliothèque `google-auth`) : signature, `aud` = `GOOGLE_CLIENT_ID`, expiration, `email_verified` = vrai ;
-2. cherche l'utilisateur par `google_id` (champ `sub` du jeton), sinon par email ;
-3. s'il n'existe pas, crée un compte **apprenant** avec `nom` (`family_name`), `prenom` (`given_name`) et `email`, sans mot de passe ;
+2. cherche l'utilisateur par `google_id` (champ `sub` du jeton), sinon par email (en minuscules) ; un compte créé par email est alors **rattaché** à Google et garde son mot de passe ;
+3. s'il n'existe pas, crée un compte **apprenant** avec `nom` (`family_name`), `prenom` (`given_name`) et `email`, sans mot de passe (`nom` et `prenom` vides si Google ne les fournit pas) ;
 4. renvoie un JWT de la plateforme, comme `/auth/login`.
 
-`200 OK` → `{ "access_token": "…", "token_type": "bearer", "nouveau_compte": true }`
+`200 OK` → `{ "access_token": "…", "token_type": "bearer", "nouveau_compte": true }` (`false` pour un compte existant)
 
-`401` si le jeton Google est invalide ou si l'email n'est pas vérifié. Un compte administrateur ne peut pas se connecter par Google (connexion email + mot de passe uniquement).
+| Code | Cas | `detail` |
+|---|---|---|
+| `401` | Jeton Google invalide ou expiré, email non vérifié, ou adresse déjà rattachée à un autre compte Google | « Connexion avec Google refusée » |
+| `403` | Compte administrateur (connexion email + mot de passe uniquement) | « Un administrateur se connecte avec son email et son mot de passe » |
+| `422` | `id_token` absent, vide ou de plus de 4 096 caractères | — |
+| `503` | `GOOGLE_CLIENT_ID` non configuré sur le serveur, ou certificats de Google injoignables | « Connexion avec Google indisponible pour le moment » |
+
+Sans `GOOGLE_CLIENT_ID`, l'API refuse toute connexion Google : `google-auth` ne contrôlerait plus l'audience et accepterait un jeton émis pour un autre site.
 
 ### `GET /users/me`
 
