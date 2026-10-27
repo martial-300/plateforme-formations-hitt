@@ -23,6 +23,24 @@ services:
       interval: 5s
       retries: 10
 
+  # Base jetable pour pytest, en mémoire (tmpfs) : `docker compose --profile test up -d db-test`.
+  # Identifiants de test fixes, non secrets : ne contient jamais de données réelles.
+  db-test:
+    image: postgres:15-alpine
+    profiles: ["test"]
+    environment:
+      POSTGRES_DB: hitt_test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    tmpfs:
+      - /var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:55432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test -d hitt_test"]
+      interval: 2s
+      retries: 15
+
   backend:
     build: ./backend
     restart: unless-stopped
