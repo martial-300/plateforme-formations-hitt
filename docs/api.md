@@ -80,7 +80,7 @@ Le frontend affiche le bouton **Google Identity Services** (« Continuer avec Go
 Le backend :
 
 1. vérifie le jeton auprès de Google (bibliothèque `google-auth`) : signature, `aud` = `GOOGLE_CLIENT_ID`, expiration, `email_verified` = vrai ;
-2. cherche l'utilisateur par `google_id` (champ `sub` du jeton), sinon par email (en minuscules) ; un compte créé par email est alors **rattaché** à Google et garde son mot de passe ;
+2. cherche l'utilisateur par `google_id` (champ `sub` du jeton), sinon par email (en minuscules) ; un compte créé par email est alors **rattaché** à Google et **son mot de passe est supprimé** : l'inscription ne vérifie pas l'adresse, et un mot de passe posé par un tiers lui laisserait l'accès au compte ; la connexion se fait ensuite avec Google uniquement ;
 3. s'il n'existe pas, crée un compte **apprenant** avec `nom` (`family_name`), `prenom` (`given_name`) et `email`, sans mot de passe (`nom` et `prenom` vides si Google ne les fournit pas) ;
 4. renvoie un JWT de la plateforme, comme `/auth/login`.
 

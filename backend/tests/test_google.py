@@ -90,7 +90,19 @@ def test_google_rattache_un_compte_email_existant(client, db, google):
     assert reponse.json()["nouveau_compte"] is False
     db.refresh(compte)
     assert compte.google_id == "g-123"
-    assert compte.mot_de_passe_hash is not None  # la connexion par mot de passe reste possible
+    assert compte.mot_de_passe_hash is None
+
+
+def test_google_rattachement_coupe_l_acces_d_un_tiers_par_mot_de_passe(client, db, google):
+    # Un tiers inscrit l'adresse de la victime avec son propre mot de passe (email non vérifié).
+    inscription = {"nom": "Kossi", "prenom": "Afi", "email": "afi@example.com"}
+    identifiants = {"email": "afi@example.com", "mot_de_passe": "mot-de-passe-du-tiers"}
+    client.post("/api/v1/auth/register", json=inscription | identifiants)
+    assert client.post("/api/v1/auth/login", json=identifiants).status_code == 200
+
+    # La titulaire de l'adresse se connecte avec Google : le mot de passe du tiers ne sert plus.
+    assert connecter_google(client).status_code == 200
+    assert client.post("/api/v1/auth/login", json=identifiants).status_code == 401
 
 
 def test_google_adresse_deja_liee_a_un_autre_compte_google_401(client, db, google):

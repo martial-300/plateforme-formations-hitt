@@ -119,8 +119,11 @@ def connecter_avec_google(
         )
         db.add(utilisateur)
     elif utilisateur.google_id is None:
-        # Compte créé par email : rattaché à Google (email vérifié par Google).
+        # Compte créé par email : rattaché à Google, qui vient de prouver qui possède l'adresse.
+        # L'inscription ne vérifie pas l'email : un mot de passe posé par un tiers avec cette
+        # adresse lui donnerait un accès permanent au compte. Il est donc retiré.
         utilisateur.google_id = identite.google_id
+        utilisateur.mot_de_passe_hash = None
     try:
         db.commit()
     except IntegrityError as exc:  # même compte Google créé au même instant par une autre requête
