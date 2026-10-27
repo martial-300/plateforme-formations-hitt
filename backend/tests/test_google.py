@@ -98,6 +98,7 @@ def test_google_adresse_deja_liee_a_un_autre_compte_google_401(client, db, googl
     reponse = connecter_google(client)
     assert reponse.status_code == 401
     assert reponse.json() == {"detail": "Connexion avec Google refusée"}
+    assert reponse.headers["www-authenticate"] == "Bearer"
 
 
 def test_google_administrateur_refuse_403(client, db, google):

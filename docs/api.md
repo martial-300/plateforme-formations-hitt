@@ -90,6 +90,7 @@ Le backend :
 |---|---|---|
 | `401` | Jeton Google invalide ou expiré, email non vérifié, ou adresse déjà rattachée à un autre compte Google | « Connexion avec Google refusée » |
 | `403` | Compte administrateur (connexion email + mot de passe uniquement) | « Un administrateur se connecte avec son email et son mot de passe » |
+| `409` | Même compte Google créé au même instant par une autre requête (double clic) ; un nouvel essai réussit | « Un compte existe déjà avec cet email » |
 | `422` | `id_token` absent, vide ou de plus de 4 096 caractères | — |
 | `503` | `GOOGLE_CLIENT_ID` non configuré sur le serveur, ou certificats de Google injoignables | « Connexion avec Google indisponible pour le moment » |
 

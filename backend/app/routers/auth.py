@@ -99,7 +99,11 @@ def connecter_avec_google(
         utilisateur = db.scalar(select(Utilisateur).where(Utilisateur.email == identite.email))
         if utilisateur is not None and utilisateur.google_id is not None:
             # Adresse déjà rattachée à un autre compte Google : on ne remplace pas le lien.
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=GOOGLE_REFUSE)
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=GOOGLE_REFUSE,
+                headers={"WWW-Authenticate": "Bearer"},
+            )
     if utilisateur is not None and utilisateur.role == ROLE_ADMINISTRATEUR:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=GOOGLE_ADMIN)
 
