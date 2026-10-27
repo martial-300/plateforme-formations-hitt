@@ -41,3 +41,28 @@ export interface ConnexionGoogle {
 export interface ReponseConnexionGoogle extends ReponseConnexion {
   nouveau_compte: boolean;
 }
+
+export type Domaine = "SISG" | "IA-Data" | "TRIT";
+export type TypeFormation = "carte" | "modulaire";
+export type UniteDuree = "heure" | "jour" | "semaine" | "mois";
+
+/** Élément de GET /formations, réponse de GET /formations/{id} */
+export interface Formation {
+  id: string;
+  intitule: string;
+  description: string;
+  domaine: Domaine;
+  type: TypeFormation;
+  duree_valeur: number;
+  duree_unite: UniteDuree;
+  cout_fcfa: number;
+  /** null pour les formations modulaires */
+  cout_promo_fcfa: number | null;
+  mots_cles: string[];
+}
+
+/** Paramètres optionnels de GET /formations */
+export interface FiltresFormations {
+  domaine?: Domaine;
+  type?: TypeFormation;
+}
