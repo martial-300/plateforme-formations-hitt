@@ -26,8 +26,18 @@ export interface Connexion {
   mot_de_passe: string;
 }
 
-/** Réponse de POST /auth/login (et /auth/google en S3) */
+/** Réponse de POST /auth/login */
 export interface ReponseConnexion {
   access_token: string;
   token_type: "bearer";
+}
+
+/** Corps de POST /auth/google : jeton d'identité reçu de Google Identity Services */
+export interface ConnexionGoogle {
+  id_token: string;
+}
+
+/** Réponse de POST /auth/google */
+export interface ReponseConnexionGoogle extends ReponseConnexion {
+  nouveau_compte: boolean;
 }
