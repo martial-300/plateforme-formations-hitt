@@ -66,3 +66,9 @@ export interface FiltresFormations {
   domaine?: Domaine;
   type?: TypeFormation;
 }
+
+/** Corps de POST /formations et PUT /formations/{id} (administrateur) */
+export type FormationEntree = Omit<Formation, "id" | "cout_promo_fcfa"> & {
+  /** absent ou null pour les formations modulaires ; PUT efface le prix promo s'il est absent */
+  cout_promo_fcfa?: number | null;
+};

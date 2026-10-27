@@ -133,9 +133,27 @@ Public. Paramètres optionnels : `domaine` (`SISG` | `IA-Data` | `TRIT`), `type`
 
 Public. `200 OK` → une formation, au même format qu'un élément de la liste. `404` « Formation introuvable » si l'id n'existe pas, `422` s'il n'est pas un UUID.
 
-### `POST /formations` / `PUT /formations/{id}` (admin)
+### `POST /formations` / `PUT /formations/{id}` / `DELETE /formations/{id}` (admin, RF-04)
 
-Corps : mêmes champs que ci-dessus sans `id`. `POST` → `201`, `PUT` → `200`, `DELETE` → `204`.
+Réservés à l'administrateur : sans jeton `401`, jeton d'apprenant `403`. Le contrôle d'accès passe avant la validation du corps.
+
+Corps de `POST` et `PUT` : mêmes champs que ci-dessus sans `id`. `POST` → `201` avec la formation créée ; `PUT` → `200` avec la formation modifiée ; `DELETE` → `204` sans corps. `404` « Formation introuvable » si l'id n'existe pas (`PUT`, `DELETE`).
+
+`PUT` remplace **tous** les champs : un `cout_promo_fcfa` absent du corps est effacé.
+
+Règles de validation (sinon `422`) :
+
+| Champ | Règle |
+|---|---|
+| `intitule` | 1 à 200 caractères (espaces de début et de fin retirés) |
+| `description` | non vide |
+| `domaine`, `type`, `duree_unite` | valeurs fermées ci-dessus |
+| `duree_valeur` | de 0,1 à 999,9, une décimale au plus |
+| `cout_fcfa` | entier strictement positif |
+| `cout_promo_fcfa` | facultatif ; interdit (`null`) pour une formation modulaire ; sinon entier positif inférieur à `cout_fcfa` |
+| `mots_cles` | 1 à 20 mots de 100 caractères au plus, enregistrés en minuscules et sans doublon |
+
+`DELETE` supprime aussi les recommandations de cette formation (`ON DELETE CASCADE` en base).
 
 ## Profil et recommandations
 
