@@ -6,7 +6,7 @@ HIT-T Reco : MVP de soutenance qui recommande à un apprenant 5 formations du ca
 
 ## Commandes
 
-Développement : la base tourne dans Docker, backend et frontend en local.
+Développement : la base tourne dans Docker, backend et frontend en local. `./lancer.sh` lance les trois d'un coup (charge `.env` : c'est l'utilisateur qui le lance), `./arreter.sh` les arrête (données conservées) ; à la main :
 
 ```bash
 docker compose up -d db                     # PostgreSQL + catalogue (86 formations)
