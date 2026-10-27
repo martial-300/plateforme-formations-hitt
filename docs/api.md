@@ -46,7 +46,13 @@ Format d'erreur : `{"detail": "message"}`.
 { "nom": "Kossi", "prenom": "Afi", "email": "afi@example.com", "mot_de_passe": "••••••••" }
 ```
 
-`201 Created` → l'utilisateur créé (sans hash), rôle forcé à `apprenant`.
+`201 Created` → l'utilisateur créé (sans hash), rôle forcé à `apprenant` :
+
+```json
+{ "id": "…", "nom": "Kossi", "prenom": "Afi", "email": "afi@example.com", "role": "apprenant", "date_creation": "2026-11-02T10:15:00" }
+```
+
+`nom` et `prenom` : 1 à 100 caractères (espaces de début et de fin retirés). Mot de passe de 8 caractères minimum et 72 octets maximum (limite de bcrypt). Sinon `422`. L'email est enregistré en minuscules : `Afi@Example.com` et `afi@example.com` désignent le même compte (`409` si déjà utilisé).
 
 ### `POST /auth/login`
 
@@ -59,6 +65,8 @@ Format d'erreur : `{"detail": "message"}`.
 ```json
 { "access_token": "eyJhbGciOi...", "token_type": "bearer" }
 ```
+
+`401` avec le même message (« Email ou mot de passe incorrect ») pour un email inconnu, un mauvais mot de passe ou un compte créé avec Google : la réponse ne révèle pas si l'adresse existe.
 
 ### `POST /auth/google` (RF-13)
 
@@ -80,6 +88,8 @@ Le backend :
 `401` si le jeton Google est invalide ou si l'email n'est pas vérifié. Un compte administrateur ne peut pas se connecter par Google (connexion email + mot de passe uniquement).
 
 ### `GET /users/me`
+
+Même format que la réponse de `POST /auth/register` :
 
 ```json
 { "id": "…", "nom": "Kossi", "prenom": "Afi", "email": "afi@example.com", "role": "apprenant", "date_creation": "2026-11-02T10:15:00" }
