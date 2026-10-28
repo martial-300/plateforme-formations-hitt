@@ -67,6 +67,19 @@ def recommander(profil, formations, k=5):
 | Doublon « Initiation Informatique » (SISG et TRIT) | Ne garder qu'une occurrence par intitulé dans le top 5 |
 | `niveau_etudes` | Collecté mais non utilisé pour le score (même niveau d'admission partout) |
 
+## Implémentation
+
+`backend/app/services/recommandation.py`, fonction pure sans base :
+
+```python
+recommander(profil, formations, k=5) -> list[Resultat]  # Resultat(formation, score, mots_cles_communs)
+```
+
+- `profil` : tout objet avec `competences`, `centres_interet`, `objectif_professionnel` (vides ou `None` acceptés), `type_souhaite` et `budget_max_fcfa`.
+- `formations` : les formations ORM lues en base (ou tout objet avec les mêmes attributs).
+- Les choix par défaut du tableau ci-dessus sont appliqués. Un mot-clé est « commun » s'il apparaît en mots entiers dans le texte du profil, sans tenir compte des accents ni de la casse.
+- À score égal, l'ordre de la liste `formations` est conservé ; un intitulé en double garde son meilleur score.
+
 ## Aperçu pour les visiteurs (RF-12)
 
 Même fonction `recommander`, appelée avec :
