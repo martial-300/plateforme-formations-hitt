@@ -30,13 +30,14 @@ VITE_API_URL=http://localhost:8000/api/v1
 
 ## Pages
 
-| Route                        | Page                                       | Accès          |
-| ---------------------------- | ------------------------------------------ | -------------- |
-| `/connexion`, `/inscription` | Connexion / Inscription                    | Public         |
-| `/` , `/formations/:id`      | Catalogue + détail                         | Public         |
-| `/essai`                     | Essayer sans compte (aperçu, RF-12)        | Public         |
-| `/questionnaire`             | Questionnaire                              | Apprenant      |
-| `/recommandations`           | Mes recommandations                        | Apprenant      |
-| `/admin`                     | Administration (catalogue + chiffres clés) | Administrateur |
+| Route                            | Page                                       | Accès          |
+| -------------------------------- | ------------------------------------------ | -------------- |
+| `/connexion`, `/inscription`     | Connexion / Inscription                    | Public         |
+| `/`                              | Accueil (écran 09)                         | Public         |
+| `/formations`, `/formations/:id` | Catalogue (filtre `?domaine=`) + détail    | Public         |
+| `/essai`                         | Essayer sans compte (aperçu, RF-12)        | Public         |
+| `/questionnaire`                 | Questionnaire                              | Apprenant      |
+| `/recommandations`               | Mes recommandations                        | Apprenant      |
+| `/admin`                         | Administration (catalogue + chiffres clés) | Administrateur |
 
 Interface responsive (ordinateur et mobile). Le JWT est conservé côté client ; la déconnexion le supprime.

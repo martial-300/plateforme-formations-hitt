@@ -114,7 +114,7 @@ export function PageCatalogue() {
             formations les plus proches de votre profil. Un conseiller du cabinet peut aussi vous
             aider.
           </p>
-          <Link to="/questionnaire" className="bouton bouton--contour">
+          <Link to="/questionnaire" className="bouton bouton--secondaire">
             Répondre au questionnaire
           </Link>
         </aside>
@@ -167,7 +167,7 @@ export function PageCatalogue() {
       {etat.statut === "erreur" && (
         <div className="catalogue__message" role="alert">
           <p>Le catalogue n'a pas pu être chargé : {etat.message}</p>
-          <button type="button" className="bouton bouton--contour" onClick={reessayer}>
+          <button type="button" className="bouton bouton--secondaire" onClick={reessayer}>
             Réessayer
           </button>
         </div>
@@ -178,7 +178,7 @@ export function PageCatalogue() {
           <p>Aucune formation ne correspond à ces filtres.</p>
           <button
             type="button"
-            className="bouton bouton--contour"
+            className="bouton bouton--secondaire"
             onClick={() => changerFiltres({ domaine: null, type: null })}
           >
             Voir toutes les formations
@@ -203,7 +203,7 @@ export function PageCatalogue() {
                   className="ligne-formation"
                 >
                   <span className="ligne-formation__domaine">
-                    <span className="sur-titre">{DOMAINE_COURT[f.domaine]}</span>
+                    <span className="surtitre">{DOMAINE_COURT[f.domaine]}</span>
                     <span className="ligne-formation__type">{TYPE_COURT[f.type]}</span>
                   </span>
                   <span className="ligne-formation__texte">
@@ -226,7 +226,7 @@ export function PageCatalogue() {
             nombreMobile < filtrees.length && (
               <button
                 type="button"
-                className="bouton bouton--contour bouton--large"
+                className="bouton bouton--secondaire bouton--large"
                 onClick={() => setPlus({ cle: cleFiltres, nombre: nombreMobile + PAR_PAGE })}
               >
                 Afficher plus de formations
@@ -241,7 +241,7 @@ export function PageCatalogue() {
                 <div className="pagination__boutons">
                   <button
                     type="button"
-                    className="bouton bouton--contour"
+                    className="bouton bouton--secondaire"
                     disabled={pageCourante === 1}
                     onClick={() => changerPage(pageCourante - 1)}
                   >
@@ -249,7 +249,7 @@ export function PageCatalogue() {
                   </button>
                   <button
                     type="button"
-                    className="bouton bouton--contour"
+                    className="bouton bouton--secondaire"
                     disabled={pageCourante === nbPages}
                     onClick={() => changerPage(pageCourante + 1)}
                   >

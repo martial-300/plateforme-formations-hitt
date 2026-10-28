@@ -29,7 +29,7 @@ export function PageDetailFormation() {
 
   // Venu du catalogue : le retour garde l'onglet, le filtre et la page.
   const recherche = (location.state as { catalogue?: string } | null)?.catalogue ?? "";
-  const retour = `/${recherche}`;
+  const retour = `/formations${recherche}`;
 
   useEffect(() => {
     let actif = true;
@@ -89,7 +89,7 @@ export function PageDetailFormation() {
         <p>La formation n'a pas pu être chargée : {courant.message}</p>
         <button
           type="button"
-          className="bouton bouton--contour"
+          className="bouton bouton--secondaire"
           onClick={() => {
             setEtat({ statut: "chargement", id });
             setEssai((n) => n + 1);
@@ -114,10 +114,12 @@ export function PageDetailFormation() {
         <div className="detail__contenu">
           <nav className="fil-ariane" aria-label="Fil d'Ariane">
             <Link to="/">Accueil</Link> / <Link to={retour}>Catalogue</Link> /{" "}
-            <Link to={`/?domaine=${formation.domaine}`}>{DOMAINE_COURT[formation.domaine]}</Link>
+            <Link to={`/formations?domaine=${formation.domaine}`}>
+              {DOMAINE_COURT[formation.domaine]}
+            </Link>
           </nav>
           <p className="detail__sur-titre">
-            <span className="sur-titre">{DOMAINE_COURT[formation.domaine]}</span>
+            <span className="surtitre">{DOMAINE_COURT[formation.domaine]}</span>
             <span>{modulaire ? "Parcours modulaire certifiant" : "À la carte"}</span>
           </p>
           <h1>{formation.intitule}</h1>

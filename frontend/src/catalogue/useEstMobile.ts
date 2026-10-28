@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from "react";
 
 // Même seuil que les règles @media de global.css.
-const REQUETE = "(max-width: 720px)";
+const REQUETE = "(max-width: 860px)";
 
 function abonner(rappel: () => void) {
   const media = window.matchMedia(REQUETE);

@@ -41,9 +41,20 @@ a {
   padding: 0 16px;
 }
 
-.en-tete {
+.application {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.application > main {
+  flex: 1;
+}
+
+/* --- En-tête (écrans 06, 07, 09) et menu mobile (M6) -------------------------------------- */
+
+.en-tete__haut {
   background: var(--carte);
-  border-bottom: 1px solid var(--filet);
 }
 
 .en-tete__barre {
@@ -51,30 +62,482 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  min-height: 64px;
+  min-height: 72px;
 }
 
-.en-tete__logo img {
+.en-tete__identite {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--texte);
+  text-decoration: none;
+}
+
+.en-tete__identite img {
   display: block;
-  height: 36px;
+  height: 44px;
+}
+
+.en-tete__identite span {
+  display: flex;
+  flex-direction: column;
+  padding-left: 16px;
+  border-left: 1px solid var(--filet);
+  line-height: 1.3;
+}
+
+.en-tete__identite strong {
+  font-size: 18px;
+}
+
+.en-tete__identite small,
+.en-tete__compte small {
+  color: var(--texte-secondaire);
+  font-size: 13px;
+}
+
+.en-tete__actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.en-tete__connexion {
+  font-weight: 600;
+}
+
+.en-tete__compte {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.3;
+}
+
+.lien-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--vert-fonce);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.en-tete__menu {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--vert-fonce);
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
 
 .en-tete__nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  background: var(--vert-fonce);
 }
 
-.en-tete__nav a {
-  padding: 20px 0 17px;
-  color: var(--texte);
+.en-tete__liens {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.en-tete__liens a {
+  display: block;
+  padding: 15px 18px 12px;
+  color: var(--carte);
+  font-size: 15px;
+  font-weight: 600;
   text-decoration: none;
   border-bottom: 3px solid transparent;
 }
 
-.en-tete__nav a.active {
+.en-tete__liens li:first-child a {
+  padding-left: 0;
+}
+
+.en-tete__liens a.active {
   border-bottom-color: var(--onglet-actif);
+}
+
+.en-tete__liens li:first-child a.active {
+  padding-left: 0;
+}
+
+.en-tete__rubrique {
+  display: none;
+  margin: 0;
+  padding: 12px 0;
+  color: var(--carte);
   font-weight: 600;
+}
+
+.menu-mobile {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow-y: auto;
+  background: var(--carte);
+}
+
+.menu-mobile__liens {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-mobile__liens a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  color: var(--texte);
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid var(--filet);
+}
+
+.menu-mobile__liens a.active {
+  padding-left: 16px;
+  color: var(--vert-fonce);
+  box-shadow: inset 4px 0 0 var(--onglet-actif);
+}
+
+.menu-mobile__compte {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 0;
+}
+
+.menu-mobile__compte .en-tete__compte {
+  align-items: flex-start;
+}
+
+@media (max-width: 860px) {
+  .en-tete__barre {
+    min-height: 58px;
+  }
+
+  .en-tete__identite img {
+    height: 36px;
+  }
+
+  .en-tete__identite span {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .en-tete__identite small,
+  .en-tete__actions,
+  .en-tete__liens {
+    display: none;
+  }
+
+  .en-tete__menu,
+  .en-tete__rubrique {
+    display: flex;
+  }
+}
+
+/* --- Boutons ------------------------------------------------------------------------------ */
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 20px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--carte);
+  text-decoration: none;
+  background: var(--vert);
+  border: 1px solid var(--vert);
+  border-radius: var(--rayon);
+  cursor: pointer;
+}
+
+.bouton:hover {
+  background: var(--vert-fonce);
+}
+
+.bouton:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.bouton--secondaire {
+  color: var(--vert-fonce);
+  background: var(--carte);
+}
+
+.bouton--secondaire:hover {
+  background: var(--fond);
+}
+
+.surtitre {
+  margin: 0 0 12px;
+  color: var(--vert-fonce);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* --- Accueil (écran 09) ------------------------------------------------------------------- */
+
+.accueil {
+  padding: 56px 0 72px;
+}
+
+.accueil h1 {
+  margin: 0 0 20px;
+  font-size: 38px;
+  line-height: 1.25;
+}
+
+.accueil h2 {
+  margin: 0 0 24px;
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+.accueil h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.accueil__texte {
+  margin: 0 0 24px;
+  color: var(--texte-secondaire);
+  font-size: 17px;
+}
+
+.accueil__entree {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: 72px;
+  align-items: start;
+}
+
+.accueil__boutons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.accueil__section {
+  margin-top: 64px;
+}
+
+.chiffres {
+  margin: 0;
+  padding: 16px 32px;
+  background: var(--carte);
+  border-radius: var(--rayon);
+}
+
+.chiffres div {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.chiffres div + div {
+  border-top: 1px solid var(--filet);
+}
+
+.chiffres dt {
+  color: var(--vert-fonce);
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.chiffres dd {
+  margin: 0;
+  color: var(--texte-secondaire);
+}
+
+.domaines {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.domaine {
+  padding: 28px;
+  background: var(--carte);
+  border-radius: var(--rayon);
+}
+
+.domaine__compte {
+  margin: 0 0 12px;
+  color: var(--texte-discret);
+  font-size: 13px;
+}
+
+.domaine__exemples {
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.domaine__exemples li::before {
+  content: "— ";
+}
+
+.domaine a {
+  font-weight: 600;
+}
+
+.fonctionnement {
+  display: grid;
+  grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+  gap: 64px;
+  align-items: start;
+}
+
+.fonctionnement__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 24px;
+  border-radius: var(--rayon);
+}
+
+.etapes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: etape;
+}
+
+.etapes li {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  padding: 18px 0;
+  border-top: 1px solid var(--filet);
+  counter-increment: etape;
+}
+
+.etapes li::before {
+  content: counter(etape);
+  grid-row: span 2;
+  color: var(--vert-fonce);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.etapes strong {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.etapes span {
+  color: var(--texte-secondaire);
+}
+
+@media (max-width: 860px) {
+  .accueil {
+    padding: 32px 0 48px;
+  }
+
+  .accueil h1 {
+    font-size: 30px;
+  }
+
+  .accueil__entree,
+  .domaines,
+  .fonctionnement {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .accueil__section {
+    margin-top: 48px;
+  }
+}
+
+/* --- Pied de page ------------------------------------------------------------------------- */
+
+.pied {
+  padding: 40px 0 24px;
+  color: var(--carte);
+  background: var(--vert-tres-fonce);
+}
+
+.pied p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.pied ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.pied a {
+  color: var(--carte);
+  text-decoration: none;
+}
+
+.pied a:hover {
+  text-decoration: underline;
+}
+
+.pied__colonnes {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--vert-fonce);
+}
+
+.pied__nom {
+  margin-bottom: 4px !important;
+  font-size: 18px !important;
+  font-weight: 700;
+}
+
+.pied__titre {
+  margin-bottom: 8px !important;
+  font-size: 12px !important;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pied__copyright {
+  padding-top: 20px;
+}
+
+@media (max-width: 860px) {
+  .pied__colonnes {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 
 .page {
@@ -90,7 +553,246 @@ a {
   color: var(--texte-secondaire);
 }
 
-/* --- Éléments communs ------------------------------------------------------------------------ */
+/* --- Connexion et inscription (écrans 01, 02, 14, 15, M5) --------------------------------- */
+
+.compte {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
+  gap: 96px;
+  align-items: start;
+  padding-top: 56px;
+  padding-bottom: 72px;
+}
+
+.compte__surtitre {
+  margin: 0 0 24px;
+  color: var(--vert-fonce);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.compte__accroche {
+  margin: 0 0 24px;
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.compte__texte {
+  margin: 0 0 24px;
+  color: var(--texte-secondaire);
+}
+
+.compte__etapes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: etape;
+}
+
+.compte__etapes li {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  padding: 18px 0;
+  border-top: 1px solid var(--filet);
+  counter-increment: etape;
+}
+
+.compte__etapes li::before {
+  content: counter(etape);
+  grid-row: span 2;
+  color: var(--vert-fonce);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.compte__etapes strong {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.compte__etapes span {
+  color: var(--texte-secondaire);
+}
+
+.compte__formulaire {
+  padding: 40px;
+  background: var(--carte);
+  border-radius: var(--rayon);
+}
+
+.compte__titre {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--filet);
+}
+
+.compte__titre h1 {
+  margin: 0 0 8px;
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.compte__titre p,
+.compte__bascule {
+  margin: 0;
+  color: var(--texte-secondaire);
+}
+
+.compte__bascule {
+  margin-top: 24px;
+}
+
+.compte__bascule a {
+  font-weight: 600;
+}
+
+.compte__note {
+  margin: 0;
+  color: var(--texte-discret);
+  font-size: 14px;
+}
+
+.bouton-google {
+  display: flex;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.separateur {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 20px;
+  color: var(--texte-discret);
+  font-size: 13px;
+}
+
+.separateur::before,
+.separateur::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--filet);
+}
+
+.formulaire {
+  display: grid;
+  gap: 20px;
+}
+
+.formulaire__ligne {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.champ label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.champ input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--texte);
+  background: var(--carte);
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon);
+}
+
+.champ input:focus {
+  outline: 2px solid var(--vert);
+  outline-offset: -1px;
+}
+
+.champ input[aria-invalid="true"] {
+  border-color: var(--erreur);
+}
+
+.champ__aide,
+.champ__erreur {
+  margin: 6px 0 0;
+  font-size: 13px;
+}
+
+.champ__aide {
+  color: var(--texte-discret);
+}
+
+.champ__erreur {
+  color: var(--erreur);
+}
+
+.alerte {
+  padding: 14px 18px;
+  border-left: 3px solid var(--erreur);
+}
+
+.alerte p {
+  margin: 0;
+  color: var(--texte-secondaire);
+  font-size: 13px;
+}
+
+.alerte .alerte__titre {
+  margin-bottom: 4px;
+  color: var(--erreur);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.alerte .alerte__titre:last-child {
+  margin-bottom: 0;
+}
+
+/* Mobile (M5) : formulaire seul, titre hors de la carte, lien de bascule sous la carte. */
+@media (max-width: 860px) {
+  .compte {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-top: 24px;
+    padding-bottom: 40px;
+  }
+
+  .compte__presentation {
+    display: none;
+  }
+
+  .compte__formulaire {
+    padding: 0;
+    background: none;
+  }
+
+  .compte__titre {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .compte__titre h1 {
+    font-size: 30px;
+  }
+
+  .compte__corps {
+    padding: 20px;
+    background: var(--carte);
+    border-radius: var(--rayon);
+  }
+}
+
+@media (max-width: 420px) {
+  .formulaire__ligne {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Éléments communs au catalogue et au détail ----------------------------------------------- */
 
 .visuellement-masque {
   position: absolute;
@@ -99,43 +801,6 @@ a {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
-}
-
-.bouton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 10px 20px;
-  border: 1px solid var(--vert);
-  border-radius: var(--rayon);
-  background: var(--vert);
-  color: var(--carte);
-  font: inherit;
-  font-weight: 600;
-  font-size: 15px;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.bouton:hover {
-  background: var(--vert-fonce);
-}
-
-.bouton--contour {
-  background: var(--carte);
-  color: var(--vert-fonce);
-}
-
-.bouton--contour:hover {
-  background: var(--fond);
-}
-
-.bouton:disabled {
-  border-color: var(--filet);
-  background: var(--carte);
-  color: var(--texte-discret);
-  cursor: default;
 }
 
 .bouton--large {
@@ -163,14 +828,6 @@ a {
 
 .fil-ariane a:hover {
   text-decoration: underline;
-}
-
-.sur-titre {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--vert-fonce);
 }
 
 .champ {
@@ -422,6 +1079,16 @@ a {
   gap: 12px;
 }
 
+.pagination__boutons .bouton:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.ligne-formation .surtitre,
+.detail__sur-titre .surtitre {
+  margin: 0;
+}
+
 .catalogue > .bouton--large {
   margin-top: 24px;
 }
@@ -568,7 +1235,7 @@ a {
 
 /* --- Écran moyen : colonnes resserrées ------------------------------------------------------- */
 
-@media (max-width: 1023px) and (min-width: 721px) {
+@media (max-width: 1023px) and (min-width: 861px) {
   .catalogue__intro,
   .detail__grille {
     grid-template-columns: 1fr 300px;
@@ -586,7 +1253,7 @@ a {
 
 /* --- Mobile (390 px, maquettes M1 et M4) ------------------------------------------------------ */
 
-@media (max-width: 720px) {
+@media (max-width: 860px) {
   .catalogue,
   .detail {
     padding-top: 24px;
