@@ -4,7 +4,9 @@ import { RouteProtegee } from "./auth/RouteProtegee";
 import { EnTete } from "./components/EnTete";
 import { PiedDePage } from "./components/PiedDePage";
 import { PageAccueil } from "./pages/PageAccueil";
+import { PageCatalogue } from "./pages/PageCatalogue";
 import { PageConnexion } from "./pages/PageConnexion";
+import { PageDetailFormation } from "./pages/PageDetailFormation";
 import { PageEnConstruction as Page } from "./pages/PageEnConstruction";
 import { PageInscription } from "./pages/PageInscription";
 
@@ -16,14 +18,8 @@ export default function App() {
           <EnTete />
           <Routes>
             <Route path="/" element={<PageAccueil />} />
-            <Route
-              path="/formations"
-              element={<Page titre="Catalogue des formations" exigence="RF-05" sprint="S3" />}
-            />
-            <Route
-              path="/formations/:id"
-              element={<Page titre="Détail d'une formation" exigence="RF-05" sprint="S3" />}
-            />
+            <Route path="/formations" element={<PageCatalogue />} />
+            <Route path="/formations/:id" element={<PageDetailFormation />} />
             <Route
               path="/essai"
               element={<Page titre="Essayer sans compte" exigence="RF-12" sprint="S5" />}

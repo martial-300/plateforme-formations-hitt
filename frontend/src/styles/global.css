@@ -7,6 +7,7 @@
   --texte-secondaire: #4a4844;
   --texte-discret: #6e6a62;
   --filet: #dcd7cc;
+  --fond-sourd: #efece4;
   --vert: #1a8559;
   --vert-fonce: #146b47;
   --vert-tres-fonce: #0f5236;
@@ -788,5 +789,590 @@ a {
 @media (max-width: 420px) {
   .formulaire__ligne {
     grid-template-columns: 1fr;
+  }
+}
+
+/* --- Éléments communs au catalogue et au détail ----------------------------------------------- */
+
+.visuellement-masque {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.bouton--large {
+  width: 100%;
+}
+
+.bouton:focus-visible,
+.onglets__onglet:focus-visible,
+.ligne-formation:focus-visible,
+.champ__saisie:focus-visible {
+  outline: 2px solid var(--vert);
+  outline-offset: 2px;
+}
+
+.fil-ariane {
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--texte-discret);
+}
+
+.fil-ariane a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.fil-ariane a:hover {
+  text-decoration: underline;
+}
+
+.champ {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.champ__libelle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.champ__saisie {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--filet);
+  border-radius: var(--rayon);
+  background: var(--carte);
+  color: var(--texte);
+  font: inherit;
+}
+
+/* Prix : orange réservé au prix promo, ancien prix barré. */
+.prix {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.prix__ancien {
+  font-size: 13px;
+  color: var(--texte-discret);
+}
+
+.prix__montant {
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.prix__montant--promo {
+  color: var(--promo);
+}
+
+.prix--grand {
+  align-items: flex-start;
+}
+
+.prix--grand .prix__ancien {
+  font-size: 15px;
+}
+
+.prix--grand .prix__montant {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* --- Catalogue (RF-05, maquettes 03 et M1) --------------------------------------------------- */
+
+.catalogue {
+  padding: 40px 16px 64px;
+}
+
+.catalogue__intro {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 48px;
+  align-items: end;
+}
+
+.catalogue h1 {
+  margin: 0 0 12px;
+  font-size: 40px;
+  line-height: 1.15;
+}
+
+.catalogue__chapo {
+  margin: 0;
+  font-size: 18px;
+  color: var(--texte-secondaire);
+}
+
+.encart {
+  padding: 16px 20px 20px;
+  border-left: 4px solid var(--vert);
+  background: var(--carte);
+}
+
+.encart__illustration {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+.encart h2 {
+  margin: 0 0 8px;
+  font-size: 17px;
+}
+
+.encart p {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: var(--texte-secondaire);
+}
+
+.catalogue__filtres {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 40px 0 32px;
+  border-bottom: 1px solid var(--filet);
+  scroll-margin-top: 16px;
+}
+
+.onglets {
+  display: flex;
+  gap: 24px;
+}
+
+.onglets__onglet {
+  padding: 8px 2px 10px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: var(--texte-discret);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.onglets__onglet[aria-pressed="true"] {
+  border-bottom-color: var(--onglet-actif);
+  color: var(--texte);
+}
+
+.catalogue__type {
+  width: 240px;
+  margin-bottom: 10px;
+}
+
+.catalogue__message {
+  padding: 32px 0;
+  color: var(--texte-secondaire);
+}
+
+.catalogue__message p {
+  margin: 0 0 16px;
+}
+
+.liste-formations__entete,
+.ligne-formation {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr) 140px 150px 24px;
+  gap: 24px;
+  padding: 0 24px;
+}
+
+.liste-formations__entete {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background: var(--fond-sourd);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texte-secondaire);
+}
+
+.liste-formations__tarif {
+  text-align: right;
+}
+
+.liste-formations {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--carte);
+}
+
+.liste-formations li + li {
+  border-top: 1px solid var(--filet);
+}
+
+.ligne-formation {
+  padding-top: 22px;
+  padding-bottom: 22px;
+  color: var(--texte);
+  text-decoration: none;
+}
+
+.ligne-formation:hover .ligne-formation__intitule {
+  color: var(--vert-fonce);
+  text-decoration: underline;
+}
+
+.ligne-formation__domaine,
+.ligne-formation__texte {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ligne-formation__type,
+.ligne-formation__description {
+  font-size: 13px;
+  color: var(--texte-secondaire);
+}
+
+.ligne-formation__intitule {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.ligne-formation__duree {
+  font-weight: 600;
+}
+
+.ligne-formation__tarif {
+  text-align: right;
+}
+
+.ligne-formation__chevron {
+  font-size: 22px;
+  line-height: 1;
+  color: var(--vert);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 32px;
+  font-size: 13px;
+  color: var(--texte-discret);
+}
+
+.pagination p {
+  margin: 0;
+}
+
+.pagination__boutons {
+  display: flex;
+  gap: 12px;
+}
+
+.pagination__boutons .bouton:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.ligne-formation .surtitre,
+.detail__sur-titre .surtitre {
+  margin: 0;
+}
+
+.catalogue > .bouton--large {
+  margin-top: 24px;
+}
+
+/* --- Détail d'une formation (RF-05, maquettes 04, 11 et M4) ---------------------------------- */
+
+.detail {
+  padding: 40px 16px 64px;
+}
+
+.detail__grille {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  grid-template-areas:
+    "contenu tarif"
+    "infos tarif";
+  column-gap: 64px;
+  align-items: start;
+}
+
+.detail__contenu {
+  grid-area: contenu;
+}
+
+.detail__infos {
+  grid-area: infos;
+}
+
+.tarif {
+  grid-area: tarif;
+}
+
+.detail__sur-titre {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--texte-secondaire);
+}
+
+.detail h1 {
+  margin: 0 0 16px;
+  font-size: 40px;
+  line-height: 1.2;
+}
+
+.detail__description {
+  margin: 0;
+  font-size: 18px;
+  color: var(--texte-secondaire);
+}
+
+.detail__infos h2 {
+  margin: 40px 0 16px;
+  font-size: 22px;
+}
+
+.infos {
+  margin: 0;
+}
+
+.infos div {
+  display: grid;
+  grid-template-columns: 224px 1fr;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--filet);
+}
+
+.infos dt {
+  font-weight: 600;
+}
+
+.infos dd {
+  margin: 0;
+  color: var(--texte-secondaire);
+}
+
+.mots-cles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--texte-secondaire);
+}
+
+.mots-cles li {
+  border-bottom: 1px solid var(--texte-discret);
+}
+
+.tarif {
+  padding: 28px;
+  background: var(--carte);
+}
+
+.tarif__titre {
+  margin: 0 0 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texte-secondaire);
+}
+
+.tarif__legende {
+  margin: 4px 0 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--filet);
+  font-size: 13px;
+  color: var(--texte-secondaire);
+}
+
+.tarif__texte {
+  margin: 20px 0;
+  font-size: 13px;
+  color: var(--texte-secondaire);
+}
+
+.tarif__retour {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.detail__retour-mobile {
+  display: none;
+}
+
+.detail--vide {
+  max-width: 520px;
+  text-align: center;
+}
+
+.detail__illustration {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+}
+
+/* --- Écran moyen : colonnes resserrées ------------------------------------------------------- */
+
+@media (max-width: 1023px) and (min-width: 861px) {
+  .catalogue__intro,
+  .detail__grille {
+    grid-template-columns: 1fr 300px;
+    column-gap: 32px;
+  }
+
+  .liste-formations__entete,
+  .ligne-formation {
+    grid-template-columns: 96px minmax(0, 1fr) 96px 120px 12px;
+    gap: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* --- Mobile (390 px, maquettes M1 et M4) ------------------------------------------------------ */
+
+@media (max-width: 860px) {
+  .catalogue,
+  .detail {
+    padding-top: 24px;
+  }
+
+  .catalogue__intro {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .catalogue h1,
+  .detail h1 {
+    font-size: 30px;
+  }
+
+  .catalogue__chapo,
+  .detail__description {
+    font-size: 16px;
+  }
+
+  .catalogue .fil-ariane,
+  .detail .fil-ariane {
+    display: none;
+  }
+
+  .catalogue__filtres {
+    flex-direction: column;
+    align-items: stretch;
+    margin: 32px 0 20px;
+    border-bottom: 0;
+  }
+
+  .onglets {
+    border-bottom: 1px solid var(--filet);
+  }
+
+  .catalogue__type {
+    width: auto;
+    margin-bottom: 0;
+  }
+
+  .liste-formations__entete {
+    display: none;
+  }
+
+  .ligne-formation {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "domaine domaine"
+      "texte texte"
+      "duree tarif";
+    gap: 8px;
+    padding: 18px 16px;
+  }
+
+  .ligne-formation__domaine {
+    grid-area: domaine;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .ligne-formation__texte {
+    grid-area: texte;
+  }
+
+  .ligne-formation__duree {
+    grid-area: duree;
+    align-self: end;
+    font-size: 14px;
+  }
+
+  .ligne-formation__tarif {
+    grid-area: tarif;
+  }
+
+  .ligne-formation .prix {
+    flex-direction: row;
+    gap: 8px;
+    align-items: baseline;
+  }
+
+  .ligne-formation__chevron {
+    display: none;
+  }
+
+  .detail__retour-mobile {
+    display: inline-block;
+    margin-bottom: 16px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .detail__grille {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "contenu"
+      "tarif"
+      "infos";
+  }
+
+  .tarif {
+    margin-top: 24px;
+    padding: 24px;
+  }
+
+  .tarif__retour {
+    display: none;
+  }
+
+  .detail__infos h2 {
+    margin-top: 32px;
+  }
+
+  .infos div {
+    grid-template-columns: auto 1fr;
+    text-align: right;
+  }
+
+  .infos dt {
+    text-align: left;
   }
 }
