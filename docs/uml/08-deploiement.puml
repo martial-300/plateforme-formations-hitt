@@ -6,12 +6,14 @@ node "Poste de l'utilisateur" {
   component "Navigateur\n(ordinateur ou mobile)" as NAV
 }
 cloud "Google\nIdentity Services" as GOO
+cloud "Let's Encrypt" as LE
 
 node "VPS Linux" {
   node "Docker Compose" {
     component "Nginx\n(HTTPS, Let's Encrypt)" as NGX
     component "Frontend\nReact + TypeScript (Vite)\nfichiers statiques" as FE
     component "Backend\nPython 3.11 · FastAPI\nSQLAlchemy · Scikit-learn" as BE
+    component "Certbot\n(renouvelle le certificat)" as CB
     database "PostgreSQL 15\n4 tables" as PG
   }
 }
@@ -22,4 +24,6 @@ NGX --> BE : /api/v1
 BE --> PG : SQL (ORM)
 NAV ..> GOO : connexion Google\n(jeton d'identité)
 BE ..> GOO : vérification du jeton\n(HTTPS)
+CB ..> NGX : certificats
+CB ..> LE : demande et renouvelle\n(ACME, défi HTTP)
 @enduml

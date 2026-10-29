@@ -233,6 +233,7 @@ def deploiement():
     b.append(noeud(360, 110, 640, 520, '«device» VPS Linux'))
     b.append(noeud(385, 160, 590, 450, '«execution environment» Docker Compose', 10))
     b.append(composant(410, 220, 230, 80, 'Nginx', 'HTTPS (Let\'s Encrypt), port 443'))
+    b.append(composant(410, 480, 230, 80, 'Certbot', 'renouvelle le certificat'))
     b.append(composant(720, 210, 230, 92, 'Frontend', 'React 18 + TypeScript (Vite)\nfichiers statiques'))
     b.append(composant(720, 360, 230, 92, 'Backend', 'Python 3.11 · FastAPI\nSQLAlchemy · Scikit-learn'))
     x, y = 835, 505
@@ -240,14 +241,18 @@ def deploiement():
     b.append(text(x, y + 38, '«database»', 11, 400, 'middle', C['muted'])); b.append(text(x, y + 56, 'PostgreSQL 15 · 4 tables', 12.5, 700, 'middle'))
     b.append(noeud(1070, 170, 210, 110, '«external» Google'))
     b.append(text(1084, 225, 'Google Identity Services\n(connexion, vérification\ndu jeton)', 11.5, 400, 'start', C['ink2']))
+    b.append(noeud(1070, 470, 210, 90, '«external» Let\'s Encrypt'))
+    b.append(text(1084, 525, 'autorité de certification', 11.5, 400, 'start', C['ink2']))
     b.append(line([(270, 230), (410, 260)], end='ouvert')); b.append(label_on(340, 236, 'HTTPS 443', 11.5))
     b.append(line([(640, 250), (720, 250)], end='ouvert')); b.append(label_on(680, 242, '/', 11.5))
     b.append(line([(600, 300), (600, 405), (720, 405)], end='ouvert')); b.append(label_on(650, 398, '/api/v1', 11.5))
     b.append(line([(835, 452), (835, 492)], end='ouvert')); b.append(label_on(885, 478, 'SQL (ORM)', 11.5))
     b.append(line([(950, 400), (1070, 250)], dash='6 4', end='ouvert')); b.append(label_on(1035, 330, 'vérifie le jeton', 11.5))
+    b.append(line([(470, 480), (470, 300)], dash='6 4')); b.append(label_on(470, 390, 'certificats', 11.5))
+    b.append(line([(525, 560), (525, 655), (1175, 655), (1175, 560)], dash='6 4', end='ouvert')); b.append(label_on(850, 655, 'demande et renouvelle (ACME, défi HTTP)', 11.5))
     b.append(f'<path d="M165,140 C165,60 1100,40 1150,156" fill="none" stroke="{C["green"]}" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#ouvert)"/>')
     b.append(label_on(640, 72, 'connexion Google (jeton d\'identité)', 11.5))
-    save('08-deploiement', doc(1320, 670, 'Diagramme de déploiement — MVP', ''.join(b)))
+    save('08-deploiement', doc(1320, 690, 'Diagramme de déploiement — MVP', ''.join(b)))
 
 
 cas_utilisation(); classes(); activite(); etats(); deploiement()
