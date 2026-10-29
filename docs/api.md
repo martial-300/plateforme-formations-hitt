@@ -36,6 +36,7 @@ La déconnexion (RF-02) est gérée côté frontend : suppression du JWT stocké
 | 404 | Ressource introuvable |
 | 409 | Email déjà utilisé |
 | 422 | Erreur de validation Pydantic (format FastAPI) |
+| 429 | Trop d'appels à l'aperçu visiteur depuis la même adresse IP (en-tête `Retry-After`) |
 | 503 | Service externe indisponible (connexion Google non configurée ou Google injoignable) |
 
 Format d'erreur : `{"detail": "message"}`.
@@ -232,7 +233,9 @@ Aperçu pour un visiteur sans compte. Même moteur que `PUT /profil`, mais avec 
 ```
 
 - Pas de description ni d'identifiant de recommandation (rien n'est enregistré, donc pas de retour possible).
-- Limiter le nombre d'appels par adresse IP (ex. 20 par minute) : la route est publique.
+- `centres_interet` : 1 à 1 000 caractères (espaces de début et de fin retirés) ; `type_souhaite` : `carte` ou `modulaire` ; `budget_max_fcfa` : entier ≥ 0. Sinon `422`.
+- Même filtre que `PUT /profil` (format, prix promo s'il existe ≤ budget) : 0 à 3 résultats, `rang` de 1 à 3 par score décroissant ; `{"recommandations": []}` si aucune formation ne correspond.
+- Route publique, sans JWT : au plus **20 appels par minute et par adresse IP**, requêtes invalides comprises. Au-delà, `429` « Trop de demandes : réessayez dans une minute » avec l'en-tête `Retry-After` (secondes). L'IP est celle lue par uvicorn `--proxy-headers` derrière les proxys de `FORWARDED_ALLOW_IPS` ; les compteurs sont en mémoire et repartent de zéro au redémarrage de l'API.
 - Le frontend garde les 3 réponses en mémoire de session pour pré-remplir le questionnaire après l'inscription.
 
 ## Administration
