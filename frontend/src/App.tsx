@@ -9,6 +9,7 @@ import { PageConnexion } from "./pages/PageConnexion";
 import { PageDetailFormation } from "./pages/PageDetailFormation";
 import { PageEnConstruction as Page } from "./pages/PageEnConstruction";
 import { PageInscription } from "./pages/PageInscription";
+import { PageQuestionnaire } from "./pages/PageQuestionnaire";
 
 export default function App() {
   return (
@@ -30,7 +31,7 @@ export default function App() {
               path="/questionnaire"
               element={
                 <RouteProtegee role="apprenant">
-                  <Page titre="Questionnaire" exigence="RF-06, RF-07" sprint="S4" />
+                  <PageQuestionnaire />
                 </RouteProtegee>
               }
             />
