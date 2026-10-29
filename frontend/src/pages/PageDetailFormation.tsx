@@ -17,7 +17,7 @@ import {
 } from "../catalogue/libelles";
 import { Correspondance } from "../components/Correspondance";
 import { Photo } from "../components/Photo";
-import { PHOTO_DOMAINE } from "../components/photos";
+import { photoFormation } from "../components/photos";
 import { AvisRecommandation } from "../recommandations/AvisRecommandation";
 import { lireEtat, type EtatDepuisRecommandations } from "../recommandations/navigation";
 
@@ -150,7 +150,7 @@ export function PageDetailFormation() {
           <h1>{formation.intitule}</h1>
           <p className="detail__description">{formation.description}</p>
           <Photo
-            nom={PHOTO_DOMAINE[formation.domaine]}
+            nom={photoFormation(formation)}
             className="detail__photo"
             tailles="(max-width: 860px) 100vw, 756px"
           />
