@@ -91,7 +91,7 @@ Le lancement du backend et du frontend est décrit dans [backend/README.md](back
 | [Cahier des charges MVP](docs/cahier-des-charges-mvp.md) | Périmètre, exigences, critères de validation (référence) |
 | [Architecture](docs/architecture.md) | Couches, pages frontend, organisation du code |
 | [Modèle de données](docs/modele-donnees.md) | 4 tables, diagramme entité-relation |
-| [API REST](docs/api.md) | 13 endpoints, exemples de requêtes / réponses |
+| [API REST](docs/api.md) | 14 endpoints, exemples de requêtes / réponses |
 | [Moteur de recommandation](docs/moteur-recommandation.md) | Algorithme TF-IDF + cosinus, pseudo-code |
 | [Diagrammes UML](docs/uml.md) | 8 diagrammes : cas d'utilisation, classes, 3 séquences, activité, états, déploiement (Mermaid + sources PlantUML) |
 | [Évaluation](docs/evaluation.md) | Protocole précision@5, panel d'apprenants |

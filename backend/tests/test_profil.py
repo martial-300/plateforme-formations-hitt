@@ -198,3 +198,46 @@ def test_reponse_en_moins_de_3_secondes(client, catalogue, apprenant):
     reponse = client.put(URL, json=REPONSES, headers=entete(apprenant))
     assert reponse.status_code == 200
     assert time.perf_counter() - debut < 3
+
+
+# --- GET /profil -----------------------------------------------------------------------------
+
+
+def test_lecture_sans_jeton_401(client, db):
+    assert client.get(URL).status_code == 401
+
+
+def test_lecture_par_un_administrateur_403(client, db):
+    admin = creer_compte(db, email="admin@example.com", role="administrateur")
+    assert client.get(URL, headers=entete(admin)).status_code == 403
+
+
+def test_lecture_sans_profil_404(client, apprenant):
+    reponse = client.get(URL, headers=entete(apprenant))
+    assert reponse.status_code == 404
+    assert reponse.json() == {"detail": "Aucun profil : répondez au questionnaire"}
+
+
+def test_lecture_renvoie_la_derniere_soumission(client, catalogue, apprenant):
+    envoi = client.put(URL, json=REPONSES, headers=entete(apprenant)).json()
+    reponse = client.get(URL, headers=entete(apprenant))
+    assert reponse.status_code == 200
+    assert reponse.json() == envoi
+
+
+def test_lecture_sans_recalcul_et_retour_conserve(client, db, catalogue, apprenant):
+    envoi = client.put(URL, json=REPONSES, headers=entete(apprenant)).json()
+    premiere = db.get(Recommandation, envoi["recommandations"][0]["id"])
+    premiere.retour = "pertinent"
+    db.flush()
+    lu = client.get(URL, headers=entete(apprenant)).json()
+    assert [r["id"] for r in lu["recommandations"]] == [r["id"] for r in envoi["recommandations"]]
+    assert lu["recommandations"][0]["retour"] == "pertinent"
+
+
+def test_lecture_limitee_a_son_propre_profil(client, db, catalogue, apprenant):
+    autre = creer_compte(db, email="kodjo@example.com")
+    client.put(URL, json=REPONSES, headers=entete(autre))
+    assert client.get(URL, headers=entete(apprenant)).status_code == 404
+    client.put(URL, json=REPONSES | {"niveau_etudes": "BEPC"}, headers=entete(apprenant))
+    assert client.get(URL, headers=entete(apprenant)).json()["profil"]["niveau_etudes"] == "BEPC"

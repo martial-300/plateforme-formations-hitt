@@ -181,6 +181,16 @@ sequenceDiagram
     participant M as MoteurRecommandation
     participant DB as PostgreSQL
 
+    A->>UI: Ouvre « Mon questionnaire »
+    UI->>API: GET /api/v1/profil (JWT)
+    API->>DB: SELECT profil et recommandations
+    alt Aucun profil
+        API-->>UI: 404
+        UI-->>A: Questionnaire vide
+    else Profil existant
+        API-->>UI: 200 { profil, recommandations }
+        UI-->>A: Questionnaire pré-rempli
+    end
     A->>UI: Remplit le questionnaire et valide
     UI->>API: PUT /api/v1/profil (JWT, réponses)
     API->>API: Vérifie le JWT et valide les données

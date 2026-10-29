@@ -1,10 +1,10 @@
-"""Questionnaire de l'apprenant et calcul de ses recommandations (RF-06 à RF-09)."""
+"""Questionnaire de l'apprenant, calcul et relecture de ses recommandations (RF-06 à RF-09)."""
 
 from datetime import datetime
 from decimal import Decimal
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import delete, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
@@ -59,3 +59,23 @@ def soumettre_profil(
     db.add_all(recommandations)
     db.commit()
     return {"profil": profil, "recommandations": recommandations}
+
+
+@router.get("", response_model=ProfilEtRecommandations)
+def lire_profil(
+    utilisateur: Annotated[Utilisateur, Depends(require_apprenant)],
+    db: Annotated[Session, Depends(get_db)],
+) -> dict:
+    """Dernières réponses et recommandations enregistrées, sans nouveau calcul (RF-07)."""
+    profil = db.scalar(
+        select(ProfilApprenant).where(ProfilApprenant.utilisateur_id == utilisateur.id)
+    )
+    if profil is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Aucun profil : répondez au questionnaire")
+    recommandations = db.scalars(
+        select(Recommandation)
+        .join(Recommandation.formation)
+        .where(Recommandation.utilisateur_id == utilisateur.id)
+        .order_by(Recommandation.score.desc(), Formation.intitule)
+    ).all()
+    return {"profil": profil, "recommandations": list(recommandations)}
