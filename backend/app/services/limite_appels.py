@@ -35,6 +35,9 @@ class LimiteAppels:
             if appels is None:
                 if len(self._appels) >= self.adresses_max:
                     self._oublier_inactives(debut)
+                    if len(self._appels) >= self.adresses_max:
+                        # Toutes les adresses suivies sont actives : refus plutôt que croissance.
+                        return self.fenetre_s
                 appels = self._appels[adresse] = deque()
             while appels and appels[0] <= debut:
                 appels.popleft()

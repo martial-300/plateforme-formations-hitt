@@ -164,3 +164,13 @@ def test_adresses_inactives_oubliees():
         limite.attente(f"192.0.2.{i}", maintenant=0)
     limite.attente("192.0.2.9", maintenant=61)
     assert limite.nb_adresses_suivies == 1
+
+
+def test_nouvelle_adresse_refusee_si_toutes_actives():
+    limite = LimiteAppels(maximum=2, fenetre_s=60, adresses_max=3)
+    for i in range(3):
+        limite.attente(f"192.0.2.{i}", maintenant=0)
+    assert limite.attente("192.0.2.9", maintenant=30) == 60
+    assert limite.nb_adresses_suivies == 3
+    # Les adresses déjà suivies restent servies.
+    assert limite.attente("192.0.2.0", maintenant=30) is None
