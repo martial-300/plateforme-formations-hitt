@@ -9,6 +9,8 @@ from tests.evaluation.precision_at_5 import (
     annotations_provisoires,
     charger_catalogue,
     charger_profils,
+    eligibles,
+    grille_cabinet,
     intitules_inconnus,
     mesurer,
     moyenne,
@@ -97,3 +99,21 @@ def test_annotation_non_validee_signalee_comme_provisoire():
         {"id": "D", "pertinentes": []},
     ]
     assert annotations_provisoires(profils) == ["A", "C"]
+
+
+def test_grille_cabinet_vierge_et_limitee_aux_formations_possibles():
+    formations = charger_catalogue()
+    profils = charger_profils()
+    texte = grille_cabinet(profils, formations)
+    # Aucune case cochée, aucune proposition de l'IA ni résultat du moteur.
+    assert "- [x]" not in texte and "proposition" not in texte.lower()
+    for profil in profils:
+        possibles = eligibles(profil["profil"], formations)
+        assert possibles, profil["id"]
+        q = profil["profil"]
+        for f in possibles:
+            prix = f.cout_promo_fcfa if f.cout_promo_fcfa is not None else f.cout_fcfa
+            assert f.type == q["type_souhaite"] and prix <= q["budget_max_fcfa"]
+        # Chaque formation annotée pertinente doit pouvoir être cochée par le conseiller.
+        assert set(profil["pertinentes"]) <= {f.intitule for f in possibles}, profil["id"]
+    assert texte.count("- [ ] ") == sum(len(eligibles(p["profil"], formations)) for p in profils)
