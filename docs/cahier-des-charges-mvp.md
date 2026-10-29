@@ -138,7 +138,7 @@ Le texte utilisé par le moteur IA est reconstruit à la volée à partir du pro
 | DELETE | /formations/{id} | Supprimer une formation | Admin |
 | GET | /profil | Relire ses réponses et ses recommandations enregistrées, pour pré-remplir le questionnaire et réafficher les recommandations (RF-07, ajout v1.2) | Apprenant |
 | PUT | /profil | Soumettre ou mettre à jour le questionnaire, renvoie les recommandations (réservé aux apprenants, ajout v1.2) | Apprenant |
-| POST | /recommandations/{id}/retour | Enregistrer le retour pertinent / non pertinent | Connecté |
+| POST | /recommandations/{id}/retour | Enregistrer le retour pertinent / non pertinent (réservé aux apprenants, ajout v1.2) | Apprenant |
 | GET | /admin/statistiques | Les 3 chiffres clés | Admin |
 | POST | /recommandations/apercu | Aperçu sans compte : 3 formations, rien n'est enregistré (RF-12, ajout v1.1) | Public |
 

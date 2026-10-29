@@ -61,3 +61,9 @@ class RecommandationSortie(BaseModel):
 class ProfilEtRecommandations(BaseModel):
     profil: ProfilSortie
     recommandations: list[RecommandationSortie]
+
+
+class RetourEntree(BaseModel):
+    """Corps de POST /recommandations/{id}/retour (RF-10) : « aucun » n'est pas un choix."""
+
+    retour: Literal["pertinent", "non_pertinent"]
