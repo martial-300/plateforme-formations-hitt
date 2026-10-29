@@ -13,6 +13,7 @@ import {
   TYPE_COURT,
 } from "../catalogue/libelles";
 import { useEstMobile } from "../catalogue/useEstMobile";
+import { Bandeau } from "../components/Photo";
 
 const PAR_PAGE = 8;
 
@@ -93,174 +94,177 @@ export function PageCatalogue() {
   const visibles = filtrees.slice(debut, estMobile ? nombreMobile : debut + PAR_PAGE);
 
   return (
-    <main className="conteneur catalogue">
-      <div className="catalogue__intro">
-        <div>
-          <nav className="fil-ariane" aria-label="Fil d'Ariane">
-            <Link to="/">Accueil</Link> / <span aria-current="page">Catalogue</span>
-          </nav>
-          <h1>Catalogue des formations</h1>
-          <p className="catalogue__chapo">
-            {etat.statut === "pret" ? `${toutes.length} formations` : "Les formations"} réparties en
-            trois domaines : Secrétariat et Gestion (SISG), IA, Data science et Blockchain,
-            Informatique et Télécoms (TRIT).
-          </p>
+    <>
+      <Bandeau nom="etudiants" />
+      <main className="conteneur catalogue">
+        <div className="catalogue__intro">
+          <div>
+            <nav className="fil-ariane" aria-label="Fil d'Ariane">
+              <Link to="/">Accueil</Link> / <span aria-current="page">Catalogue</span>
+            </nav>
+            <h1>Catalogue des formations</h1>
+            <p className="catalogue__chapo">
+              {etat.statut === "pret" ? `${toutes.length} formations` : "Les formations"} réparties
+              en trois domaines : Secrétariat et Gestion (SISG), IA, Data science et Blockchain,
+              Informatique et Télécoms (TRIT).
+            </p>
+          </div>
+          <aside className="encart">
+            <img src="/illustrations/choix.svg" alt="" className="encart__illustration" />
+            <h2>Vous ne savez pas quoi choisir ?</h2>
+            <p>
+              Répondez au questionnaire : la plateforme sélectionne automatiquement les cinq
+              formations les plus proches de votre profil. Un conseiller du cabinet peut aussi vous
+              aider.
+            </p>
+            <Link to="/questionnaire" className="bouton bouton--secondaire">
+              Répondre au questionnaire
+            </Link>
+          </aside>
         </div>
-        <aside className="encart">
-          <img src="/illustrations/choix.svg" alt="" className="encart__illustration" />
-          <h2>Vous ne savez pas quoi choisir ?</h2>
-          <p>
-            Répondez au questionnaire : la plateforme sélectionne automatiquement les cinq
-            formations les plus proches de votre profil. Un conseiller du cabinet peut aussi vous
-            aider.
-          </p>
-          <Link to="/questionnaire" className="bouton bouton--secondaire">
-            Répondre au questionnaire
-          </Link>
-        </aside>
-      </div>
 
-      <div className="catalogue__filtres" ref={haut}>
-        <div className="onglets" role="group" aria-label="Domaine">
-          <button
-            type="button"
-            className="onglets__onglet"
-            aria-pressed={domaine === null}
-            onClick={() => changerFiltres({ domaine: null })}
-          >
-            {estMobile ? "Tous" : "Tous les domaines"}
-          </button>
-          {DOMAINES.map((d) => (
+        <div className="catalogue__filtres" ref={haut}>
+          <div className="onglets" role="group" aria-label="Domaine">
             <button
-              key={d}
               type="button"
               className="onglets__onglet"
-              aria-pressed={domaine === d}
-              onClick={() => changerFiltres({ domaine: d })}
+              aria-pressed={domaine === null}
+              onClick={() => changerFiltres({ domaine: null })}
             >
-              {DOMAINE_COURT[d]}
+              {estMobile ? "Tous" : "Tous les domaines"}
             </button>
-          ))}
-        </div>
-        <label className="champ catalogue__type">
-          <span className="champ__libelle">Type de formation</span>
-          <select
-            className="champ__saisie"
-            value={type ?? ""}
-            onChange={(e) =>
-              changerFiltres({ type: estType(e.target.value) ? e.target.value : null })
-            }
-          >
-            <option value="">Tous les types</option>
-            <option value="carte">À la carte</option>
-            <option value="modulaire">Modulaire · certifiante</option>
-          </select>
-        </label>
-      </div>
-
-      {etat.statut === "chargement" && (
-        <p className="catalogue__message" role="status">
-          Chargement du catalogue…
-        </p>
-      )}
-
-      {etat.statut === "erreur" && (
-        <div className="catalogue__message" role="alert">
-          <p>Le catalogue n'a pas pu être chargé : {etat.message}</p>
-          <button type="button" className="bouton bouton--secondaire" onClick={reessayer}>
-            Réessayer
-          </button>
-        </div>
-      )}
-
-      {etat.statut === "pret" && filtrees.length === 0 && (
-        <div className="catalogue__message" role="status">
-          <p>Aucune formation ne correspond à ces filtres.</p>
-          <button
-            type="button"
-            className="bouton bouton--secondaire"
-            onClick={() => changerFiltres({ domaine: null, type: null })}
-          >
-            Voir toutes les formations
-          </button>
-        </div>
-      )}
-
-      {visibles.length > 0 && (
-        <>
-          <div className="liste-formations__entete" aria-hidden="true">
-            <span>Domaine</span>
-            <span>Formation</span>
-            <span>Durée</span>
-            <span className="liste-formations__tarif">Tarif</span>
-          </div>
-          <ul className="liste-formations">
-            {visibles.map((f) => (
-              <li key={f.id}>
-                <Link
-                  to={`/formations/${f.id}`}
-                  state={{ catalogue: location.search }}
-                  className="ligne-formation"
-                >
-                  <span className="ligne-formation__domaine">
-                    <span className="surtitre">{DOMAINE_COURT[f.domaine]}</span>
-                    <span className="ligne-formation__type">{TYPE_COURT[f.type]}</span>
-                  </span>
-                  <span className="ligne-formation__texte">
-                    <span className="ligne-formation__intitule">{f.intitule}</span>
-                    <span className="ligne-formation__description">{f.description}</span>
-                  </span>
-                  <span className="ligne-formation__duree">{formaterDuree(f)}</span>
-                  <span className="ligne-formation__tarif">
-                    <Prix formation={f} />
-                  </span>
-                  <span className="ligne-formation__chevron" aria-hidden="true">
-                    ›
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          {estMobile ? (
-            nombreMobile < filtrees.length && (
+            {DOMAINES.map((d) => (
               <button
+                key={d}
                 type="button"
-                className="bouton bouton--secondaire bouton--large"
-                onClick={() => setPlus({ cle: cleFiltres, nombre: nombreMobile + PAR_PAGE })}
+                className="onglets__onglet"
+                aria-pressed={domaine === d}
+                onClick={() => changerFiltres({ domaine: d })}
               >
-                Afficher plus de formations
+                {DOMAINE_COURT[d]}
               </button>
-            )
-          ) : (
-            <div className="pagination">
-              <p>
-                Formations {debut + 1} à {debut + visibles.length} sur {filtrees.length}
-              </p>
-              {nbPages > 1 && (
-                <div className="pagination__boutons">
-                  <button
-                    type="button"
-                    className="bouton bouton--secondaire"
-                    disabled={pageCourante === 1}
-                    onClick={() => changerPage(pageCourante - 1)}
-                  >
-                    Page précédente
-                  </button>
-                  <button
-                    type="button"
-                    className="bouton bouton--secondaire"
-                    disabled={pageCourante === nbPages}
-                    onClick={() => changerPage(pageCourante + 1)}
-                  >
-                    Page suivante
-                  </button>
-                </div>
-              )}
+            ))}
+          </div>
+          <label className="champ catalogue__type">
+            <span className="champ__libelle">Type de formation</span>
+            <select
+              className="champ__saisie"
+              value={type ?? ""}
+              onChange={(e) =>
+                changerFiltres({ type: estType(e.target.value) ? e.target.value : null })
+              }
+            >
+              <option value="">Tous les types</option>
+              <option value="carte">À la carte</option>
+              <option value="modulaire">Modulaire · certifiante</option>
+            </select>
+          </label>
+        </div>
+
+        {etat.statut === "chargement" && (
+          <p className="catalogue__message" role="status">
+            Chargement du catalogue…
+          </p>
+        )}
+
+        {etat.statut === "erreur" && (
+          <div className="catalogue__message" role="alert">
+            <p>Le catalogue n'a pas pu être chargé : {etat.message}</p>
+            <button type="button" className="bouton bouton--secondaire" onClick={reessayer}>
+              Réessayer
+            </button>
+          </div>
+        )}
+
+        {etat.statut === "pret" && filtrees.length === 0 && (
+          <div className="catalogue__message" role="status">
+            <p>Aucune formation ne correspond à ces filtres.</p>
+            <button
+              type="button"
+              className="bouton bouton--secondaire"
+              onClick={() => changerFiltres({ domaine: null, type: null })}
+            >
+              Voir toutes les formations
+            </button>
+          </div>
+        )}
+
+        {visibles.length > 0 && (
+          <>
+            <div className="liste-formations__entete" aria-hidden="true">
+              <span>Domaine</span>
+              <span>Formation</span>
+              <span>Durée</span>
+              <span className="liste-formations__tarif">Tarif</span>
             </div>
-          )}
-        </>
-      )}
-    </main>
+            <ul className="liste-formations">
+              {visibles.map((f) => (
+                <li key={f.id}>
+                  <Link
+                    to={`/formations/${f.id}`}
+                    state={{ catalogue: location.search }}
+                    className="ligne-formation"
+                  >
+                    <span className="ligne-formation__domaine">
+                      <span className="surtitre">{DOMAINE_COURT[f.domaine]}</span>
+                      <span className="ligne-formation__type">{TYPE_COURT[f.type]}</span>
+                    </span>
+                    <span className="ligne-formation__texte">
+                      <span className="ligne-formation__intitule">{f.intitule}</span>
+                      <span className="ligne-formation__description">{f.description}</span>
+                    </span>
+                    <span className="ligne-formation__duree">{formaterDuree(f)}</span>
+                    <span className="ligne-formation__tarif">
+                      <Prix formation={f} />
+                    </span>
+                    <span className="ligne-formation__chevron" aria-hidden="true">
+                      ›
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {estMobile ? (
+              nombreMobile < filtrees.length && (
+                <button
+                  type="button"
+                  className="bouton bouton--secondaire bouton--large"
+                  onClick={() => setPlus({ cle: cleFiltres, nombre: nombreMobile + PAR_PAGE })}
+                >
+                  Afficher plus de formations
+                </button>
+              )
+            ) : (
+              <div className="pagination">
+                <p>
+                  Formations {debut + 1} à {debut + visibles.length} sur {filtrees.length}
+                </p>
+                {nbPages > 1 && (
+                  <div className="pagination__boutons">
+                    <button
+                      type="button"
+                      className="bouton bouton--secondaire"
+                      disabled={pageCourante === 1}
+                      onClick={() => changerPage(pageCourante - 1)}
+                    >
+                      Page précédente
+                    </button>
+                    <button
+                      type="button"
+                      className="bouton bouton--secondaire"
+                      disabled={pageCourante === nbPages}
+                      onClick={() => changerPage(pageCourante + 1)}
+                    >
+                      Page suivante
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </>
+        )}
+      </main>
+    </>
   );
 }

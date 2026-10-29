@@ -2900,3 +2900,63 @@ a {
     padding: 20px 16px;
   }
 }
+
+/* --- Photos (maquette v2, étape 5 : écrans 01–05, 09–11, 14, 15, 19, M1, M4) ----------------- */
+
+.photo {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+.bandeau {
+  background: var(--fond-sourd);
+}
+
+.bandeau__photo {
+  display: block;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.bandeau--grand .bandeau__photo {
+  height: 440px;
+}
+
+.domaine__photo {
+  height: 180px;
+  margin-bottom: 20px;
+}
+
+.compte__photo {
+  height: 260px;
+  margin-top: 24px;
+}
+
+.detail__photo {
+  height: 340px;
+  margin-top: 28px;
+}
+
+.questionnaire__photo {
+  height: 220px;
+  margin-top: 20px;
+}
+
+@media (max-width: 860px) {
+  .bandeau__photo,
+  .bandeau--grand .bandeau__photo {
+    height: 180px;
+  }
+
+  .detail__photo {
+    height: 200px;
+    margin-top: 20px;
+  }
+
+  /* M2 : pas de photo dans le questionnaire sur mobile. */
+  .questionnaire__photo {
+    display: none;
+  }
+}

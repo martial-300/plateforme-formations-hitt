@@ -5,6 +5,7 @@ import { ErreurApi } from "../api/client";
 import { lireProfil, soumettreProfil } from "../api/profil";
 import type { TypeFormation } from "../api/types";
 import { messageErreur } from "../auth/useConnexion";
+import { Photo } from "../components/Photo";
 import { lireEssai, oublierEssai } from "../essai/memoire";
 import {
   CHAMPS,
@@ -159,6 +160,7 @@ export function PageQuestionnaire() {
         <p className="questionnaire__note">
           Seuls les champs de ce questionnaire et de votre compte sont enregistrés.
         </p>
+        <Photo nom="groupe" className="questionnaire__photo" tailles="340px" />
       </div>
 
       {chargement ? (

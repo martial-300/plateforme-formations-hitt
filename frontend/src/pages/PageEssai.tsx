@@ -7,6 +7,7 @@ import { useAuth } from "../auth/useAuth";
 import { messageErreur } from "../auth/useConnexion";
 import { formaterMontant } from "../catalogue/libelles";
 import { ListeApercu } from "../components/ListeApercu";
+import { Bandeau } from "../components/Photo";
 import { garderEssai, lireEssai } from "../essai/memoire";
 import {
   controler,
@@ -206,110 +207,114 @@ export function PageEssai() {
   }
 
   return (
-    <main className="conteneur questionnaire essai">
-      <div className="questionnaire__intro">
-        <nav className="fil-ariane" aria-label="Fil d'Ariane">
-          <Link to="/">Accueil</Link> / <span aria-current="page">Essai</span>
-        </nav>
-        <h1>Essayez sans compte</h1>
-        <img src="/illustrations/questionnaire.svg" alt="" className="essai__image" />
-        <p className="questionnaire__chapo">
-          Trois questions suffisent pour voir les trois formations les plus proches de vous. Rien
-          n'est enregistré tant que vous ne créez pas de compte.
-        </p>
-        <p className="questionnaire__note">
-          Le questionnaire complet (six questions) affine le résultat et donne cinq formations.
-        </p>
-      </div>
-
-      <form className="questionnaire__carte" onSubmit={envoyer} noValidate>
-        {erreur && (
-          <div className="alerte" role="alert">
-            <p className="alerte__titre">L'aperçu n'a pas pu être calculé</p>
-            <p>{erreur}</p>
-          </div>
-        )}
-
-        <div className="champ">
-          <label htmlFor="centres_interet" className="essai__question">
-            <span className="questionnaire__numero">1.</span> Qu'aimeriez-vous apprendre ou faire ?
-          </label>
-          <textarea
-            className="champ__saisie"
-            rows={3}
-            maxLength={1000}
-            placeholder="Ex. : créer des sites internet, programmer"
-            value={saisie.centres_interet}
-            onChange={(e) => modifier("centres_interet", e.target.value)}
-            {...aria("centres_interet", "centres_interet-aide")}
-          />
-          {messageSous("centres_interet") ?? (
-            <p id="centres_interet-aide" className="champ__aide">
-              Un métier, un outil, un domaine… Exemple : secrétariat, Excel, réseaux.
-            </p>
-          )}
+    <>
+      <Bandeau nom="classe" />
+      <main className="conteneur questionnaire essai">
+        <div className="questionnaire__intro">
+          <nav className="fil-ariane" aria-label="Fil d'Ariane">
+            <Link to="/">Accueil</Link> / <span aria-current="page">Essai</span>
+          </nav>
+          <h1>Essayez sans compte</h1>
+          <img src="/illustrations/questionnaire.svg" alt="" className="essai__image" />
+          <p className="questionnaire__chapo">
+            Trois questions suffisent pour voir les trois formations les plus proches de vous. Rien
+            n'est enregistré tant que vous ne créez pas de compte.
+          </p>
+          <p className="questionnaire__note">
+            Le questionnaire complet (six questions) affine le résultat et donne cinq formations.
+          </p>
         </div>
 
-        <fieldset
-          className="choix"
-          id="type_souhaite"
-          tabIndex={-1}
-          aria-invalid={problemes.type_souhaite ? true : undefined}
-          aria-describedby={problemes.type_souhaite ? "type_souhaite-erreur" : undefined}
-        >
-          <legend className="essai__question">
-            <span className="questionnaire__numero">2.</span> Quel format vous convient ?
-          </legend>
-          {TYPES.map((type) => (
-            <label key={type.valeur} className="choix__option">
-              <input
-                type="radio"
-                name="type_souhaite"
-                value={type.valeur}
-                checked={saisie.type_souhaite === type.valeur}
-                onChange={() => modifier("type_souhaite", type.valeur)}
-              />
-              <span>
-                <strong>{type.titre}</strong>
-                <span className="choix__detail">{type.detail}</span>
-              </span>
+        <form className="questionnaire__carte" onSubmit={envoyer} noValidate>
+          {erreur && (
+            <div className="alerte" role="alert">
+              <p className="alerte__titre">L'aperçu n'a pas pu être calculé</p>
+              <p>{erreur}</p>
+            </div>
+          )}
+
+          <div className="champ">
+            <label htmlFor="centres_interet" className="essai__question">
+              <span className="questionnaire__numero">1.</span> Qu'aimeriez-vous apprendre ou faire
+              ?
             </label>
-          ))}
-          {messageSous("type_souhaite")}
-        </fieldset>
+            <textarea
+              className="champ__saisie"
+              rows={3}
+              maxLength={1000}
+              placeholder="Ex. : créer des sites internet, programmer"
+              value={saisie.centres_interet}
+              onChange={(e) => modifier("centres_interet", e.target.value)}
+              {...aria("centres_interet", "centres_interet-aide")}
+            />
+            {messageSous("centres_interet") ?? (
+              <p id="centres_interet-aide" className="champ__aide">
+                Un métier, un outil, un domaine… Exemple : secrétariat, Excel, réseaux.
+              </p>
+            )}
+          </div>
 
-        <div className="champ questionnaire__budget">
-          <label htmlFor="budget" className="essai__question">
-            <span className="questionnaire__numero">3.</span> Quel est votre budget maximum ?
-            <span className="visuellement-masque"> (FCFA)</span>
-          </label>
-          <input
-            className="champ__saisie"
-            inputMode="numeric"
-            autoComplete="off"
-            placeholder="Ex. : 150 000"
-            value={saisie.budget}
-            onChange={(e) => modifier("budget", e.target.value)}
-            onBlur={() => {
-              const montant = lireMontant(saisie.budget);
-              if (montant !== null) modifier("budget", formaterNombre(montant));
-            }}
-            {...aria("budget", "budget-aide")}
-          />
-          {messageSous("budget") ?? (
-            <p id="budget-aide" className="champ__aide">
-              En FCFA. Seules les formations à ce prix ou moins vous seront proposées.
-            </p>
-          )}
-        </div>
+          <fieldset
+            className="choix"
+            id="type_souhaite"
+            tabIndex={-1}
+            aria-invalid={problemes.type_souhaite ? true : undefined}
+            aria-describedby={problemes.type_souhaite ? "type_souhaite-erreur" : undefined}
+          >
+            <legend className="essai__question">
+              <span className="questionnaire__numero">2.</span> Quel format vous convient ?
+            </legend>
+            {TYPES.map((type) => (
+              <label key={type.valeur} className="choix__option">
+                <input
+                  type="radio"
+                  name="type_souhaite"
+                  value={type.valeur}
+                  checked={saisie.type_souhaite === type.valeur}
+                  onChange={() => modifier("type_souhaite", type.valeur)}
+                />
+                <span>
+                  <strong>{type.titre}</strong>
+                  <span className="choix__detail">{type.detail}</span>
+                </span>
+              </label>
+            ))}
+            {messageSous("type_souhaite")}
+          </fieldset>
 
-        <div className="questionnaire__actions">
-          <p className="questionnaire__obligatoire">Aucune donnée enregistrée.</p>
-          <button type="submit" className="bouton" disabled={envoi}>
-            {envoi ? "Calcul en cours…" : "Voir l'aperçu"}
-          </button>
-        </div>
-      </form>
-    </main>
+          <div className="champ questionnaire__budget">
+            <label htmlFor="budget" className="essai__question">
+              <span className="questionnaire__numero">3.</span> Quel est votre budget maximum ?
+              <span className="visuellement-masque"> (FCFA)</span>
+            </label>
+            <input
+              className="champ__saisie"
+              inputMode="numeric"
+              autoComplete="off"
+              placeholder="Ex. : 150 000"
+              value={saisie.budget}
+              onChange={(e) => modifier("budget", e.target.value)}
+              onBlur={() => {
+                const montant = lireMontant(saisie.budget);
+                if (montant !== null) modifier("budget", formaterNombre(montant));
+              }}
+              {...aria("budget", "budget-aide")}
+            />
+            {messageSous("budget") ?? (
+              <p id="budget-aide" className="champ__aide">
+                En FCFA. Seules les formations à ce prix ou moins vous seront proposées.
+              </p>
+            )}
+          </div>
+
+          <div className="questionnaire__actions">
+            <p className="questionnaire__obligatoire">Aucune donnée enregistrée.</p>
+            <button type="submit" className="bouton" disabled={envoi}>
+              {envoi ? "Calcul en cours…" : "Voir l'aperçu"}
+            </button>
+          </div>
+        </form>
+      </main>
+    </>
   );
 }

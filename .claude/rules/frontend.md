@@ -19,5 +19,6 @@ paths:
   - Score de pertinence affiché en libellé (« Très proche / Proche / Peut vous intéresser ») avec une jauge en 3 segments, jamais le score brut.
   - Les textes disent que les recommandations sont calculées automatiquement et qu'un conseiller peut aider.
   - Illustrations : SVG de `design/illustrations/`. Logo : `docs/images/logo-hitt.svg`.
+  - Photos : celles de la maquette (`v2-05-photos.js`, Pexels, provisoires), dans `frontend/public/photos/` en WebP 800 et 1600 px ; toujours via les composants `Photo` et `Bandeau` (`src/components/Photo.tsx`), jamais une URL externe.
 - Responsive obligatoire (ordinateur et mobile). Montants en FCFA avec séparateur d'espace (`125 000 FCFA`).
 - Style : ESLint + Prettier (`npm run lint` lance les deux, `npm run format` corrige). Avant de dire qu'un changement est fini : `cd frontend && npm run lint && npm run build` (le build vérifie aussi les types).
