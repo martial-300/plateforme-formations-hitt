@@ -1,0 +1,242 @@
+[
+  {
+    "id": "P01",
+    "profil": {
+      "niveau_etudes": "BAC II",
+      "competences": "word, bases d'internet",
+      "centres_interet": "organisation, accueil des visiteurs, gestion du courrier",
+      "objectif_professionnel": "devenir secrétaire de direction",
+      "type_souhaite": "modulaire",
+      "budget_max_fcfa": 150000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P02",
+    "profil": {
+      "niveau_etudes": "BAC I",
+      "competences": "calculs simples, un peu d'excel",
+      "centres_interet": "comptabilité, chiffres, tableaux",
+      "objectif_professionnel": "tenir les comptes d'une petite boutique",
+      "type_souhaite": "carte",
+      "budget_max_fcfa": 60000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P03",
+    "profil": {
+      "niveau_etudes": "BAC II",
+      "competences": "saisie, word",
+      "centres_interet": "comptabilité, gestion, finances",
+      "objectif_professionnel": "devenir aide-comptable dans une entreprise",
+      "type_souhaite": "modulaire",
+      "budget_max_fcfa": 150000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P04",
+    "profil": {
+      "niveau_etudes": "Licence",
+      "competences": "rédaction, recherche sur internet",
+      "centres_interet": "emploi, recrutement, présentation de soi",
+      "objectif_professionnel": "trouver un premier emploi après la licence",
+      "type_souhaite": "carte",
+      "budget_max_fcfa": 30000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P05",
+    "profil": {
+      "niveau_etudes": "BAC II",
+      "competences": "utilisation de facebook et whatsapp",
+      "centres_interet": "réseaux sociaux, publicité en ligne, communication",
+      "objectif_professionnel": "devenir community manager",
+      "type_souhaite": "modulaire",
+      "budget_max_fcfa": 200000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P06",
+    "profil": {
+      "niveau_etudes": "BEPC",
+      "competences": "vente au marché, contact avec les clients",
+      "centres_interet": "commerce, vente, négociation",
+      "objectif_professionnel": "devenir commercial dans une entreprise",
+      "type_souhaite": "modulaire",
+      "budget_max_fcfa": 160000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P07",
+    "profil": {
+      "niveau_etudes": "BEPC",
+      "competences": "aucune, je débute avec l'ordinateur",
+      "centres_interet": "traitement de texte, présentations, bureautique",
+      "objectif_professionnel": "savoir utiliser l'ordinateur au bureau",
+      "type_souhaite": "carte",
+      "budget_max_fcfa": 40000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P08",
+    "profil": {
+      "niveau_etudes": "BAC II",
+      "competences": "permis de conduire, gestion de stock",
+      "centres_interet": "transport, livraison, entrepôt",
+      "objectif_professionnel": "travailler dans la logistique",
+      "type_souhaite": "modulaire",
+      "budget_max_fcfa": 150000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P09",
+    "profil": {
+      "niveau_etudes": "Licence",
+      "competences": "excel avancé, statistiques",
+      "centres_interet": "données, tableaux de bord, analyse",
+      "objectif_professionnel": "devenir analyste de données",
+      "type_souhaite": "carte",
+      "budget_max_fcfa": 100000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P10",
+    "profil": {
+      "niveau_etudes": "BAC + 2",
+      "competences": "bases en programmation",
+      "centres_interet": "intelligence artificielle, python, apprentissage automatique",
+      "objectif_professionnel": "développer des modèles d'IA",
+      "type_souhaite": "carte",
+      "budget_max_fcfa": 100000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P11",
+    "profil": {
+      "niveau_etudes": "Licence",
+      "competences": "programmation python et java",
+      "centres_interet": "intelligence artificielle, conception de systèmes",
+      "objectif_professionnel": "devenir développeur de systèmes d'IA",
+      "type_souhaite": "modulaire",
+      "budget_max_fcfa": 300000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P12",
+    "profil": {
+      "niveau_etudes": "BAC + 2",
+      "competences": "un peu de programmation web",
+      "centres_interet": "assistants conversationnels, service client automatisé",
+      "objectif_professionnel": "créer un chatbot pour une entreprise",
+      "type_souhaite": "carte",
+      "budget_max_fcfa": 60000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P13",
+    "profil": {
+      "niveau_etudes": "Master ou plus",
+      "competences": "développement logiciel",
+      "centres_interet": "blockchain, cryptomonnaies, contrats intelligents",
+      "objectif_professionnel": "devenir développeur blockchain",
+      "type_souhaite": "modulaire",
+      "budget_max_fcfa": 400000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P14",
+    "profil": {
+      "niveau_etudes": "Licence",
+      "competences": "word, recherche documentaire",
+      "centres_interet": "intelligence artificielle générative, rédaction",
+      "objectif_professionnel": "rédiger mon mémoire de fin d'études plus vite",
+      "type_souhaite": "carte",
+      "budget_max_fcfa": 50000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P15",
+    "profil": {
+      "niveau_etudes": "BAC II",
+      "competences": "word, excel, bases d'internet",
+      "centres_interet": "programmation, création de sites internet",
+      "objectif_professionnel": "devenir développeur web",
+      "type_souhaite": "carte",
+      "budget_max_fcfa": 150000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P16",
+    "profil": {
+      "niveau_etudes": "BEPC",
+      "competences": "bricolage, montage d'ordinateurs",
+      "centres_interet": "réparation d'ordinateurs, matériel informatique",
+      "objectif_professionnel": "devenir technicien de maintenance informatique",
+      "type_souhaite": "modulaire",
+      "budget_max_fcfa": 150000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P17",
+    "profil": {
+      "niveau_etudes": "BAC + 2",
+      "competences": "configuration de réseaux simples",
+      "centres_interet": "réseaux informatiques, sécurité informatique",
+      "objectif_professionnel": "devenir administrateur réseau et sécurité",
+      "type_souhaite": "modulaire",
+      "budget_max_fcfa": 400000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P18",
+    "profil": {
+      "niveau_etudes": "BAC + 2",
+      "competences": "excel, un peu de programmation",
+      "centres_interet": "bases de données, requêtes sql",
+      "objectif_professionnel": "gérer les bases de données d'une entreprise",
+      "type_souhaite": "carte",
+      "budget_max_fcfa": 100000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P19",
+    "profil": {
+      "niveau_etudes": "Licence",
+      "competences": "programmation java",
+      "centres_interet": "applications pour téléphone, android",
+      "objectif_professionnel": "créer des applications mobiles",
+      "type_souhaite": "carte",
+      "budget_max_fcfa": 120000
+    },
+    "pertinentes": []
+  },
+  {
+    "id": "P20",
+    "profil": {
+      "niveau_etudes": "BEPC",
+      "competences": "électricité de base",
+      "centres_interet": "froid, climatisation, réparation",
+      "objectif_professionnel": "devenir technicien en climatisation",
+      "type_souhaite": "modulaire",
+      "budget_max_fcfa": 250000
+    },
+    "pertinentes": []
+  }
+]

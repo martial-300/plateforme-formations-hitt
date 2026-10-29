@@ -37,6 +37,24 @@ Fichier prévu : `backend/tests/evaluation/profils_test.json`
 
 Si un conseiller désigne moins de 5 formations pertinentes pour un profil, le noter dans le mémoire (la précision@5 maximale atteignable est alors inférieure à 1).
 
+### Outils
+
+Depuis `backend/`, sans base de données (le catalogue est lu dans `database/02_catalogue_hitt.sql`) :
+
+| Commande | Rôle |
+|---|---|
+| `python -m tests.evaluation.precision_at_5` | Précision@5 par profil, moyenne sur les profils annotés, temps de calcul |
+| `python -m tests.evaluation.precision_at_5 --details` | Idem, avec le top 5 de chaque profil (✓ = formation pertinente) |
+| `python -m tests.evaluation.precision_at_5 --grille` | Grille à remettre au conseiller : [grille-annotation-profils.md](grille-annotation-profils.md), profils et catalogue **sans** résultat du moteur |
+
+- Un profil dont `pertinentes` est vide est affiché « non annoté » et exclu de la moyenne.
+- Une formation pertinente doit être écrite exactement comme son intitulé dans le catalogue ; sinon le script s'arrête et indique le profil concerné.
+- La colonne « Maximum » donne la précision@5 atteignable quand le conseiller a désigné moins de 5 formations.
+
+### État
+
+*29 octobre 2026* : les 20 profils sont rédigés (`profils_test.json` : projets orientés vers SISG pour 8 d'entre eux, IA-Data pour 6 et TRIT pour 6 ; 10 à la carte, 10 modulaires). **Les formations pertinentes restent à désigner par un conseiller du cabinet** : aucune précision@5 n'a encore été mesurée.
+
 ### Journal des essais
 
 | Date | Paramètres | Précision@5 moyenne | Remarques |
