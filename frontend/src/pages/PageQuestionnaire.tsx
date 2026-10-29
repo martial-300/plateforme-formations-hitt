@@ -5,6 +5,7 @@ import { ErreurApi } from "../api/client";
 import { lireProfil, soumettreProfil } from "../api/profil";
 import type { TypeFormation } from "../api/types";
 import { messageErreur } from "../auth/useConnexion";
+import { lireEssai, oublierEssai } from "../essai/memoire";
 import {
   CHAMPS,
   controler,
@@ -41,6 +42,7 @@ export function PageQuestionnaire() {
   // Les réponses déjà enregistrées pré-remplissent la page (RF-07) ; 404 = premier passage.
   const [chargement, setChargement] = useState(true);
   const [aUnProfil, setAUnProfil] = useState(false);
+  const [repriseEssai, setRepriseEssai] = useState(false);
   const [problemes, setProblemes] = useState<Partial<Record<Champ, Probleme>>>({});
   const [erreur, setErreur] = useState<string | null>(null);
   const [erreurChargement, setErreurChargement] = useState<string | null>(null);
@@ -59,9 +61,23 @@ export function PageQuestionnaire() {
         setAUnProfil(true);
       })
       .catch((e: unknown) => {
-        // Sans profil, le questionnaire part vide ; une autre erreur est signalée sans bloquer.
-        if (actif && !(e instanceof ErreurApi && e.statut === 404))
+        // Sans profil, le questionnaire part vide ou reprend l'essai sans compte (RF-12) ;
+        // une autre erreur est signalée sans bloquer.
+        if (!actif) return;
+        if (!(e instanceof ErreurApi && e.statut === 404)) {
           setErreurChargement(messageErreur(e));
+          return;
+        }
+        const essai = lireEssai();
+        if (essai) {
+          setSaisie({
+            ...SAISIE_VIDE,
+            centres_interet: essai.centres_interet,
+            type_souhaite: essai.type_souhaite,
+            budget: formaterNombre(essai.budget_max_fcfa),
+          });
+          setRepriseEssai(true);
+        }
       })
       .finally(() => actif && setChargement(false));
     return () => {
@@ -96,6 +112,7 @@ export function PageQuestionnaire() {
     setEnvoi(true);
     try {
       const resultat = await soumettreProfil(versProfil(saisie));
+      oublierEssai();
       navigate("/recommandations", { state: { resultat } });
     } catch (e) {
       setErreur(messageErreur(e));
@@ -150,6 +167,12 @@ export function PageQuestionnaire() {
         </p>
       ) : (
         <form className="questionnaire__carte" onSubmit={soumettre} noValidate>
+          {repriseEssai && (
+            <p className="questionnaire__reprise" role="status">
+              Vos réponses de l'essai sans compte sont reprises : complétez les trois autres
+              questions.
+            </p>
+          )}
           {erreurChargement && (
             <div className="alerte" role="alert">
               <p className="alerte__titre">Vos réponses précédentes n'ont pas pu être chargées</p>

@@ -1,4 +1,9 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { demanderApercu } from "../api/apercu";
+import type { ApercuEntree, RecommandationApercu } from "../api/types";
+import { formaterMontant } from "../catalogue/libelles";
+import { ListeApercu } from "../components/ListeApercu";
 
 // Chiffres du catalogue validé (database/02_catalogue_hitt.sql) ; à lire depuis l'API
 // une fois GET /formations disponible.
@@ -49,9 +54,72 @@ const ETAPES = [
   ],
 ] as const;
 
+// Profil fictif de l'exemple (RF-12) : ses formations sont calculées par le vrai moteur, via
+// l'aperçu, pour que l'exemple reste juste quand le catalogue ou le moteur change.
+const EXEMPLE: ApercuEntree = {
+  centres_interet: "Développement web, sites web, programmation",
+  type_souhaite: "carte",
+  budget_max_fcfa: 150000,
+};
+
 const TOTAL = DOMAINES.reduce((total, d) => total + d.carte + d.modulaires, 0);
 
-/** Écran 09 (RF-05), sans l'exemple de résultat (RF-12, ajouté en S5). */
+/** Exemple de l'écran 09 ; rien n'est affiché si l'aperçu échoue (API injoignable, 429). */
+function ExempleAfi() {
+  const [recommandations, setRecommandations] = useState<RecommandationApercu[] | null>(null);
+
+  useEffect(() => {
+    let actif = true;
+    demanderApercu(EXEMPLE)
+      .then((reponse) => actif && setRecommandations(reponse.recommandations))
+      .catch(() => {});
+    return () => {
+      actif = false;
+    };
+  }, []);
+
+  if (!recommandations || recommandations.length === 0) return null;
+  return (
+    <section className="conteneur accueil__section" aria-labelledby="titre-exemple">
+      <p className="surtitre">Exemple</p>
+      <h2 id="titre-exemple">Ce que la plateforme propose à Afi</h2>
+      <p className="exemple__note">
+        Afi est un profil fictif, donné pour illustrer le fonctionnement.
+      </p>
+      <div className="exemple">
+        <div className="exemple__reponses">
+          <h3>Ses réponses</h3>
+          <dl>
+            <div>
+              <dt>Ce qui l&apos;attire</dt>
+              <dd>{EXEMPLE.centres_interet}</dd>
+            </div>
+            <div>
+              <dt>Format</dt>
+              <dd>Formation courte, à la carte</dd>
+            </div>
+            <div>
+              <dt>Budget</dt>
+              <dd>{formaterMontant(EXEMPLE.budget_max_fcfa)} au maximum</dd>
+            </div>
+          </dl>
+        </div>
+        <div className="exemple__resultat">
+          <h3>Ses {recommandations.length === 3 ? "trois " : ""}premières formations</h3>
+          <ListeApercu recommandations={recommandations} />
+          <div className="exemple__action">
+            <Link to="/essai" className="bouton">
+              Essayer avec mon profil
+            </Link>
+            <p>Sans compte, en trois questions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** Écran 09 (RF-05, RF-12). */
 export function PageAccueil() {
   return (
     <main className="accueil">
@@ -113,6 +181,8 @@ export function PageAccueil() {
           ))}
         </ul>
       </section>
+
+      <ExempleAfi />
 
       <section
         className="conteneur accueil__section fonctionnement"

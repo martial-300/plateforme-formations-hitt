@@ -23,12 +23,13 @@ function liensSelonRole(utilisateur: Utilisateur | null): Lien[] {
       { vers: "/recommandations", libelle: "Mes recommandations" },
     ];
   }
-  return [catalogue, { vers: "/questionnaire", libelle: "Obtenir mes recommandations" }];
+  return [catalogue, { vers: "/essai", libelle: "Obtenir mes recommandations" }];
 }
 
 /** Libellé de la bande verte sur mobile (M1, M5) : la rubrique de la page affichée. */
 function rubrique(chemin: string, liens: Lien[]): string {
   if (chemin === "/connexion" || chemin === "/inscription") return "Espace apprenant";
+  if (chemin === "/essai") return "Essai sans compte";
   const lien = liens.find((l) => chemin === l.vers || chemin.startsWith(`${l.vers}/`));
   return lien?.libelle ?? "Accueil";
 }

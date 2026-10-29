@@ -109,3 +109,30 @@ export interface ProfilEtRecommandations {
   profil: Profil;
   recommandations: Recommandation[];
 }
+
+/** Corps de POST /recommandations/apercu (RF-12) : les 3 questions de la page /essai */
+export interface ApercuEntree {
+  /** 1 à 1 000 caractères : « ce que vous aimeriez apprendre » */
+  centres_interet: string;
+  type_souhaite: TypeFormation;
+  /** entier de 0 à 2 147 483 647 */
+  budget_max_fcfa: number;
+}
+
+/** Formation de l'aperçu : sans description ni mots-clés */
+export type FormationApercu = Omit<Formation, "description" | "mots_cles">;
+
+/** Rien n'est enregistré : pas d'identifiant, donc pas de retour possible */
+export interface RecommandationApercu {
+  /** 1 à 3, par score décroissant */
+  rang: number;
+  /** de 0 à 1, jamais affiché tel quel (libellé de correspondance) */
+  score: number;
+  mots_cles_communs: string[];
+  formation: FormationApercu;
+}
+
+/** Réponse de POST /recommandations/apercu : 3 formations au plus (liste vide possible) */
+export interface ReponseApercu {
+  recommandations: RecommandationApercu[];
+}
