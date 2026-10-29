@@ -4,12 +4,14 @@ import { RouteProtegee } from "./auth/RouteProtegee";
 import { EnTete } from "./components/EnTete";
 import { PiedDePage } from "./components/PiedDePage";
 import { PageAccueil } from "./pages/PageAccueil";
+import { PageAdmin } from "./pages/PageAdmin";
 import { PageCatalogue } from "./pages/PageCatalogue";
 import { PageConnexion } from "./pages/PageConnexion";
 import { PageDetailFormation } from "./pages/PageDetailFormation";
 import { PageEnConstruction as Page } from "./pages/PageEnConstruction";
 import { PageEssai } from "./pages/PageEssai";
 import { PageInscription } from "./pages/PageInscription";
+import { PageNouvelleFormation } from "./pages/PageNouvelleFormation";
 import { PageQuestionnaire } from "./pages/PageQuestionnaire";
 import { PageRecommandations } from "./pages/PageRecommandations";
 
@@ -46,7 +48,15 @@ export default function App() {
               path="/admin"
               element={
                 <RouteProtegee role="administrateur">
-                  <Page titre="Administration" exigence="RF-04, RF-11" sprint="S6" />
+                  <PageAdmin />
+                </RouteProtegee>
+              }
+            />
+            <Route
+              path="/admin/formations/nouvelle"
+              element={
+                <RouteProtegee role="administrateur">
+                  <PageNouvelleFormation />
                 </RouteProtegee>
               }
             />
