@@ -2,6 +2,10 @@
 
 *Générée par `python -m tests.evaluation.precision_at_5 --grille` (depuis `backend/`).*
 
+> **Proposition d'annotation rédigée par l'assistant IA (Claude), le 29 octobre 2026 — à faire valider par un conseiller de HIT-T Institute.**
+> Elle ne remplace pas l'annotation du cabinet exigée par le protocole (`docs/evaluation.md`) : une précision@5 calculée avec ces réponses est une mesure provisoire, à présenter comme telle.
+> Méthode : intitulés et prix du catalogue, filtre type souhaité + budget (prix promo s'il existe), adéquation avec le métier visé ; aucun résultat du moteur n'a été consulté. Le conseiller peut barrer, remplacer ou compléter chaque liste.
+
 Pour chaque profil, indiquer les formations du catalogue que vous conseilleriez à cette personne (5 de préférence, moins si le catalogue n'en propose pas autant). Seules les formations du type souhaité et dans le budget comptent. Les résultats de la plateforme ne sont volontairement pas montrés.
 
 ## P01
@@ -13,7 +17,14 @@ Pour chaque profil, indiquer les formations du catalogue que vous conseilleriez 
 - Type souhaité : Parcours modulaire certifiant
 - Budget maximum : 150 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Assistant de Direction (AD)
+2. Secrétariat-Bureautique (SB)
+3. Secrétariat-Comptabilité / Aide Comptable
+4. Secrétariat / Caisse (SC)
+
+*4 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P02
 
@@ -24,7 +35,14 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Formation courte, à la carte
 - Budget maximum : 60 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Tenue de caisse et facturation avec Excel
+2. Office Excel niveau débutant 2010-2024
+3. Office Excel niveau intermédiaire 2010-2024
+4. Office Excel niveau avancé 2010-2024
+
+*4 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P03
 
@@ -35,7 +53,12 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Parcours modulaire certifiant
 - Budget maximum : 150 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Secrétariat-Comptabilité / Aide Comptable
+2. Secrétariat / Caisse (SC)
+
+*2 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P04
 
@@ -46,7 +69,13 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Formation courte, à la carte
 - Budget maximum : 30 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Rédaction de CV (Faire la différence)
+2. Techniques d'entretien d'embauche
+3. Ecrits Professionnels (EP : CV et LM)
+
+*3 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P05
 
@@ -57,7 +86,13 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Parcours modulaire certifiant
 - Budget maximum : 200 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Community management
+2. Marketing digital
+3. Marketing et Communication (M & C)
+4. Multimédia ou Infographie ou Sérigraphie
+5. Production audiovisuel (Options : image, Montage, etc.)
 
 ## P06
 
@@ -68,7 +103,13 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Parcours modulaire certifiant
 - Budget maximum : 160 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Action commerciale et force de vente
+2. Gestion Commerciale / Commerce (COM)
+3. Marketing et Communication (M & C)
+
+*3 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P07
 
@@ -79,7 +120,13 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Formation courte, à la carte
 - Budget maximum : 40 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Initiation Informatique
+2. Office Word 2010-2024
+3. Office PowerPoint 2010-2024
+4. Office Excel niveau débutant 2010-2024
+5. Internet et réseaux sociaux
 
 ## P08
 
@@ -90,7 +137,11 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Parcours modulaire certifiant
 - Budget maximum : 150 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Transport et logistique
+
+*1 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P09
 
@@ -101,7 +152,13 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Formation courte, à la carte
 - Budget maximum : 100 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Analyse des données (Power BI, etc.)
+2. Analyse des données (Power Query, etc.)
+3. Langage Python et l'IA (Analyse des données)
+4. Office Excel niveau avancé 2010-2024
+5. Langage SQL ou PL/SQL ou Transact-SQL
 
 ## P10
 
@@ -112,7 +169,13 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Formation courte, à la carte
 - Budget maximum : 100 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Deep Learning ou Machine Learning
+2. Langage Python et l'IA (Analyse des données)
+3. Bibliothèque TensorFlow ou PyTorch
+4. Bibliothèque Keras
+5. IA Open Source et exemple d'application
 
 ## P11
 
@@ -123,7 +186,12 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Parcours modulaire certifiant
 - Budget maximum : 300 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Analyste développeur des systèmes IA
+2. Analyste Programmeur / Génie informatique
+
+*2 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P12
 
@@ -134,7 +202,12 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Formation courte, à la carte
 - Budget maximum : 60 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Principe de développement des ChatBot
+2. IA : Historique et opportunités du moment
+
+*2 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P13
 
@@ -145,7 +218,11 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Parcours modulaire certifiant
 - Budget maximum : 400 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Analyste développeur des systèmes BlockChain
+
+*1 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P14
 
@@ -156,7 +233,13 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Formation courte, à la carte
 - Budget maximum : 50 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. IA Générative et rédaction de mémoire
+2. Office Word 2010-2024
+3. IA : Historique et opportunités du moment
+
+*3 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P15
 
@@ -167,7 +250,13 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Formation courte, à la carte
 - Budget maximum : 150 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Développement de site web avec PHP, HTML, CSS
+2. Développement web Laravel (ou autres technologies)
+3. Algorithme et Programmation avec C/C++, Java
+4. Bases de données MySQL / Oracle / SQL Server
+5. Programmation en Java SE ou C++ ou VB ou PHP
 
 ## P16
 
@@ -178,7 +267,12 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Parcours modulaire certifiant
 - Budget maximum : 150 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Maintenance informatique
+2. Câblage et Maintenance Réseaux
+
+*2 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P17
 
@@ -189,7 +283,14 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Parcours modulaire certifiant
 - Budget maximum : 400 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Réseau et Cybersécurité
+2. Administrateur réseaux
+3. Analyste Programmeur et Cybersécurité
+4. Maintenance Info et Installation des Réseaux
+
+*4 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P18
 
@@ -200,7 +301,13 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Formation courte, à la carte
 - Budget maximum : 100 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Bases de données MySQL / Oracle / SQL Server
+2. Langage SQL ou PL/SQL ou Transact-SQL
+3. Office Access 2010-2024
+
+*3 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P19
 
@@ -211,7 +318,14 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Formation courte, à la carte
 - Budget maximum : 120 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Programmation mobile (Android/Iphone) (Flutter, …)
+2. Java Swing / JavaFX / Bases de données
+3. Algorithme et Programmation avec C/C++, Java
+4. Bases de données MySQL / Oracle / SQL Server
+
+*4 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## P20
 
@@ -222,7 +336,11 @@ Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
 - Type souhaité : Parcours modulaire certifiant
 - Budget maximum : 250 000 FCFA
 
-Formations pertinentes : 1. … 2. … 3. … 4. … 5. …
+Formations pertinentes (proposition) :
+
+1. Installation et réparation de climatiseurs
+
+*1 seulement : les autres formations du type et du budget ne correspondent pas vraiment au projet.*
 
 ## Catalogue (86 formations)
 

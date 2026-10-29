@@ -6,6 +6,7 @@ from types import SimpleNamespace
 from app.schemas.profil import ProfilEntree
 from tests.evaluation.precision_at_5 import (
     K,
+    annotations_provisoires,
     charger_catalogue,
     charger_profils,
     intitules_inconnus,
@@ -86,3 +87,13 @@ def test_precision_et_maximum():
     # Un profil non annoté ne compte pas dans la moyenne.
     assert moyenne([a, b]) == a.precision
     assert moyenne([b]) is None
+
+
+def test_annotation_non_validee_signalee_comme_provisoire():
+    profils = [
+        {"id": "A", "pertinentes": ["X"], "annote_par": "assistant IA, proposition"},
+        {"id": "B", "pertinentes": ["X"], "annote_par": "conseiller du cabinet, M. Exemple"},
+        {"id": "C", "pertinentes": ["X"]},
+        {"id": "D", "pertinentes": []},
+    ]
+    assert annotations_provisoires(profils) == ["A", "C"]
