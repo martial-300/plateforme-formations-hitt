@@ -15,7 +15,7 @@ from sqlalchemy.orm import Session
 from app.config import parametres
 from app.database import get_db
 from app.models import Utilisateur
-from app.models.utilisateur import ROLE_ADMINISTRATEUR
+from app.models.utilisateur import ROLE_ADMINISTRATEUR, ROLE_APPRENANT
 
 ALGORITHME_JWT = "HS256"
 
@@ -94,5 +94,16 @@ def require_admin(
     if utilisateur.role != ROLE_ADMINISTRATEUR:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail="Accès réservé à l'administrateur"
+        )
+    return utilisateur
+
+
+def require_apprenant(
+    utilisateur: Annotated[Utilisateur, Depends(get_current_user)],
+) -> Utilisateur:
+    """Apprenant connecté ; 403 pour un administrateur (questionnaire, recommandations, retours)."""
+    if utilisateur.role != ROLE_APPRENANT:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Accès réservé aux apprenants"
         )
     return utilisateur

@@ -4,6 +4,8 @@ Chaque modèle importé ici est enregistré dans `Base.metadata` (créé au dém
 """
 
 from app.models.formation import Formation
+from app.models.profil import ProfilApprenant
+from app.models.recommandation import Recommandation
 from app.models.utilisateur import Utilisateur
 
-__all__ = ["Formation", "Utilisateur"]
+__all__ = ["Formation", "ProfilApprenant", "Recommandation", "Utilisateur"]

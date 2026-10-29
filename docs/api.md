@@ -18,7 +18,7 @@
 | POST | `/formations` | Créer une formation | Admin | RF-03, RF-04 |
 | PUT | `/formations/{id}` | Modifier une formation | Admin | RF-03, RF-04 |
 | DELETE | `/formations/{id}` | Supprimer une formation | Admin | RF-03, RF-04 |
-| PUT | `/profil` | Soumettre / mettre à jour le questionnaire, renvoie les recommandations | Connecté | RF-06 → RF-09 |
+| PUT | `/profil` | Soumettre / mettre à jour le questionnaire, renvoie les recommandations | Apprenant | RF-06 → RF-09 |
 | POST | `/recommandations/{id}/retour` | Retour pertinent / non pertinent | Connecté | RF-10 |
 | GET | `/admin/statistiques` | Les 3 chiffres clés | Admin | RF-11 |
 | POST | `/recommandations/apercu` | Aperçu sans compte (3 formations, rien n'est enregistré) | Public | RF-12 |
@@ -31,7 +31,7 @@ La déconnexion (RF-02) est gérée côté frontend : suppression du JWT stocké
 |---|---|
 | 400 | Données invalides (ex. budget négatif) |
 | 401 | JWT absent, expiré ou invalide ; identifiants incorrects |
-| 403 | Rôle insuffisant (route admin appelée par un apprenant) ; administrateur sur `/auth/google` |
+| 403 | Rôle insuffisant (route admin appelée par un apprenant, `PUT /profil` appelé par un administrateur) ; administrateur sur `/auth/google` |
 | 404 | Ressource introuvable |
 | 409 | Email déjà utilisé |
 | 422 | Erreur de validation Pydantic (format FastAPI) |
@@ -174,7 +174,10 @@ Règles de validation (sinon `422`) :
 
 ```json
 {
-  "profil": { "…": "…" },
+  "profil": {
+    "niveau_etudes": "BAC II", "competences": "word excel bases internet", "…": "…",
+    "type_souhaite": "carte", "budget_max_fcfa": 150000, "date_maj": "2026-11-02T10:20:00"
+  },
   "recommandations": [
     {
       "id": "…",
@@ -187,7 +190,11 @@ Règles de validation (sinon `422`) :
 }
 ```
 
-Moins de 5 résultats peuvent être renvoyés si le filtre type + budget laisse peu de formations.
+Moins de 5 résultats peuvent être renvoyés si le filtre type + budget laisse peu de formations (`[]` si aucune ne correspond ; le profil est enregistré quand même).
+
+- Tous les champs sont obligatoires à chaque soumission. Textes : espaces de début et de fin retirés, 1 à 1 000 caractères (`niveau_etudes` : 50). `type_souhaite` : `carte` | `modulaire`. `budget_max_fcfa` : entier de 0 à 2 147 483 647. Sinon `422`, et rien n'est enregistré. Sans jeton ou jeton invalide : `401`. Compte administrateur : `403` « Accès réservé aux apprenants » (ses recommandations fausseraient les statistiques de RF-11).
+- Un seul profil par compte : une nouvelle soumission l'écrase, et les anciennes recommandations sont remplacées dans la même transaction (RF-07).
+- `score` est arrondi à 4 décimales (`NUMERIC(5,4)` en base) ; `formation` a le format de `GET /formations/{id}`.
 
 ### `POST /recommandations/{id}/retour`
 

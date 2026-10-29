@@ -67,7 +67,7 @@ erDiagram
 | Prix promo absent pour les modulaires | `cout_promo_fcfa` nullable |
 | Durée hétérogène | `duree_valeur` + `duree_unite` |
 | Suppression d'une formation | `ON DELETE CASCADE` sur les recommandations associées |
-| Resoumission du questionnaire | `UPDATE` du profil + suppression des anciennes recommandations + insertion des 5 nouvelles (une transaction) |
+| Soumission ou resoumission du questionnaire | Création ou écrasement du profil (`INSERT … ON CONFLICT (utilisateur_id) DO UPDATE`) + suppression des anciennes recommandations + insertion des 5 nouvelles au plus (une transaction) |
 
 ## Écart par rapport au cahier des charges
 
