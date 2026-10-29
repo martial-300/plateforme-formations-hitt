@@ -21,7 +21,7 @@
 | GET | `/profil` | Relire ses réponses et ses recommandations enregistrées (*ajout v1.2*) | Apprenant | RF-07 |
 | PUT | `/profil` | Soumettre / mettre à jour le questionnaire, renvoie les recommandations | Apprenant | RF-06 → RF-09 |
 | POST | `/recommandations/{id}/retour` | Retour pertinent / non pertinent | Apprenant | RF-10 |
-| GET | `/admin/statistiques` | Les 3 chiffres clés | Admin | RF-11 |
+| GET | `/admin/statistiques` | Apprenants, top 5, retours et taux « pertinent » | Admin | RF-11 |
 | POST | `/recommandations/apercu` | Aperçu sans compte (3 formations, rien n'est enregistré) | Public | RF-12 |
 
 La déconnexion (RF-02) est gérée côté frontend : suppression du JWT stocké.
@@ -247,14 +247,21 @@ Aperçu pour un visiteur sans compte. Même moteur que `PUT /profil`, mais avec 
 
 ### `GET /admin/statistiques`
 
+Réservé à l'administrateur (`401` sans JWT, `403` pour un apprenant).
+
 ```json
 {
   "nb_apprenants": 27,
   "top_formations": [
-    { "formation_id": "…", "intitule": "Office Excel niveau avancé 2010-2024", "nb_recommandations": 14 }
+    { "formation_id": "…", "intitule": "Office Excel niveau avancé 2010-2024", "domaine": "SISG", "nb_recommandations": 14 }
   ],
-  "taux_pertinent": 0.74
+  "nb_retours": 92,
+  "nb_retours_pertinents": 68,
+  "taux_pertinent": 0.739
 }
 ```
 
-`taux_pertinent` = retours « pertinent » / retours donnés (`null` s'il n'y a encore aucun retour).
+- `nb_apprenants` : comptes de rôle `apprenant` (les administrateurs ne sont pas comptés).
+- `top_formations` : 5 au plus, par nombre de recommandations décroissant puis par intitulé ; une formation jamais recommandée n'y figure pas. Les recommandations comptées sont celles en base, c'est-à-dire le dernier top 5 de chaque apprenant (RF-07).
+- `nb_retours` : retours donnés (`pertinent` ou `non_pertinent`, `aucun` exclu) ; `nb_retours_pertinents` : ceux marqués `pertinent`.
+- `taux_pertinent` = `nb_retours_pertinents` / `nb_retours`, arrondi à 3 décimales (`null` s'il n'y a encore aucun retour). Objectif de la soutenance : au moins 0,70 (cahier des charges § 11).
