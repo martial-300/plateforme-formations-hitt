@@ -72,3 +72,40 @@ export type FormationEntree = Omit<Formation, "id" | "cout_promo_fcfa"> & {
   /** absent ou null pour les formations modulaires ; PUT efface le prix promo s'il est absent */
   cout_promo_fcfa?: number | null;
 };
+
+/** Corps de PUT /profil (RF-06, RF-07) : toutes les réponses, à chaque soumission */
+export interface ProfilEntree {
+  /** 1 à 50 caractères */
+  niveau_etudes: string;
+  /** 1 à 1 000 caractères */
+  competences: string;
+  /** 1 à 1 000 caractères */
+  centres_interet: string;
+  /** 1 à 1 000 caractères */
+  objectif_professionnel: string;
+  type_souhaite: TypeFormation;
+  /** entier de 0 à 2 147 483 647 */
+  budget_max_fcfa: number;
+}
+
+export interface Profil extends ProfilEntree {
+  date_maj: string;
+}
+
+export type Retour = "pertinent" | "non_pertinent" | "aucun";
+
+/** Recommandation enregistrée pour l'apprenant (RF-08, RF-09) */
+export interface Recommandation {
+  id: string;
+  /** de 0 à 1, jamais affiché tel quel (libellé de correspondance) */
+  score: number;
+  mots_cles_communs: string[];
+  retour: Retour;
+  formation: Formation;
+}
+
+/** Réponse de PUT /profil : 5 recommandations au plus, triées par score décroissant */
+export interface ProfilEtRecommandations {
+  profil: Profil;
+  recommandations: Recommandation[];
+}

@@ -1376,3 +1376,206 @@ a {
     text-align: left;
   }
 }
+
+/* --- Questionnaire (écrans 05, 13 et M2, RF-06, RF-07) ---------------------------------------- */
+
+.questionnaire {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  gap: 64px;
+  align-items: start;
+  padding-top: 40px;
+  padding-bottom: 72px;
+}
+
+.questionnaire h1 {
+  margin: 0 0 16px;
+  font-size: 40px;
+  line-height: 1.15;
+}
+
+.questionnaire__chapo {
+  margin: 0 0 20px;
+  color: var(--texte-secondaire);
+}
+
+.questionnaire__note {
+  margin: 0;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--texte-secondaire);
+  background: var(--carte);
+  border-left: 3px solid var(--vert);
+}
+
+.questionnaire__carte {
+  display: grid;
+  gap: 32px;
+  padding: 40px;
+  background: var(--carte);
+  border-radius: var(--rayon);
+}
+
+.questionnaire__carte .alerte a {
+  color: inherit;
+}
+
+.questionnaire__bloc,
+.choix {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.questionnaire__bloc {
+  display: grid;
+  gap: 20px;
+}
+
+.questionnaire__bloc > legend {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 0 0 16px;
+  font-size: 22px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--filet);
+}
+
+.questionnaire__numero {
+  margin-right: 6px;
+  color: var(--vert-fonce);
+}
+
+.questionnaire textarea.champ__saisie {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.questionnaire .champ__saisie[aria-invalid="true"] {
+  border-color: var(--erreur);
+}
+
+.questionnaire .champ__saisie:focus {
+  outline: 2px solid var(--vert);
+  outline-offset: -1px;
+}
+
+.choix .champ__libelle {
+  margin-bottom: 12px;
+  padding: 0;
+}
+
+.choix__option {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  cursor: pointer;
+}
+
+.choix__option + .choix__option {
+  border-top: 1px solid var(--filet);
+}
+
+.choix__option input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: var(--vert);
+}
+
+.choix__option strong {
+  display: block;
+  font-weight: 600;
+}
+
+.choix__detail {
+  font-size: 13px;
+  color: var(--texte-secondaire);
+}
+
+.questionnaire__budget {
+  max-width: 360px;
+}
+
+.questionnaire__actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding-top: 28px;
+  border-top: 1px solid var(--filet);
+}
+
+.questionnaire__obligatoire {
+  flex: 1;
+  margin: 0;
+  font-size: 13px;
+  color: var(--texte-discret);
+}
+
+.questionnaire__annuler {
+  font-weight: 600;
+}
+
+@media (max-width: 1023px) and (min-width: 861px) {
+  .questionnaire {
+    grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+
+/* Mobile (M2) : en-tête court, formulaire sur le fond, bouton pleine largeur. */
+@media (max-width: 860px) {
+  .questionnaire {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-top: 24px;
+    padding-bottom: 40px;
+  }
+
+  .questionnaire h1 {
+    margin-bottom: 4px;
+    font-size: 30px;
+  }
+
+  .questionnaire .fil-ariane,
+  .questionnaire__chapo-suite,
+  .questionnaire__note,
+  .questionnaire__annuler {
+    display: none;
+  }
+
+  .questionnaire__chapo {
+    margin: 0;
+  }
+
+  .questionnaire__carte {
+    padding: 0;
+    background: none;
+  }
+
+  .questionnaire .formulaire__ligne {
+    grid-template-columns: 1fr;
+  }
+
+  .choix__option {
+    background: var(--carte);
+  }
+
+  .questionnaire__budget {
+    max-width: none;
+  }
+
+  .questionnaire__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .questionnaire__actions .bouton {
+    width: 100%;
+  }
+}
