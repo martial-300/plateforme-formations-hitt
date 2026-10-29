@@ -139,3 +139,24 @@ export interface RecommandationApercu {
 export interface ReponseApercu {
   recommandations: RecommandationApercu[];
 }
+
+/** Ligne du top 5 de GET /admin/statistiques */
+export interface FormationRecommandee {
+  formation_id: string;
+  intitule: string;
+  domaine: Domaine;
+  nb_recommandations: number;
+}
+
+/** Réponse de GET /admin/statistiques (RF-11) */
+export interface Statistiques {
+  /** administrateurs exclus */
+  nb_apprenants: number;
+  /** 5 au plus, par nombre de recommandations décroissant puis par intitulé */
+  top_formations: FormationRecommandee[];
+  /** retours « pertinent » ou « non pertinent » donnés */
+  nb_retours: number;
+  nb_retours_pertinents: number;
+  /** de 0 à 1, null sans retour */
+  taux_pertinent: number | null;
+}

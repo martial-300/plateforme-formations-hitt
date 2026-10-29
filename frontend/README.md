@@ -39,5 +39,6 @@ VITE_API_URL=http://localhost:8000/api/v1
 | `/questionnaire`                 | Questionnaire                              | Apprenant      |
 | `/recommandations`               | Mes recommandations                        | Apprenant      |
 | `/admin`                         | Administration (catalogue + chiffres clés) | Administrateur |
+| `/admin/formations/nouvelle`     | Ajouter une formation (écran 16)           | Administrateur |
 
 Interface responsive (ordinateur et mobile). Le JWT est conservé côté client ; la déconnexion le supprime.
