@@ -40,9 +40,9 @@ nano .env
 docker compose exec backend python -m app.outils.comptes_demo
 ```
 
-`premier-certificat.sh` pose un certificat provisoire auto-signé (nginx refuse de démarrer sans certificat), démarre toute la pile, demande le vrai certificat par le défi HTTP de Let's Encrypt, recharge nginx puis lance `certbot` pour les renouvellements. Relancé alors qu'un certificat existe, il se contente de `docker compose --profile production up -d --build`. Après `--staging`, supprimer le certificat de test avant la demande réelle : `docker compose --profile production run --rm --entrypoint sh certbot -c "rm -rf /etc/letsencrypt/live/<domaine> /etc/letsencrypt/archive/<domaine> /etc/letsencrypt/renewal/<domaine>.conf"`.
+`premier-certificat.sh` pose un certificat provisoire auto-signé (nginx refuse de démarrer sans certificat), démarre toute la pile, demande le vrai certificat par le défi HTTP de Let's Encrypt, recharge nginx puis lance `certbot` pour les renouvellements. Relancé alors qu'un certificat existe, il se contente de `docker compose --profile production up -d --build` ; un certificat de test (`--staging`) est remplacé par un certificat réel. Avant de lancer le script, il refuse un `.env` resté en valeurs de développement (`VITE_API_URL` sur localhost, `CORS_ORIGINS` sans `https://<domaine>`, identifiant Google d'exemple). Si la demande échoue (DNS pas encore propagé, port 80 fermé), le certificat provisoire est remis en place et le script peut être relancé. Le domaine doit pointer vers le VPS en IPv4 (A) et, s'il a un enregistrement AAAA, en IPv6 aussi : Let's Encrypt essaie l'IPv6 en premier.
 
-Mise à jour du code ensuite :
+Mise à jour du code ensuite (nginx résout `backend` et `frontend` à chaque requête : pas besoin de le recharger) :
 
 ```bash
 git pull
@@ -101,8 +101,10 @@ docker compose --profile production down -v && ./deploy/premier-certificat.sh
 Les sauvegardes automatisées sont en V2. En attendant :
 
 ```bash
-docker compose exec db pg_dump -U hitt hitt > sauvegarde_$(date +%F).sql
+docker compose exec -T db pg_dump -U hitt hitt > sauvegarde_$(date +%F).sql
 ```
+
+`-T` évite les fins de ligne modifiées par le terminal ; remplacer `-U hitt hitt` si `POSTGRES_USER` ou `POSTGRES_DB` ont été changés.
 
 ## Vérifications avant la soutenance
 
