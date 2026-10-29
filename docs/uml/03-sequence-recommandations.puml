@@ -13,6 +13,17 @@ box "Serveur (VPS)" #F6F4EF
   database "PostgreSQL" as DB
 end box
 
+A -> UI : Ouvre « Mon questionnaire »
+UI -> API : GET /api/v1/profil (JWT)
+API -> DB : SELECT profil et recommandations
+alt Aucun profil
+  API --> UI : 404
+  UI --> A : Questionnaire vide
+else Profil existant
+  API --> UI : 200 { profil, recommandations }
+  UI --> A : Questionnaire pré-rempli
+end
+
 A -> UI : Remplit le questionnaire et valide
 UI -> UI : Contrôle des champs (obligatoires, budget numérique)
 UI -> API : PUT /api/v1/profil (JWT, réponses)

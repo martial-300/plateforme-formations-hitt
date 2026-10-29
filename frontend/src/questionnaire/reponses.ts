@@ -1,4 +1,4 @@
-// Réponses du questionnaire (RF-06, RF-07) : saisie, contrôle avant envoi et mémoire de session.
+// Réponses du questionnaire (RF-06, RF-07) : saisie et contrôle avant envoi.
 import type { ProfilEntree, TypeFormation } from "../api/types";
 
 export const NIVEAUX_ETUDES = [
@@ -134,26 +134,3 @@ export function versSaisie(profil: ProfilEntree): Saisie {
 export function formaterNombre(montant: number): string {
   return String(montant).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0");
 }
-
-// Dernières réponses envoyées, gardées le temps de l'onglet (sessionStorage) et par compte :
-// l'apprenant qui revient modifier son questionnaire (RF-07) retrouve ses réponses. Rien n'est
-// conservé après la fermeture de l'onglet (poste partagé).
-const cle = (utilisateurId: string) => `hitt.questionnaire.${utilisateurId}`;
-
-export const reponsesEnvoyees = {
-  lire(utilisateurId: string): ProfilEntree | null {
-    try {
-      const brut = sessionStorage.getItem(cle(utilisateurId));
-      return brut ? (JSON.parse(brut) as ProfilEntree) : null;
-    } catch {
-      return null;
-    }
-  },
-  enregistrer(utilisateurId: string, profil: ProfilEntree) {
-    try {
-      sessionStorage.setItem(cle(utilisateurId), JSON.stringify(profil));
-    } catch {
-      // Stockage indisponible (navigation privée) : le questionnaire repartira vide.
-    }
-  },
-};

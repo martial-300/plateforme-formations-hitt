@@ -18,6 +18,7 @@
 | POST | `/formations` | Créer une formation | Admin | RF-03, RF-04 |
 | PUT | `/formations/{id}` | Modifier une formation | Admin | RF-03, RF-04 |
 | DELETE | `/formations/{id}` | Supprimer une formation | Admin | RF-03, RF-04 |
+| GET | `/profil` | Relire ses réponses et ses recommandations enregistrées (*ajout v1.2*) | Apprenant | RF-07 |
 | PUT | `/profil` | Soumettre / mettre à jour le questionnaire, renvoie les recommandations | Apprenant | RF-06 → RF-09 |
 | POST | `/recommandations/{id}/retour` | Retour pertinent / non pertinent | Connecté | RF-10 |
 | GET | `/admin/statistiques` | Les 3 chiffres clés | Admin | RF-11 |
@@ -195,6 +196,13 @@ Moins de 5 résultats peuvent être renvoyés si le filtre type + budget laisse 
 - Tous les champs sont obligatoires à chaque soumission. Textes : espaces de début et de fin retirés, 1 à 1 000 caractères (`niveau_etudes` : 50). `type_souhaite` : `carte` | `modulaire`. `budget_max_fcfa` : entier de 0 à 2 147 483 647. Sinon `422`, et rien n'est enregistré. Sans jeton ou jeton invalide : `401`. Compte administrateur : `403` « Accès réservé aux apprenants » (ses recommandations fausseraient les statistiques de RF-11).
 - Un seul profil par compte : une nouvelle soumission l'écrase, et les anciennes recommandations sont remplacées dans la même transaction (RF-07).
 - `score` est arrondi à 4 décimales (`NUMERIC(5,4)` en base) ; `formation` a le format de `GET /formations/{id}`.
+
+### `GET /profil` (*ajout v1.2*)
+
+Relit le profil et les recommandations enregistrés par le dernier `PUT /profil`, **sans nouveau calcul** : même format de réponse que `PUT /profil`, recommandations triées par score décroissant, avec leur `retour`.
+
+- Sert à pré-remplir le questionnaire (RF-07) et à réafficher « Mes recommandations » après une reconnexion.
+- `404` « Aucun profil : répondez au questionnaire » si l'apprenant n'a encore rien soumis. Même accès que `PUT /profil` : `401` sans jeton, `403` pour un administrateur.
 
 ### `POST /recommandations/{id}/retour`
 

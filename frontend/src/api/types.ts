@@ -104,7 +104,7 @@ export interface Recommandation {
   formation: Formation;
 }
 
-/** Réponse de PUT /profil : 5 recommandations au plus, triées par score décroissant */
+/** Réponse de GET et PUT /profil : 5 recommandations au plus, triées par score décroissant */
 export interface ProfilEtRecommandations {
   profil: Profil;
   recommandations: Recommandation[];

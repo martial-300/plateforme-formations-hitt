@@ -1,6 +1,6 @@
 # Cahier des charges MVP — Plateforme de recommandation de formations (HIT-T Institute)
 
-*23 octobre 2026 · Martial — v1.1 du 24 octobre 2026 : ajout de l'aperçu pour les visiteurs (RF-12) et de la connexion avec Google (RF-13)*
+*23 octobre 2026 · Martial — v1.1 du 24 octobre 2026 : ajout de l'aperçu pour les visiteurs (RF-12) et de la connexion avec Google (RF-13) — v1.2 du 28 octobre 2026 : lecture du profil enregistré (`GET /profil`) et routes du questionnaire réservées aux apprenants, à faire valider par les encadreurs*
 
 > Version Markdown du document de référence. Original Word : [Cahier_des_Charges_MVP_HITT_Institute.docx](Cahier_des_Charges_MVP_HITT_Institute.docx).
 
@@ -123,7 +123,7 @@ Le texte utilisé par le moteur IA est reconstruit à la volée à partir du pro
 
 ## 8. API REST minimale
 
-13 endpoints (contre 18 dans le cahier technique), base `/api/v1`, JSON, JWT en en-tête `Authorization: Bearer`. La documentation Swagger générée par FastAPI sur `/docs` sert de référence.
+14 endpoints (contre 18 dans le cahier technique), base `/api/v1`, JSON, JWT en en-tête `Authorization: Bearer`. La documentation Swagger générée par FastAPI sur `/docs` sert de référence.
 
 | Méthode | Route | Rôle | Accès |
 |---|---|---|---|
@@ -136,7 +136,8 @@ Le texte utilisé par le moteur IA est reconstruit à la volée à partir du pro
 | POST | /formations | Créer une formation | Admin |
 | PUT | /formations/{id} | Modifier une formation | Admin |
 | DELETE | /formations/{id} | Supprimer une formation | Admin |
-| PUT | /profil | Soumettre ou mettre à jour le questionnaire, renvoie les recommandations | Connecté |
+| GET | /profil | Relire ses réponses et ses recommandations enregistrées, pour pré-remplir le questionnaire et réafficher les recommandations (RF-07, ajout v1.2) | Apprenant |
+| PUT | /profil | Soumettre ou mettre à jour le questionnaire, renvoie les recommandations (réservé aux apprenants, ajout v1.2) | Apprenant |
 | POST | /recommandations/{id}/retour | Enregistrer le retour pertinent / non pertinent | Connecté |
 | GET | /admin/statistiques | Les 3 chiffres clés | Admin |
 | POST | /recommandations/apercu | Aperçu sans compte : 3 formations, rien n'est enregistré (RF-12, ajout v1.1) | Public |
