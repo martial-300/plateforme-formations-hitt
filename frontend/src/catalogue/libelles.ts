@@ -53,7 +53,10 @@ export function formaterMontant(montant: number): string {
 }
 
 /** 3 semaine → « 3 semaines », 0.5 semaine → « 0,5 semaine ». */
-export function formaterDuree({ duree_valeur, duree_unite }: Formation): string {
+export function formaterDuree({
+  duree_valeur,
+  duree_unite,
+}: Pick<Formation, "duree_valeur" | "duree_unite">): string {
   const unite = duree_valeur >= 2 ? UNITES_PLURIEL[duree_unite] : duree_unite;
   return `${String(duree_valeur).replace(".", ",")}\u00a0${unite}`;
 }

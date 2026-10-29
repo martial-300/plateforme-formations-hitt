@@ -8,6 +8,7 @@ import { PageCatalogue } from "./pages/PageCatalogue";
 import { PageConnexion } from "./pages/PageConnexion";
 import { PageDetailFormation } from "./pages/PageDetailFormation";
 import { PageEnConstruction as Page } from "./pages/PageEnConstruction";
+import { PageEssai } from "./pages/PageEssai";
 import { PageInscription } from "./pages/PageInscription";
 import { PageQuestionnaire } from "./pages/PageQuestionnaire";
 
@@ -21,10 +22,7 @@ export default function App() {
             <Route path="/" element={<PageAccueil />} />
             <Route path="/formations" element={<PageCatalogue />} />
             <Route path="/formations/:id" element={<PageDetailFormation />} />
-            <Route
-              path="/essai"
-              element={<Page titre="Essayer sans compte" exigence="RF-12" sprint="S5" />}
-            />
+            <Route path="/essai" element={<PageEssai />} />
             <Route path="/connexion" element={<PageConnexion />} />
             <Route path="/inscription" element={<PageInscription />} />
             <Route
