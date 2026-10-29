@@ -53,13 +53,13 @@ Depuis `backend/`, sans base de données (le catalogue est lu dans `database/02_
 
 ### État
 
-*29 octobre 2026* : les 20 profils sont rédigés (`profils_test.json` : projets orientés vers SISG pour 8 d'entre eux, IA-Data pour 6 et TRIT pour 6 ; 10 à la carte, 10 modulaires). **Les formations pertinentes restent à désigner par un conseiller du cabinet** : aucune précision@5 n'a encore été mesurée.
+*29 octobre 2026* : les 20 profils sont rédigés (`profils_test.json` : projets orientés vers SISG pour 8 d'entre eux, IA-Data pour 6 et TRIT pour 6 ; 10 à la carte, 10 modulaires). Les formations pertinentes ont été **proposées par l'assistant IA** ([grille](grille-annotation-profils.md)) et recopiées dans `profils_test.json` avec `annote_par` ; **elles restent à valider par un conseiller du cabinet**. La mesure qui en découle (0,47) est provisoire. Une annotation validée s'écrit avec `annote_par` commençant par « conseiller du cabinet » ; le script cesse alors de signaler la mesure comme provisoire.
 
 ### Journal des essais
 
 | Date | Paramètres | Précision@5 moyenne | Remarques |
 |---|---|---|---|
-| | | | |
+| 29/10/2026 | Moteur de référence : TF-IDF `strip_accents="unicode"`, `lowercase=True`, `ngram_range=(1, 2)`, stop-words français fixes ; filtre type + prix effectif ≤ budget ; score 0 exclu ; un exemplaire par intitulé | **0,47 (provisoire)** | Annotations **proposées par l'assistant IA, non validées par le cabinet** (`annote_par`). Maximum atteignable avec ces annotations : 0,64 (15 profils sur 20 ont moins de 5 formations pertinentes). Profils au maximum : P02, P08, P11, P13, P14, P16, P18, P20. Plus gros écarts : P15 (0,40 / 1,00), P10 (0,40 / 1,00), P05 (0,60 / 1,00), P03 (0,20 / 0,40), P12 (0,20 / 0,40 ; 4 résultats seulement). Calcul : 6 ms au plus par profil. |
 
 ## 2. Retours du panel d'apprenants
 

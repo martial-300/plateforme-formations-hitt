@@ -9,6 +9,9 @@ Le catalogue est lu dans database/02_catalogue_hitt.sql, sans base de données :
 reproductible et ne dépend que du moteur et du catalogue du dépôt. Les formations « pertinentes »
 sont désignées par un conseiller du cabinet, sans voir les résultats du moteur : ce script ne les
 modifie jamais. Un profil sans annotation est affiché mais exclu de la moyenne.
+
+Chaque profil indique dans `annote_par` qui a désigné ses formations pertinentes. Tant qu'un profil
+annoté n'est pas validé par un conseiller du cabinet, la mesure est signalée comme provisoire.
 """
 
 import argparse
@@ -26,6 +29,7 @@ CATALOGUE_SQL = RACINE / "database" / "02_catalogue_hitt.sql"
 PROFILS = Path(__file__).with_name("profils_test.json")
 K = 5
 OBJECTIF = 0.6
+VALIDE_PAR_LE_CABINET = "conseiller du cabinet"
 
 COLONNES = (
     "intitule",
@@ -172,6 +176,15 @@ def intitules_inconnus(profils: list[dict], formations: list[SimpleNamespace]) -
     return inconnus
 
 
+def annotations_provisoires(profils: list[dict]) -> list[str]:
+    """Profils annotés dont l'annotation n'a pas été faite ou validée par le cabinet."""
+    return [
+        p["id"]
+        for p in profils
+        if p["pertinentes"] and not p.get("annote_par", "").startswith(VALIDE_PAR_LE_CABINET)
+    ]
+
+
 def mesurer(profils: list[dict], formations: list[SimpleNamespace]) -> list[Resultat]:
     resultats = []
     for p in profils:
@@ -204,7 +217,7 @@ def _decimal(valeur: float) -> str:
     return f"{valeur:.2f}".replace(".", ",")
 
 
-def afficher(resultats: list[Resultat], details: bool) -> None:
+def afficher(resultats: list[Resultat], details: bool, provisoires: list[str]) -> None:
     print(f"{'Profil':<7}{'Précision@5':>12}{'Maximum':>10}{'Temps':>9}")
     for r in resultats:
         if r.annote:
@@ -229,6 +242,11 @@ def afficher(resultats: list[Resultat], details: bool) -> None:
         f"sur {len(resultats)} (objectif {_decimal(OBJECTIF)} : {verdict})"
     )
     print(f"Temps de calcul maximal : {max(r.duree_ms for r in resultats):.0f} ms")
+    if provisoires:
+        print(
+            f"MESURE PROVISOIRE : {len(provisoires)} profil(s) annoté(s) sans validation du "
+            "cabinet (champ annote_par). Ne pas la présenter comme la mesure du protocole."
+        )
 
 
 def grille(profils: list[dict], formations: list[SimpleNamespace]) -> str:
@@ -288,7 +306,7 @@ def main(arguments: list[str] | None = None) -> int:
                 f"{profil_id} : intitulé(s) absent(s) du catalogue : {manquants}", file=sys.stderr
             )
         return 1
-    afficher(mesurer(profils, formations), options.details)
+    afficher(mesurer(profils, formations), options.details, annotations_provisoires(profils))
     return 0
 
 
