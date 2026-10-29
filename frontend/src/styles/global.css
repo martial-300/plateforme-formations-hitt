@@ -1117,7 +1117,7 @@ a {
   grid-area: infos;
 }
 
-.tarif {
+.detail__cote {
   grid-area: tarif;
 }
 
@@ -1963,5 +1963,445 @@ a {
 
   .essai-compte__action p {
     max-width: none;
+  }
+}
+
+/* --- Mes recommandations (écrans 06, 12 et M3, RF-08 à RF-10) -------------------------------- */
+
+.seulement-mobile {
+  display: none;
+}
+
+.recommandations {
+  padding-top: 40px;
+  padding-bottom: 72px;
+}
+
+.recommandations h1 {
+  margin: 0 0 12px;
+  font-size: 40px;
+  line-height: 1.15;
+}
+
+.recommandations__chapo {
+  max-width: 1200px;
+  margin: 0 0 32px;
+  font-size: 17px;
+  color: var(--texte-secondaire);
+}
+
+.recommandations__grille {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 40px;
+  align-items: start;
+}
+
+.recommandations__liste {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.carte-reco {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 240px;
+  gap: 24px;
+  padding: 28px 24px;
+  background: var(--carte);
+  border-radius: var(--rayon);
+}
+
+.carte-reco__rang {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--vert-fonce);
+}
+
+.carte-reco__sur-titre {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--texte-secondaire);
+}
+
+.carte-reco__sur-titre .surtitre,
+.carte-reco__avis .surtitre {
+  margin: 0;
+}
+
+.carte-reco h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+.carte-reco h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.carte-reco h2 a:hover {
+  text-decoration: underline;
+}
+
+.carte-reco__description {
+  margin: 0 0 12px;
+  color: var(--texte-secondaire);
+}
+
+.carte-reco__legende {
+  margin: 0 0 6px;
+  font-size: 13px;
+  color: var(--texte-discret);
+}
+
+.carte-reco__infos {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: var(--texte-secondaire);
+}
+
+.mots-cles--communs li,
+.mots-cles--avec-communs .mots-cles__commun {
+  font-weight: 600;
+  border-bottom-color: var(--texte);
+}
+
+.mots-cles--communs li {
+  font-size: 13px;
+}
+
+.mots-cles--avec-communs li:not(.mots-cles__commun) {
+  color: var(--texte-discret);
+}
+
+.carte-reco__avis {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.carte-reco__avis .correspondance {
+  width: auto;
+}
+
+.avis {
+  display: grid;
+  gap: 8px;
+}
+
+.avis__question {
+  margin: 0;
+  font-size: 13px;
+  color: var(--texte-secondaire);
+}
+
+.avis__choix {
+  display: grid;
+  gap: 8px;
+}
+
+.avis .bouton {
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.avis .bouton[aria-pressed="true"] {
+  border-width: 2px;
+}
+
+.avis__choisi {
+  gap: 8px;
+}
+
+.avis__choisi--non_pertinent {
+  background: var(--texte-secondaire);
+  border-color: var(--texte-secondaire);
+}
+
+.avis__choisi--non_pertinent:hover {
+  background: var(--texte);
+}
+
+.recommandations__cote {
+  display: grid;
+  gap: 24px;
+}
+
+.recommandations__profil {
+  padding: 24px;
+  background: var(--carte);
+  border-radius: var(--rayon);
+}
+
+.recommandations__profil h2 {
+  margin: 0;
+  padding-bottom: 16px;
+  font-size: 22px;
+  border-bottom: 1px solid var(--filet);
+}
+
+.recommandations__profil dl {
+  margin: 0 0 20px;
+}
+
+.recommandations__profil dl div {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--filet);
+}
+
+.recommandations__profil dt {
+  font-size: 13px;
+  color: var(--texte-secondaire);
+}
+
+.recommandations__profil dd {
+  margin: 2px 0 0;
+  font-weight: 600;
+}
+
+.recommandations__aide {
+  padding: 20px;
+  background: var(--carte);
+  border-left: 3px solid var(--vert);
+}
+
+.recommandations__aide h2 {
+  margin: 0 0 8px;
+  font-size: 17px;
+}
+
+.recommandations__aide p {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: var(--texte-secondaire);
+}
+
+.recommandations__aide p:last-child {
+  margin-bottom: 0;
+}
+
+.recommandations__resume-mobile {
+  display: none;
+}
+
+.recommandations__vide {
+  padding: 40px;
+  background: var(--carte);
+  border-radius: var(--rayon);
+}
+
+.recommandations__illustration {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  margin-bottom: 24px;
+}
+
+.recommandations__vide h2 {
+  margin: 0 0 12px;
+  font-size: 28px;
+  line-height: 1.25;
+}
+
+.recommandations__vide p {
+  margin: 0 0 24px;
+  color: var(--texte-secondaire);
+}
+
+.recommandations__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  font-weight: 600;
+}
+
+/* Détail venu de « Mes recommandations » (écran 10). */
+.pourquoi {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
+  padding: 20px 24px;
+  background: var(--carte);
+  border-left: 3px solid var(--vert);
+}
+
+.pourquoi h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.pourquoi .correspondance {
+  width: min(320px, 100%);
+}
+
+.pourquoi p {
+  margin: 0;
+  color: var(--texte-secondaire);
+}
+
+.pourquoi .pourquoi__contraintes {
+  font-size: 13px;
+}
+
+.detail__avis {
+  margin-top: 24px;
+}
+
+.detail__avis h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.detail__avis .avis__choix {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 1023px) and (min-width: 861px) {
+  .recommandations__grille {
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: 24px;
+  }
+
+  .carte-reco {
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  .carte-reco__avis {
+    grid-column: 2;
+  }
+}
+
+/* Mobile (M3) : résumé du profil en haut, correspondance et avis sous chaque formation. */
+@media (max-width: 860px) {
+  .seulement-ordinateur {
+    display: none;
+  }
+
+  .seulement-mobile {
+    display: inline;
+  }
+
+  .recommandations {
+    padding-top: 24px;
+    padding-bottom: 40px;
+  }
+
+  .recommandations .fil-ariane {
+    display: none;
+  }
+
+  .recommandations h1 {
+    margin-bottom: 8px;
+    font-size: 30px;
+  }
+
+  .recommandations__chapo {
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .recommandations__resume-mobile {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    background: var(--carte);
+  }
+
+  .recommandations__resume-mobile p {
+    display: grid;
+    margin: 0;
+    font-size: 13px;
+  }
+
+  .recommandations__resume-mobile span {
+    color: var(--texte-secondaire);
+  }
+
+  .recommandations__resume-mobile a {
+    font-weight: 600;
+  }
+
+  .recommandations__grille {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .recommandations__liste + .recommandations__cote {
+    display: none;
+  }
+
+  .carte-reco {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 4px 12px;
+    padding: 20px 16px;
+  }
+
+  .carte-reco__rang {
+    font-size: 26px;
+    line-height: 1;
+  }
+
+  .carte-reco__texte,
+  .carte-reco__avis {
+    display: contents;
+  }
+
+  .carte-reco__sur-titre {
+    align-self: center;
+    margin: 0;
+  }
+
+  .carte-reco__texte > :not(.carte-reco__sur-titre),
+  .carte-reco__avis > * {
+    grid-column: 1 / -1;
+  }
+
+  .carte-reco h2 {
+    margin-top: 12px;
+    font-size: 18px;
+  }
+
+  .carte-reco__description {
+    font-size: 14px;
+  }
+
+  .carte-reco__avis > .surtitre {
+    margin-top: 16px;
+  }
+
+  .carte-reco__avis .correspondance {
+    margin: 6px 0 4px;
+  }
+
+  .avis__choix {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .recommandations__vide {
+    padding: 24px 20px;
+  }
+
+  .recommandations__vide h2 {
+    font-size: 22px;
+  }
+
+  .pourquoi {
+    padding: 16px 18px;
+  }
+
+  .detail__avis + .tarif__retour {
+    display: none;
   }
 }

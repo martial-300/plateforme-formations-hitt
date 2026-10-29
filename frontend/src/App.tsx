@@ -11,6 +11,7 @@ import { PageEnConstruction as Page } from "./pages/PageEnConstruction";
 import { PageEssai } from "./pages/PageEssai";
 import { PageInscription } from "./pages/PageInscription";
 import { PageQuestionnaire } from "./pages/PageQuestionnaire";
+import { PageRecommandations } from "./pages/PageRecommandations";
 
 export default function App() {
   return (
@@ -37,7 +38,7 @@ export default function App() {
               path="/recommandations"
               element={
                 <RouteProtegee role="apprenant">
-                  <Page titre="Mes recommandations" exigence="RF-08 à RF-10" sprint="S5" />
+                  <PageRecommandations />
                 </RouteProtegee>
               }
             />

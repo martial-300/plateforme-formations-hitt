@@ -94,6 +94,9 @@ export interface Profil extends ProfilEntree {
 
 export type Retour = "pertinent" | "non_pertinent" | "aucun";
 
+/** Corps de POST /recommandations/{id}/retour : « aucun » n'est pas un choix (RF-10) */
+export type RetourDonne = Exclude<Retour, "aucun">;
+
 /** Recommandation enregistrée pour l'apprenant (RF-08, RF-09) */
 export interface Recommandation {
   id: string;

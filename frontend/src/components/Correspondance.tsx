@@ -11,7 +11,8 @@ function niveauCorrespondance(score: number) {
   return NIVEAUX.find((niveau) => score >= niveau.minimum) ?? NIVEAUX[NIVEAUX.length - 1];
 }
 
-export function Correspondance({ score }: { score: number }) {
+/** `complement` s'ajoute au libellé, ex. « rang 1 sur 5 » (écran 10). */
+export function Correspondance({ score, complement }: { score: number; complement?: string }) {
   const { segments, libelle } = niveauCorrespondance(score);
   return (
     <div className="correspondance">
@@ -23,7 +24,10 @@ export function Correspondance({ score }: { score: number }) {
           />
         ))}
       </span>
-      <span className="correspondance__libelle">{libelle}</span>
+      <span className="correspondance__libelle">
+        {libelle}
+        {complement && ` — ${complement}`}
+      </span>
     </div>
   );
 }

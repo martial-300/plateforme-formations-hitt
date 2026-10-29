@@ -20,7 +20,7 @@
 | DELETE | `/formations/{id}` | Supprimer une formation | Admin | RF-03, RF-04 |
 | GET | `/profil` | Relire ses réponses et ses recommandations enregistrées (*ajout v1.2*) | Apprenant | RF-07 |
 | PUT | `/profil` | Soumettre / mettre à jour le questionnaire, renvoie les recommandations | Apprenant | RF-06 → RF-09 |
-| POST | `/recommandations/{id}/retour` | Retour pertinent / non pertinent | Connecté | RF-10 |
+| POST | `/recommandations/{id}/retour` | Retour pertinent / non pertinent | Apprenant | RF-10 |
 | GET | `/admin/statistiques` | Les 3 chiffres clés | Admin | RF-11 |
 | POST | `/recommandations/apercu` | Aperçu sans compte (3 formations, rien n'est enregistré) | Public | RF-12 |
 
@@ -211,7 +211,12 @@ Relit le profil et les recommandations enregistrés par le dernier `PUT /profil`
 { "retour": "pertinent" }
 ```
 
-Valeurs : `pertinent` | `non_pertinent`. L'apprenant ne peut noter que ses propres recommandations (sinon `404`).
+Valeurs : `pertinent` | `non_pertinent` (`aucun` est la valeur initiale, pas un choix : sinon `422`). L'apprenant ne peut noter que ses propres recommandations : celle d'un autre apprenant répond `404` « Recommandation introuvable », comme un identifiant inconnu.
+
+`200 OK` → la recommandation mise à jour, au format des éléments de `recommandations` de `PUT /profil`.
+
+- Modifiable : un nouveau retour remplace le précédent. Resoumettre le questionnaire remplace les recommandations, et donc leurs retours.
+- `401` sans jeton ; `403` pour un administrateur (comme `GET` et `PUT /profil`) ; `422` si l'identifiant n'est pas un UUID.
 
 ### `POST /recommandations/apercu` (public, RF-12)
 
