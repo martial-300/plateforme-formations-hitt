@@ -21,7 +21,7 @@
 | GET | `/profil` | Relire ses réponses et ses recommandations enregistrées (*ajout v1.2*) | Apprenant | RF-07 |
 | PUT | `/profil` | Soumettre / mettre à jour le questionnaire, renvoie les recommandations | Apprenant | RF-06 → RF-09 |
 | POST | `/recommandations/{id}/retour` | Retour pertinent / non pertinent | Apprenant | RF-10 |
-| GET | `/admin/statistiques` | Les 3 chiffres clés | Admin | RF-11 |
+| GET | `/admin/statistiques` | Apprenants, top 5, retours et taux « pertinent » | Admin | RF-11 |
 | POST | `/recommandations/apercu` | Aperçu sans compte (3 formations, rien n'est enregistré) | Public | RF-12 |
 
 La déconnexion (RF-02) est gérée côté frontend : suppression du JWT stocké.
