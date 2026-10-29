@@ -189,8 +189,8 @@ def test_suppression_sans_jeton_401_ou_par_un_apprenant_403(client, db, apprenan
 
 
 def test_suppression_supprime_les_recommandations_liees(client, db, admin):
-    # Le modèle Recommandation arrive avec #16 : la table est créée ici depuis 01_schema.sql
-    # (annulée à la fin du test) pour vérifier le ON DELETE CASCADE de la vraie base.
+    # 01_schema.sql est rejoué (sans effet sur les tables déjà créées par le modèle ORM) : le
+    # ON DELETE CASCADE vérifié est celui de la base réelle comme celui du modèle Recommandation.
     connexion = db.connection()
     connexion.exec_driver_sql(SCHEMA_SQL.read_text(encoding="utf-8"))
     formation = ajouter_formation(db)

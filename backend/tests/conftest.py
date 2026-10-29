@@ -1,5 +1,6 @@
 import os
 from collections.abc import Iterator
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
@@ -13,6 +14,8 @@ from sqlalchemy.orm import Session
 os.environ.setdefault("DATABASE_URL", "postgresql+psycopg://test:test@localhost:5432/test")
 os.environ.setdefault("JWT_SECRET", "secret-de-test-uniquement-0123456789abcdef")
 os.environ.setdefault("CORS_ORIGINS", "http://localhost:5173")
+
+CATALOGUE_SQL = Path(__file__).resolve().parents[2] / "database" / "02_catalogue_hitt.sql"
 
 # Base jetable du service `db-test` de docker-compose.yml (identifiants de test, non secrets).
 URL_BASE_TEST = os.environ.get(
@@ -70,3 +73,12 @@ def client(db: Session) -> Iterator[TestClient]:
     app.dependency_overrides[get_db] = lambda: db
     yield TestClient(app)
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def catalogue(db):
+    """Les 86 formations de `database/02_catalogue_hitt.sql`, annulées à la fin du test."""
+    # Script statique du dépôt, sans paramètre : il vérifie aussi que le modèle ORM accepte
+    # exactement les lignes chargées dans PostgreSQL au premier démarrage.
+    db.connection().exec_driver_sql(CATALOGUE_SQL.read_text(encoding="utf-8"))
+    return db

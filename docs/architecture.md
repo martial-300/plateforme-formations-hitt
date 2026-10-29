@@ -46,7 +46,7 @@ backend/
 │   ├── schemas/             # schémas Pydantic (entrées / sorties)
 │   ├── routers/             # auth, users, formations, profil, recommandations, admin
 │   ├── services/
-│   │   ├── security.py      # bcrypt, JWT, dépendances get_current_user / require_admin
+│   │   ├── security.py      # bcrypt, JWT, dépendances get_current_user / require_admin / require_apprenant
 │   │   └── recommandation.py# moteur TF-IDF + cosinus
 │   └── ...
 ├── tests/
@@ -70,7 +70,7 @@ frontend/
 - Mots de passe hachés avec **bcrypt** (jamais stockés ni renvoyés en clair).
 - **JWT** signé (`JWT_SECRET`, HS256), durée de vie `JWT_EXPIRE_MINUTES`.
 - **Connexion Google** (RF-13) : jeton d'identité vérifié côté serveur (signature, audience `GOOGLE_CLIENT_ID`, email vérifié) ; jamais de confiance accordée aux données envoyées par le navigateur seules.
-- Contrôle du rôle sur toutes les routes admin (dépendance `require_admin`).
+- Contrôle du rôle sur toutes les routes admin (dépendance `require_admin`) et sur `PUT /profil`, réservé aux apprenants (`require_apprenant`).
 - Accès base **uniquement via l'ORM** (pas de SQL concaténé).
 - **HTTPS** obligatoire en production (Nginx + Let's Encrypt).
 - CORS limité à l'origine du frontend.

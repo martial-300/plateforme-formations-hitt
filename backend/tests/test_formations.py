@@ -2,14 +2,11 @@
 
 import uuid
 from decimal import Decimal
-from pathlib import Path
 
 import pytest
 from sqlalchemy import func, select
 
 from app.models import Formation
-
-CATALOGUE_SQL = Path(__file__).resolve().parents[2] / "database" / "02_catalogue_hitt.sql"
 
 
 def ajouter_formation(db, **modifs) -> Formation:
@@ -28,15 +25,6 @@ def ajouter_formation(db, **modifs) -> Formation:
     db.add(formation)
     db.flush()
     return formation
-
-
-@pytest.fixture
-def catalogue(db):
-    """Les 86 formations de `database/02_catalogue_hitt.sql`, annulées à la fin du test."""
-    # Script statique du dépôt, sans paramètre : il vérifie aussi que le modèle ORM accepte
-    # exactement les lignes chargées dans PostgreSQL au premier démarrage.
-    db.connection().exec_driver_sql(CATALOGUE_SQL.read_text(encoding="utf-8"))
-    return db
 
 
 # --- GET /formations ---------------------------------------------------------------------------
