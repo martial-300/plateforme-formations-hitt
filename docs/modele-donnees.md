@@ -79,12 +79,14 @@ La colonne `recommandations.mots_cles_communs` est ajoutée pour pouvoir réaffi
 -- Nombre d'apprenants inscrits
 SELECT count(*) FROM utilisateurs WHERE role = 'apprenant';
 
--- 5 formations les plus recommandées
-SELECT f.intitule, f.domaine, count(*) AS nb
+-- 5 formations les plus recommandées (à égalité : par intitulé)
+SELECT f.id, f.intitule, f.domaine, count(*) AS nb
 FROM recommandations r JOIN formations f ON f.id = r.formation_id
-GROUP BY f.id ORDER BY nb DESC LIMIT 5;
+GROUP BY f.id ORDER BY nb DESC, f.intitule LIMIT 5;
 
--- Taux de retours « pertinent » (parmi les retours donnés)
-SELECT round(avg((retour = 'pertinent')::int), 3) AS taux
+-- Retours donnés, retours « pertinent » et taux (NULL sans retour)
+SELECT count(*) AS nb_retours,
+       count(*) FILTER (WHERE retour = 'pertinent') AS nb_pertinents,
+       round(avg((retour = 'pertinent')::int), 3) AS taux
 FROM recommandations WHERE retour <> 'aucun';
 ```

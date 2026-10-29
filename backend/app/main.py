@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app import models  # noqa: F401  (enregistre les modèles dans Base.metadata)
 from app.config import parametres
 from app.database import Base, SessionLocal, engine
-from app.routers import apercu, auth, formations, profil, recommandations, users
+from app.routers import admin, apercu, auth, formations, profil, recommandations, users
 from app.services.comptes import creer_admin_si_absent
 
 
@@ -46,4 +46,5 @@ api.include_router(formations.router)
 api.include_router(profil.router)
 api.include_router(apercu.router)
 api.include_router(recommandations.router)
+api.include_router(admin.router)
 app.include_router(api)
