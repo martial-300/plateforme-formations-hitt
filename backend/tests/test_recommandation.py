@@ -3,6 +3,8 @@
 import time
 from dataclasses import dataclass, field
 
+import pytest
+
 from app.services.recommandation import prix_effectif, recommander
 
 
@@ -176,3 +178,34 @@ def test_calcul_en_moins_d_une_seconde_sur_86_formations():
     resultats = recommander(profil, formations)
     assert time.perf_counter() - debut < 1
     assert len(resultats) == 5
+
+
+# --- Réglage du 29/10/2026 : verbes génériques en stop-words, mots seuls (docs/evaluation.md) ---
+
+
+def test_verbe_generique_ne_rapproche_pas_un_projet_d_une_formation():
+    # « devenir » figurait dans la fiche de maintenance : il suffisait à la recommander à une
+    # future secrétaire.
+    maintenance = F(
+        "Maintenance informatique",
+        "Devenir technicien capable de dépanner des ordinateurs.",
+        ["dépannage", "ordinateur"],
+    )
+    profil = P(objectif_professionnel="devenir secrétaire", type_souhaite="carte")
+    assert recommander(profil, [maintenance, WEB, EXCEL]) == []
+
+
+def test_verbes_generiques_dans_les_stop_words():
+    from app.services.recommandation import STOPWORDS_FR
+
+    assert {"devenir", "apprendre", "savoir", "utiliser", "travailler", "creer"} <= STOPWORDS_FR
+
+
+def test_mots_seuls_sans_paires_de_mots():
+    # Avec les paires de mots, « site web » comptait en plus de « site » et « web » : la
+    # formation qui reprend l'expression exacte n'est plus favorisée au-delà de ses mots.
+    # Intitulés de même poids : seul l'ordre des mots de la description diffère.
+    exacte = F("Atelier alpha", "site web", ["atelier"])
+    melangee = F("Atelier omega", "web site", ["atelier"])
+    resultats = recommander(P(centres_interet="site web"), [exacte, melangee])
+    assert resultats[0].score == pytest.approx(resultats[1].score)

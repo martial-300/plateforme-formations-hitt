@@ -45,7 +45,8 @@ Depuis `backend/`, sans base de données (le catalogue est lu dans `database/02_
 |---|---|
 | `python -m tests.evaluation.precision_at_5` | Précision@5 par profil, moyenne sur les profils annotés, temps de calcul |
 | `python -m tests.evaluation.precision_at_5 --details` | Idem, avec le top 5 de chaque profil (✓ = formation pertinente) |
-| `python -m tests.evaluation.precision_at_5 --grille` | Grille à remettre au conseiller : [grille-annotation-profils.md](grille-annotation-profils.md), profils et catalogue **sans** résultat du moteur |
+| `python -m tests.evaluation.precision_at_5 --grille` | Grille avec les propositions de l'IA : [grille-annotation-profils.md](grille-annotation-profils.md), profils et catalogue **sans** résultat du moteur |
+| `python -m tests.evaluation.precision_at_5 --grille-cabinet` | Grille vierge à cocher pour le conseiller : [grille-annotation-cabinet.md](grille-annotation-cabinet.md), formations possibles de chaque profil (format et budget), sans résultat du moteur ni proposition |
 
 - Un profil dont `pertinentes` est vide est affiché « non annoté » et exclu de la moyenne.
 - Une formation pertinente doit être écrite exactement comme son intitulé dans le catalogue ; sinon le script s'arrête et indique le profil concerné.
@@ -53,13 +54,22 @@ Depuis `backend/`, sans base de données (le catalogue est lu dans `database/02_
 
 ### État
 
-*29 octobre 2026* : les 20 profils sont rédigés (`profils_test.json` : projets orientés vers SISG pour 8 d'entre eux, IA-Data pour 6 et TRIT pour 6 ; 10 à la carte, 10 modulaires). Les formations pertinentes ont été **proposées par l'assistant IA** ([grille](grille-annotation-profils.md)) et recopiées dans `profils_test.json` avec `annote_par` ; **elles restent à valider par un conseiller du cabinet**. La mesure qui en découle (0,47) est provisoire. Une annotation validée s'écrit avec `annote_par` commençant par « conseiller du cabinet » ; le script cesse alors de signaler la mesure comme provisoire.
+*29 octobre 2026* : les 20 profils sont rédigés (`profils_test.json` : projets orientés vers SISG pour 8 d'entre eux, IA-Data pour 6 et TRIT pour 6 ; 10 à la carte, 10 modulaires). Les formations pertinentes ont été **proposées par l'assistant IA** ([grille](grille-annotation-profils.md)) et recopiées dans `profils_test.json` avec `annote_par` ; **elles restent à valider par un conseiller du cabinet**. La mesure qui en découle (0,47, puis 0,49 après le réglage du 29 octobre) est provisoire. Grille vierge à remettre au cabinet : [grille-annotation-cabinet.md](grille-annotation-cabinet.md), aussi en Word à imprimer ou à remplir (`grille-annotation-cabinet.docx`) ; chaque profil n'y montre que les formations du format demandé et dans le budget, sans résultat du moteur ni proposition de l'IA. Au retour, recopier les formations cochées dans `pertinentes` de `profils_test.json`, avec `annote_par` commençant par « conseiller du cabinet » (nom et date), puis relancer la mesure. Une annotation validée s'écrit avec `annote_par` commençant par « conseiller du cabinet » ; le script cesse alors de signaler la mesure comme provisoire.
 
 ### Journal des essais
 
 | Date | Paramètres | Précision@5 moyenne | Remarques |
 |---|---|---|---|
 | 29/10/2026 | Moteur de référence : TF-IDF `strip_accents="unicode"`, `lowercase=True`, `ngram_range=(1, 2)`, stop-words français fixes ; filtre type + prix effectif ≤ budget ; score 0 exclu ; un exemplaire par intitulé | **0,47 (provisoire)** | Annotations **proposées par l'assistant IA, non validées par le cabinet** (`annote_par`). Maximum atteignable avec ces annotations : 0,64 (15 profils sur 20 ont moins de 5 formations pertinentes). Profils au maximum : P02, P08, P11, P13, P14, P16, P18, P20. Plus gros écarts : P15 (0,40 / 1,00), P10 (0,40 / 1,00), P05 (0,60 / 1,00), P03 (0,20 / 0,40), P12 (0,20 / 0,40 ; 4 résultats seulement). Calcul : 6 ms au plus par profil. |
+| 29/10/2026 | Essai 1 : verbes et mots génériques des projets ajoutés aux stop-words (`devenir apprendre savoir utiliser travailler faire creer trouver gerer vite peu`) | 0,48 (provisoire) | « devenir » suffisait à classer « Maintenance informatique » dans le top 5 de projets de secrétariat ou de commerce (P01, P03, P06, P11). |
+| 29/10/2026 | Essai 2 : mots seuls, `ngram_range=(1, 1)` (référence : `(1, 2)`) | 0,49 (provisoire) | Les paires de mots (« bases internet ») renforçaient des formations débutantes. |
+| 29/10/2026 | Essai 3 : profil sans les compétences actuelles (intérêts et objectif seuls) | 0,46 (provisoire) | Écarté : les compétences aident certains profils (P09, P18). |
+| 29/10/2026 | Essai 4 : centres d'intérêt et objectif comptés deux fois | 0,47 (provisoire) | Écarté : sans effet sur la moyenne. |
+| 29/10/2026 | Essai 5 : pluriels ramenés au singulier (s ou x final retiré) | 0,46 (provisoire) | Écarté : « sites » retrouve « site », mais d'autres mots sont abîmés. |
+| 29/10/2026 | Essai 6 : `sublinear_tf=True` | 0,47 (provisoire) | Écarté : sans effet. |
+| 29/10/2026 | Essai 7 : mots-clés des formations comptés deux fois | 0,47 (provisoire) | Écarté : sans effet ; catalogue non modifié (descriptions et mots-clés à valider par le cabinet). |
+| 29/10/2026 | Essai 8 : n-grammes de caractères (4 à 6, `char_wb`) avec les verbes génériques | 0,50 (provisoire) | Écarté malgré un point de plus : les scores changent d'échelle (seuils du libellé de correspondance à recalibrer) et le classement devient plus difficile à expliquer. |
+| 29/10/2026 | **Retenu** : essais 1 et 2 combinés (verbes génériques en stop-words, mots seuls) | **0,49 (provisoire)** | Gains : P10 (0,40 → 0,60), P17 (0,60 → 0,80) ; aucun profil en baisse. Maximum atteignable avec ces annotations : 0,64, d'où l'objectif de 0,6 hors de portée par le seul réglage du moteur : il faut l'annotation du cabinet ([grille à remplir](grille-annotation-cabinet.md)). Calcul : 7 ms au plus par profil. |
 
 ## 2. Retours du panel d'apprenants
 

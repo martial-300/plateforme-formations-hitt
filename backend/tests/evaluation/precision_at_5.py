@@ -4,6 +4,9 @@ Usage (depuis backend/) :
     python -m tests.evaluation.precision_at_5            mesure et moyenne
     python -m tests.evaluation.precision_at_5 --details  avec le top 5 de chaque profil
     python -m tests.evaluation.precision_at_5 --grille   grille d'annotation (Markdown)
+    python -m tests.evaluation.precision_at_5 --grille-cabinet
+                                    grille vierge à cocher pour le cabinet
+                                    (> ../docs/grille-annotation-cabinet.md)
 
 Le catalogue est lu dans database/02_catalogue_hitt.sql, sans base de données : la mesure est
 reproductible et ne dépend que du moteur et du catalogue du dépôt. Les formations « pertinentes »
@@ -287,16 +290,94 @@ def grille(profils: list[dict], formations: list[SimpleNamespace]) -> str:
     return "\n".join(lignes) + "\n"
 
 
+def eligibles(profil: dict, formations: list[SimpleNamespace]) -> list[SimpleNamespace]:
+    """Formations que le moteur peut proposer : type souhaité, prix effectif dans le budget."""
+    vues: set[str] = set()
+    retenues = []
+    for f in sorted(formations, key=lambda f: (f.domaine, f.intitule.lower())):
+        prix = f.cout_promo_fcfa if f.cout_promo_fcfa is not None else f.cout_fcfa
+        if f.type == profil["type_souhaite"] and prix <= profil["budget_max_fcfa"]:
+            if f.intitule not in vues:  # doublon « Initiation Informatique » (SISG et TRIT)
+                vues.add(f.intitule)
+                retenues.append(f)
+    return retenues
+
+
+def grille_cabinet(profils: list[dict], formations: list[SimpleNamespace]) -> str:
+    """Grille vierge pour le conseiller : formations possibles à cocher, sans aucune proposition."""
+    types = {"carte": "Formation courte, à la carte", "modulaire": "Parcours modulaire certifiant"}
+    montant = lambda n: f"{n:,} FCFA".replace(",", "\u00a0")  # noqa: E731
+    lignes = [
+        "# Grille d'annotation des profils de test — à remplir par HIT-T Institute",
+        "",
+        "*Générée par `python -m tests.evaluation.precision_at_5 --grille-cabinet` "
+        "(depuis `backend/`) ; protocole : [evaluation.md](evaluation.md).*",
+        "",
+        "**Conseiller :** ……………………………………  **Date :** ……………………",
+        "",
+        "## Consignes",
+        "",
+        "Cette grille sert à mesurer la qualité des recommandations de la plateforme. Pour chacun "
+        "des 20 profils fictifs ci-dessous :",
+        "",
+        "1. Lire le profil comme celui d'une personne venue vous demander conseil.",
+        "2. Cocher les formations que vous lui conseilleriez, parmi celles proposées : ce sont "
+        "toutes les formations du catalogue du format demandé et dans son budget (prix promo s'il "
+        "existe).",
+        "3. Cocher **5 formations si possible**. Si moins de 5 conviennent vraiment, n'en cocher "
+        "que celles-là et l'indiquer : n'ajoutez pas de formation pour arriver à 5.",
+        "4. Ne pas chercher à deviner ce que propose la plateforme : ses résultats ne sont "
+        "volontairement pas montrés.",
+        "",
+        "Remarques libres possibles sous chaque profil (profil peu réaliste, formation manquante "
+        "au catalogue…).",
+        "",
+    ]
+    for p in profils:
+        q = p["profil"]
+        possibles = eligibles(q, formations)
+        lignes += [
+            f"## {p['id']}",
+            "",
+            f"- Niveau d'études : {q['niveau_etudes']}",
+            f"- Compétences actuelles : {q['competences']}",
+            f"- Centres d'intérêt : {q['centres_interet']}",
+            f"- Objectif professionnel : {q['objectif_professionnel']}",
+            f"- Format souhaité : {types[q['type_souhaite']]}",
+            f"- Budget maximum : {montant(q['budget_max_fcfa'])}",
+            "",
+            f"Formations possibles ({len(possibles)}) — cocher celles que vous conseilleriez :",
+            "",
+        ]
+        domaine = None
+        for f in possibles:
+            if f.domaine != domaine:
+                if domaine is not None:
+                    lignes.append("")
+                domaine = f.domaine
+                lignes += [f"*{domaine}*", ""]
+            prix = f.cout_promo_fcfa if f.cout_promo_fcfa is not None else f.cout_fcfa
+            lignes.append(f"- [ ] {f.intitule} — {montant(prix)}")
+        lignes += ["", "Remarques : ……………………………………………………………………", ""]
+    return "\n".join(lignes) + "\n"
+
+
 def main(arguments: list[str] | None = None) -> int:
     analyse = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     analyse.add_argument("--details", action="store_true", help="affiche le top 5 de chaque profil")
     analyse.add_argument("--grille", action="store_true", help="grille d'annotation en Markdown")
+    analyse.add_argument(
+        "--grille-cabinet", action="store_true", help="grille vierge à cocher pour le cabinet"
+    )
     options = analyse.parse_args(arguments)
 
     formations = charger_catalogue()
     profils = charger_profils()
     if options.grille:
         sys.stdout.write(grille(profils, formations))
+        return 0
+    if options.grille_cabinet:
+        sys.stdout.write(grille_cabinet(profils, formations))
         return 0
 
     inconnus = intitules_inconnus(profils, formations)

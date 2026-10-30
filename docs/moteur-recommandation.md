@@ -37,7 +37,7 @@ def texte_profil(p):
 
 def recommander(profil, formations, k=5):
     vectorizer = TfidfVectorizer(strip_accents="unicode", lowercase=True,
-                                 stop_words=STOPWORDS_FR, ngram_range=(1, 2))
+                                 stop_words=STOPWORDS_FR, ngram_range=(1, 1))
     X = vectorizer.fit_transform([texte_formation(f) for f in formations])
     q = vectorizer.transform([texte_profil(profil)])
     scores = cosine_similarity(q, X).ravel()
@@ -61,7 +61,8 @@ def recommander(profil, formations, k=5):
 | Point | Proposition par défaut |
 |---|---|
 | Prix comparé au budget | Prix promo s'il existe, sinon prix normal (`prix_effectif`) |
-| Stop-words français | Liste fixe dans le code (scikit-learn n'en fournit pas en français) |
+| Stop-words français | Liste fixe dans le code (scikit-learn n'en fournit pas en français), plus les verbes génériques des projets (« devenir », « apprendre »…) depuis le 29/10/2026 |
+| Découpage | Mots seuls (`ngram_range=(1, 1)`) depuis le 29/10/2026 ; les paires de mots n'amélioraient pas la mesure ([journal des essais](evaluation.md)) |
 | Accents / casse | `strip_accents="unicode"`, `lowercase=True` |
 | Score nul | Les formations de score 0 ne sont pas recommandées |
 | Doublon « Initiation Informatique » (SISG et TRIT) | Ne garder qu'une occurrence par intitulé dans le top 5 |

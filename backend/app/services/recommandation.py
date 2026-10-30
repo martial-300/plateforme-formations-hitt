@@ -24,8 +24,12 @@ STOPWORDS_FR = frozenset(
     ete etre avoir ai as avons avez ont est sont suis es sommes etes etait
     plus tres bien aussi comme tout tous toute toutes sans sous entre vers chez afin ainsi
     dont donc car si ni or deja encore puis
+    devenir apprendre savoir utiliser travailler faire creer trouver gerer vite peu
     """.split()
 )
+# Dernière ligne : verbes et mots génériques des projets (« devenir secrétaire », « apprendre à
+# créer… »). Sans eux, « devenir » suffisait à rapprocher un projet de secrétariat d'une formation
+# de maintenance informatique (journal des essais, docs/evaluation.md).
 
 
 class FormationRecommandable(Protocol):
@@ -98,7 +102,8 @@ def recommander(
         strip_accents="unicode",
         lowercase=True,
         stop_words=list(STOPWORDS_FR),
-        ngram_range=(1, 2),
+        # Mots seuls : les paires de mots n'amélioraient pas la mesure (journal des essais).
+        ngram_range=(1, 1),
     )
     matrice = vectoriseur.fit_transform([texte_formation(f) for f in formations])
     vecteur_profil = vectoriseur.transform([texte_profil(profil)])

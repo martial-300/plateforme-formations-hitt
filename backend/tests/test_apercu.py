@@ -70,8 +70,10 @@ def test_format_et_budget_respectes(client, catalogue):
 
 def test_mots_cles_communs_tires_de_la_reponse(client, catalogue):
     corps = REPONSES | {"centres_interet": "développement web et site web"}
-    premiere = client.post(URL, json=corps).json()["recommandations"][0]
-    assert "site web" in premiere["mots_cles_communs"]
+    recommandations = client.post(URL, json=corps).json()["recommandations"]
+    communs = [mot for r in recommandations for mot in r["mots_cles_communs"]]
+    assert {"développement web", "site web"} <= set(communs)
+    assert all(mot in corps["centres_interet"] for mot in communs)
 
 
 def test_aucune_formation_dans_le_budget(client, catalogue):
