@@ -351,7 +351,9 @@ flowchart LR
         NGX[Nginx<br/>HTTPS Let's Encrypt] -- / --> FE[Frontend React<br/>fichiers statiques]
         NGX -- /api/v1 --> BE[Backend FastAPI<br/>SQLAlchemy · Scikit-learn]
         BE -- SQL via ORM --> PG[(PostgreSQL 15<br/>4 tables)]
+        CB[Certbot<br/>renouvelle le certificat] -. certificats .-> NGX
     end
+    CB -. ACME, défi HTTP .-> LE[Let's Encrypt]
     NAV -. jeton d'identité .-> GOO[Google Identity Services]
     BE -. vérification du jeton .-> GOO
 ```

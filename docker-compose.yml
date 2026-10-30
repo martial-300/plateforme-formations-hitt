@@ -1,8 +1,8 @@
 # HIT-T Reco — Docker Compose
 # Développement : `docker compose up -d db`, puis backend (uvicorn) et frontend (npm run dev)
-# en local. `docker compose up -d --build` construit aussi backend et frontend ; le frontend
-# conteneurisé n'est joignable que derrière nginx (production, S7).
-# Ports publiés sur 127.0.0.1 uniquement : en production, seul nginx expose 80 et 443.
+# en local. Production : `docker compose --profile production up -d --build` ajoute nginx et
+# certbot ; le premier certificat se demande avec `deploy/premier-certificat.sh`
+# (docs/deploiement.md). Ports publiés sur 127.0.0.1 uniquement : seul nginx expose 80 et 443.
 
 services:
   db:
@@ -47,11 +47,15 @@ services:
     env_file: .env
     environment:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-hitt}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-hitt}
+      # Seul nginx, à son adresse fixe, peut transmettre l'IP du visiteur (limite de l'aperçu,
+      # RF-12) : fixé ici, et non dans .env, pour qu'un oubli ne fasse pas partager la limite.
+      FORWARDED_ALLOW_IPS: ${NGINX_IP:-172.30.89.10}
     depends_on:
       db:
         condition: service_healthy
     ports:
       - "127.0.0.1:8000:8000"
+    networks: [default, production]
 
   frontend:
     build:
@@ -62,20 +66,59 @@ services:
     restart: unless-stopped
     depends_on:
       - backend
+    networks: [production]
 
-  # nginx:   # production uniquement
-  #   image: nginx:1.27-alpine
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-  #     - ./deploy/certbot:/var/www/certbot:ro
-  #     - /etc/letsencrypt:/etc/letsencrypt:ro
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   depends_on:
-  #     - backend
-  #     - frontend
+  # Production : seul service exposé (80 et 443 sur toutes les interfaces).
+  # deploy/nginx.conf est un modèle : ${DOMAINE} y est remplacé au démarrage.
+  nginx:
+    image: nginx:1.27-alpine
+    profiles: ["production"]
+    restart: unless-stopped
+    environment:
+      DOMAINE: ${DOMAINE:?définir DOMAINE dans .env}
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/templates/default.conf.template:ro
+      - certbot-webroot:/var/www/certbot:ro
+      - certificats:/etc/letsencrypt:ro
+    ports:
+      # HTTP_PORT et HTTPS_PORT ne servent qu'à une répétition en local (80 et 443 sinon).
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      production:
+        ipv4_address: ${NGINX_IP:-172.30.89.10}
+    # Recharge la configuration toutes les 12 h pour prendre le certificat renouvelé.
+    entrypoint:
+      - /bin/sh
+      - -c
+      - (while :; do sleep 12h; nginx -s reload; done) & exec /docker-entrypoint.sh nginx -g 'daemon off;'
+
+  # Production : renouvelle le certificat Let's Encrypt (essai toutes les 12 h, effectif à
+  # 30 jours de l'expiration). Le premier certificat : deploy/premier-certificat.sh.
+  certbot:
+    image: certbot/certbot:v2.11.0
+    profiles: ["production"]
+    restart: unless-stopped
+    volumes:
+      - certbot-webroot:/var/www/certbot
+      - certificats:/etc/letsencrypt
+    entrypoint:
+      - /bin/sh
+      - -c
+      - trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot --quiet; sleep 12h & wait $${!}; done
+
+networks:
+  # Réseau de nginx, du backend et du frontend, au sous-réseau fixe pour que l'adresse de
+  # nginx soit connue du backend. Le réseau par défaut (db, développement) n'est pas modifié.
+  production:
+    ipam:
+      config:
+        - subnet: ${RESEAU_PRODUCTION:-172.30.89.0/24}
 
 volumes:
   pgdata:
+  certificats:
+  certbot-webroot:
