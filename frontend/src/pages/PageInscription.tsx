@@ -73,6 +73,7 @@ export function PageInscription() {
 
   return (
     <MiseEnPageCompte
+      photo="etudiants"
       titre="Créer un compte"
       sousTitre="Seules ces informations vous sont demandées."
       texteGoogle="signup_with"

@@ -48,6 +48,7 @@ export function PageConnexion() {
 
   return (
     <MiseEnPageCompte
+      photo="groupe"
       titre="Connexion"
       sousTitre="Accédez à votre questionnaire et à vos recommandations."
       texteGoogle="continue_with"

@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { demanderApercu } from "../api/apercu";
-import type { ApercuEntree, RecommandationApercu } from "../api/types";
+import type { ApercuEntree, Domaine, RecommandationApercu } from "../api/types";
 import { formaterMontant } from "../catalogue/libelles";
 import { ListeApercu } from "../components/ListeApercu";
+import { Bandeau, Photo } from "../components/Photo";
+import { PHOTO_DOMAINE } from "../components/photos";
 
 // Chiffres du catalogue validé (database/02_catalogue_hitt.sql) ; à lire depuis l'API
 // une fois GET /formations disponible.
-const DOMAINES = [
+const DOMAINES: {
+  code: Domaine;
+  surtitre: string;
+  nom: string;
+  carte: number;
+  modulaires: number;
+  exemples: string[];
+}[] = [
   {
     code: "SISG",
     surtitre: "SISG",
@@ -122,90 +131,98 @@ function ExempleAfi() {
 /** Écran 09 (RF-05, RF-12). */
 export function PageAccueil() {
   return (
-    <main className="accueil">
-      <section className="conteneur accueil__entree">
-        <div>
-          <p className="surtitre">HIT-T Institute · Orientation</p>
-          <h1>Choisissez votre formation en connaissance de cause</h1>
-          <p className="accueil__texte">
-            Secrétariat et gestion, intelligence artificielle et data, informatique et télécoms :
-            répondez à six questions, la plateforme vous indique automatiquement les formations qui
-            vous correspondent.
-          </p>
-          <div className="accueil__boutons">
-            <Link to="/questionnaire" className="bouton">
-              Commencer le questionnaire
-            </Link>
-            <Link to="/formations" className="bouton bouton--secondaire">
-              Voir le catalogue
-            </Link>
-          </div>
-        </div>
-        <dl className="chiffres">
+    <>
+      <Bandeau nom="classe" grand />
+      <main className="accueil">
+        <section className="conteneur accueil__entree">
           <div>
-            <dt>{TOTAL}</dt>
-            <dd>formations au catalogue</dd>
-          </div>
-          <div>
-            <dt>{DOMAINES.length}</dt>
-            <dd>domaines : SISG, IA et Data, TRIT</dd>
-          </div>
-          <div>
-            <dt>2</dt>
-            <dd>
-              formats : à la carte (1 jour à 3 mois) ou parcours modulaire certifiant (2 à 9 mois)
-            </dd>
-          </div>
-        </dl>
-      </section>
-
-      <section className="conteneur accueil__section" aria-labelledby="titre-domaines">
-        <h2 id="titre-domaines">Trois domaines de formation</h2>
-        <ul className="domaines">
-          {DOMAINES.map((domaine) => (
-            <li key={domaine.code} className="domaine">
-              <p className="surtitre">{domaine.surtitre}</p>
-              <h3>{domaine.nom}</h3>
-              <p className="domaine__compte">
-                {domaine.carte} à la carte · {domaine.modulaires} parcours modulaires
-              </p>
-              <ul className="domaine__exemples">
-                {domaine.exemples.map((exemple) => (
-                  <li key={exemple}>{exemple}</li>
-                ))}
-              </ul>
-              <Link to={`/formations?domaine=${domaine.code}`}>
-                Voir les {domaine.carte + domaine.modulaires} formations
+            <p className="surtitre">HIT-T Institute · Orientation</p>
+            <h1>Choisissez votre formation en connaissance de cause</h1>
+            <p className="accueil__texte">
+              Secrétariat et gestion, intelligence artificielle et data, informatique et télécoms :
+              répondez à six questions, la plateforme vous indique automatiquement les formations
+              qui vous correspondent.
+            </p>
+            <div className="accueil__boutons">
+              <Link to="/questionnaire" className="bouton">
+                Commencer le questionnaire
               </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+              <Link to="/formations" className="bouton bouton--secondaire">
+                Voir le catalogue
+              </Link>
+            </div>
+          </div>
+          <dl className="chiffres">
+            <div>
+              <dt>{TOTAL}</dt>
+              <dd>formations au catalogue</dd>
+            </div>
+            <div>
+              <dt>{DOMAINES.length}</dt>
+              <dd>domaines : SISG, IA et Data, TRIT</dd>
+            </div>
+            <div>
+              <dt>2</dt>
+              <dd>
+                formats : à la carte (1 jour à 3 mois) ou parcours modulaire certifiant (2 à 9 mois)
+              </dd>
+            </div>
+          </dl>
+        </section>
 
-      <ExempleAfi />
+        <section className="conteneur accueil__section" aria-labelledby="titre-domaines">
+          <h2 id="titre-domaines">Trois domaines de formation</h2>
+          <ul className="domaines">
+            {DOMAINES.map((domaine) => (
+              <li key={domaine.code} className="domaine">
+                <Photo
+                  nom={PHOTO_DOMAINE[domaine.code]}
+                  className="domaine__photo"
+                  tailles="(max-width: 860px) 100vw, 360px"
+                />
+                <p className="surtitre">{domaine.surtitre}</p>
+                <h3>{domaine.nom}</h3>
+                <p className="domaine__compte">
+                  {domaine.carte} à la carte · {domaine.modulaires} parcours modulaires
+                </p>
+                <ul className="domaine__exemples">
+                  {domaine.exemples.map((exemple) => (
+                    <li key={exemple}>{exemple}</li>
+                  ))}
+                </ul>
+                <Link to={`/formations?domaine=${domaine.code}`}>
+                  Voir les {domaine.carte + domaine.modulaires} formations
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-      <section
-        className="conteneur accueil__section fonctionnement"
-        aria-labelledby="titre-fonctionnement"
-      >
-        <div>
-          <img src="/illustrations/parcours.svg" alt="" className="fonctionnement__image" />
-          <h2 id="titre-fonctionnement">Comment fonctionne l&apos;orientation</h2>
-          <p className="accueil__texte">
-            Le classement est automatique : il compare les mots de vos réponses à ceux de chaque
-            formation et ne retient que le format choisi et les formations dans votre budget. Vos
-            avis servent à l&apos;améliorer.
-          </p>
-        </div>
-        <ol className="etapes">
-          {ETAPES.map(([etape, detail]) => (
-            <li key={etape}>
-              <strong>{etape}</strong>
-              <span>{detail}</span>
-            </li>
-          ))}
-        </ol>
-      </section>
-    </main>
+        <ExempleAfi />
+
+        <section
+          className="conteneur accueil__section fonctionnement"
+          aria-labelledby="titre-fonctionnement"
+        >
+          <div>
+            <img src="/illustrations/parcours.svg" alt="" className="fonctionnement__image" />
+            <h2 id="titre-fonctionnement">Comment fonctionne l&apos;orientation</h2>
+            <p className="accueil__texte">
+              Le classement est automatique : il compare les mots de vos réponses à ceux de chaque
+              formation et ne retient que le format choisi et les formations dans votre budget. Vos
+              avis servent à l&apos;améliorer.
+            </p>
+          </div>
+          <ol className="etapes">
+            {ETAPES.map(([etape, detail]) => (
+              <li key={etape}>
+                <strong>{etape}</strong>
+                <span>{detail}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      </main>
+    </>
   );
 }

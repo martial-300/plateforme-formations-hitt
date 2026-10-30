@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import { BoutonGoogle } from "./BoutonGoogle";
+import { Photo } from "./Photo";
+import type { NomPhoto } from "./photos";
 import { GOOGLE_CLIENT_ID } from "../auth/google";
 
 const ETAPES = [
@@ -12,6 +14,7 @@ const ETAPES = [
 export function MiseEnPageCompte({
   titre,
   sousTitre,
+  photo,
   texteGoogle,
   surJetonGoogle,
   erreurGoogle,
@@ -20,6 +23,7 @@ export function MiseEnPageCompte({
 }: {
   titre: string;
   sousTitre: string;
+  photo: NomPhoto;
   texteGoogle: "continue_with" | "signup_with";
   surJetonGoogle: (idToken: string) => void;
   erreurGoogle: string | null;
@@ -44,6 +48,7 @@ export function MiseEnPageCompte({
             </li>
           ))}
         </ol>
+        <Photo nom={photo} className="compte__photo" tailles="(max-width: 1200px) 50vw, 624px" />
       </section>
 
       <section className="compte__formulaire">
