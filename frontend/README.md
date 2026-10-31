@@ -24,7 +24,7 @@ VITE_API_URL=http://localhost:8000/api/v1
 | ----------------------- | ----------------------------------------------------------------------------------------- |
 | `src/api/`              | Client HTTP (`appelApi`, jeton, gestion du 401) et types de [docs/api.md](../docs/api.md) |
 | `src/auth/`             | Contexte d'auth, `useAuth`, `RouteProtegee`                                               |
-| `src/pages/`            | Écrans (provisoirement `PageEnConstruction`)                                              |
+| `src/pages/`            | Écrans, un composant par page (`PageCatalogue`, `PageIntrouvable`…)                       |
 | `src/components/`       | Composants partagés (en-tête…)                                                            |
 | `src/styles/global.css` | Tokens de la charte v2                                                                    |
 
