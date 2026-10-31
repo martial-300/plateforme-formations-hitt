@@ -11,11 +11,12 @@
     },
     "pertinentes": [
       "Assistant de Direction (AD)",
+      "Ressources humaines",
+      "Secrétariat / Caisse (SC)",
       "Secrétariat-Bureautique (SB)",
-      "Secrétariat-Comptabilité / Aide Comptable",
-      "Secrétariat / Caisse (SC)"
+      "Secrétariat-Comptabilité / Aide Comptable"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P02",
@@ -28,12 +29,12 @@
       "budget_max_fcfa": 60000
     },
     "pertinentes": [
-      "Tenue de caisse et facturation avec Excel",
+      "Initiation Informatique",
       "Office Excel niveau débutant 2010-2024",
       "Office Excel niveau intermédiaire 2010-2024",
-      "Office Excel niveau avancé 2010-2024"
+      "Tenue de caisse et facturation avec Excel"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P03",
@@ -46,10 +47,12 @@
       "budget_max_fcfa": 150000
     },
     "pertinentes": [
-      "Secrétariat-Comptabilité / Aide Comptable",
-      "Secrétariat / Caisse (SC)"
+      "Gestion Commerciale / Commerce (COM)",
+      "Secrétariat / Caisse (SC)",
+      "Secrétariat-Bureautique (SB)",
+      "Secrétariat-Comptabilité / Aide Comptable"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P04",
@@ -62,11 +65,13 @@
       "budget_max_fcfa": 30000
     },
     "pertinentes": [
+      "Ecrits Professionnels (EP : CV et LM)",
+      "Office Excel niveau débutant 2010-2024",
+      "Office Word 2010-2024",
       "Rédaction de CV (Faire la différence)",
-      "Techniques d'entretien d'embauche",
-      "Ecrits Professionnels (EP : CV et LM)"
+      "Techniques d'entretien d'embauche"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P05",
@@ -85,7 +90,7 @@
       "Multimédia ou Infographie ou Sérigraphie",
       "Production audiovisuel (Options : image, Montage, etc.)"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P06",
@@ -100,9 +105,10 @@
     "pertinentes": [
       "Action commerciale et force de vente",
       "Gestion Commerciale / Commerce (COM)",
+      "Marketing digital",
       "Marketing et Communication (M & C)"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P07",
@@ -116,12 +122,12 @@
     },
     "pertinentes": [
       "Initiation Informatique",
-      "Office Word 2010-2024",
-      "Office PowerPoint 2010-2024",
+      "Internet et réseaux sociaux",
       "Office Excel niveau débutant 2010-2024",
-      "Internet et réseaux sociaux"
+      "Office PowerPoint 2010-2024",
+      "Office Word 2010-2024"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P08",
@@ -134,9 +140,10 @@
       "budget_max_fcfa": 150000
     },
     "pertinentes": [
+      "Ergonomie et Qualité en entreprise",
       "Transport et logistique"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P09",
@@ -152,10 +159,10 @@
       "Analyse des données (Power BI, etc.)",
       "Analyse des données (Power Query, etc.)",
       "Langage Python et l'IA (Analyse des données)",
-      "Office Excel niveau avancé 2010-2024",
+      "Bases de données MySQL / Oracle / SQL Server",
       "Langage SQL ou PL/SQL ou Transact-SQL"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P10",
@@ -168,13 +175,13 @@
       "budget_max_fcfa": 100000
     },
     "pertinentes": [
-      "Deep Learning ou Machine Learning",
-      "Langage Python et l'IA (Analyse des données)",
-      "Bibliothèque TensorFlow ou PyTorch",
       "Bibliothèque Keras",
-      "IA Open Source et exemple d'application"
+      "Bibliothèque TensorFlow ou PyTorch",
+      "Deep Learning ou Machine Learning",
+      "IA Open Source et exemple d'application",
+      "Langage Python et l'IA (Analyse des données)"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P11",
@@ -190,7 +197,7 @@
       "Analyste développeur des systèmes IA",
       "Analyste Programmeur / Génie informatique"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P12",
@@ -203,10 +210,10 @@
       "budget_max_fcfa": 60000
     },
     "pertinentes": [
-      "Principe de développement des ChatBot",
-      "IA : Historique et opportunités du moment"
+      "IA : Historique et opportunités du moment",
+      "Principe de développement des ChatBot"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P13",
@@ -219,9 +226,11 @@
       "budget_max_fcfa": 400000
     },
     "pertinentes": [
-      "Analyste développeur des systèmes BlockChain"
+      "Analyste développeur des systèmes BlockChain",
+      "Analyste Programmeur / Génie informatique",
+      "Analyste Programmeur et Cybersécurité"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P14",
@@ -235,10 +244,10 @@
     },
     "pertinentes": [
       "IA Générative et rédaction de mémoire",
-      "Office Word 2010-2024",
-      "IA : Historique et opportunités du moment"
+      "Office PowerPoint 2010-2024",
+      "Office Word 2010-2024"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P15",
@@ -251,13 +260,13 @@
       "budget_max_fcfa": 150000
     },
     "pertinentes": [
-      "Développement de site web avec PHP, HTML, CSS",
-      "Développement web Laravel (ou autres technologies)",
       "Algorithme et Programmation avec C/C++, Java",
       "Bases de données MySQL / Oracle / SQL Server",
-      "Programmation en Java SE ou C++ ou VB ou PHP"
+      "Développement de site web avec PHP, HTML, CSS",
+      "Développement web Laravel (ou autres technologies)",
+      "Langage SQL ou PL/SQL ou Transact-SQL"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P16",
@@ -270,10 +279,11 @@
       "budget_max_fcfa": 150000
     },
     "pertinentes": [
-      "Maintenance informatique",
-      "Câblage et Maintenance Réseaux"
+      "Câblage et Maintenance Réseaux",
+      "Installation et maintenance téléphonique",
+      "Maintenance informatique"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P17",
@@ -286,12 +296,13 @@
       "budget_max_fcfa": 400000
     },
     "pertinentes": [
-      "Réseau et Cybersécurité",
       "Administrateur réseaux",
       "Analyste Programmeur et Cybersécurité",
-      "Maintenance Info et Installation des Réseaux"
+      "Câblage et Maintenance Réseaux",
+      "Maintenance Info et Installation des Réseaux",
+      "Réseau et Cybersécurité"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P18",
@@ -304,11 +315,12 @@
       "budget_max_fcfa": 100000
     },
     "pertinentes": [
+      "Analyse des données (Power Query, etc.)",
+      "Office Access 2010-2024",
       "Bases de données MySQL / Oracle / SQL Server",
-      "Langage SQL ou PL/SQL ou Transact-SQL",
-      "Office Access 2010-2024"
+      "Langage SQL ou PL/SQL ou Transact-SQL"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P19",
@@ -321,12 +333,12 @@
       "budget_max_fcfa": 120000
     },
     "pertinentes": [
-      "Programmation mobile (Android/Iphone) (Flutter, …)",
-      "Java Swing / JavaFX / Bases de données",
-      "Algorithme et Programmation avec C/C++, Java",
-      "Bases de données MySQL / Oracle / SQL Server"
+      "Bibliothèque GitHub",
+      "Bases de données MySQL / Oracle / SQL Server",
+      "Langage SQL ou PL/SQL ou Transact-SQL",
+      "Programmation mobile (Android/Iphone) (Flutter, …)"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   },
   {
     "id": "P20",
@@ -341,6 +353,6 @@
     "pertinentes": [
       "Installation et réparation de climatiseurs"
     ],
-    "annote_par": "assistant IA, proposition du 29 octobre 2026 à faire valider par un conseiller"
+    "annote_par": "conseiller du cabinet, anonyme à sa demande, grille remplie du 31 octobre 2026"
   }
 ]
