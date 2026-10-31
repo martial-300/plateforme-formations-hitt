@@ -540,19 +540,6 @@ a {
   }
 }
 
-.page {
-  padding: 40px 0;
-}
-
-.page h1 {
-  margin: 0 0 8px;
-  font-size: 28px;
-}
-
-.page p {
-  color: var(--texte-secondaire);
-}
-
 /* --- Connexion et inscription (écrans 01, 02, 14, 15, M5) --------------------------------- */
 
 .compte {
@@ -2216,6 +2203,31 @@ a {
   color: var(--texte-secondaire);
 }
 
+.recommandations__vide .recommandations__explication {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--filet);
+}
+
+.recommandations__vide h3 {
+  margin: 0 0 12px;
+  font-size: 17px;
+}
+
+.recommandations__possibilites {
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+  color: var(--texte-secondaire);
+}
+
+.recommandations__possibilites li {
+  margin-bottom: 8px;
+}
+
+.recommandations__possibilites li::before {
+  content: "— ";
+}
+
 .recommandations__actions {
   display: flex;
   flex-wrap: wrap;
@@ -2958,5 +2970,59 @@ a {
   /* M2 : pas de photo dans le questionnaire sur mobile. */
   .questionnaire__photo {
     display: none;
+  }
+}
+
+/* --- Page introuvable (écran 18) -------------------------------------------------------------- */
+
+.introuvable {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+
+.introuvable__illustration {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  margin-bottom: 24px;
+}
+
+.introuvable .surtitre {
+  margin-bottom: 8px;
+}
+
+.introuvable h1 {
+  margin: 0 0 16px;
+  font-size: 40px;
+  line-height: 1.15;
+}
+
+.introuvable__texte {
+  margin: 0 0 24px;
+  font-size: 17px;
+  color: var(--texte-secondaire);
+}
+
+.introuvable__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  font-weight: 600;
+}
+
+@media (max-width: 860px) {
+  .introuvable {
+    padding-top: 40px;
+    padding-bottom: 56px;
+  }
+
+  .introuvable h1 {
+    font-size: 30px;
+  }
+
+  .introuvable__texte {
+    font-size: 15px;
   }
 }

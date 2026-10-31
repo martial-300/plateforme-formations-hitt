@@ -6,6 +6,7 @@ import { lireProfil } from "../api/profil";
 import type { Profil, ProfilEtRecommandations, Recommandation } from "../api/types";
 import { DOMAINE_COURT, formaterDuree, formaterMontant, TYPE_COURT } from "../catalogue/libelles";
 import { Correspondance } from "../components/Correspondance";
+import { AucuneRecommandation } from "../recommandations/AucuneRecommandation";
 import { AvisRecommandation } from "../recommandations/AvisRecommandation";
 import {
   lireEtat,
@@ -185,23 +186,7 @@ export function PageRecommandations() {
         {filAriane}
         <h1>Vos recommandations</h1>
         <div className="recommandations__grille">
-          <section className="recommandations__vide">
-            <img src="/illustrations/vide.svg" alt="" className="recommandations__illustration" />
-            <h2>Aucune formation ne correspond à vos critères</h2>
-            <p>
-              {profil.type_souhaite === "carte"
-                ? "Aucune formation à la carte"
-                : "Aucun parcours modulaire"}{" "}
-              ne correspond à vos réponses pour {budget} ou moins. Augmentez votre budget, changez
-              de type de formation ou décrivez autrement vos centres d'intérêt.
-            </p>
-            <div className="recommandations__actions">
-              <Link to="/questionnaire" className="bouton">
-                Modifier mes réponses
-              </Link>
-              <Link to="/formations">Parcourir le catalogue</Link>
-            </div>
-          </section>
+          <AucuneRecommandation profil={profil} />
           {resumeProfil}
         </div>
       </main>

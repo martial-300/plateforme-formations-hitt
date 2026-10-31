@@ -8,9 +8,9 @@ import { PageAdmin } from "./pages/PageAdmin";
 import { PageCatalogue } from "./pages/PageCatalogue";
 import { PageConnexion } from "./pages/PageConnexion";
 import { PageDetailFormation } from "./pages/PageDetailFormation";
-import { PageEnConstruction as Page } from "./pages/PageEnConstruction";
 import { PageEssai } from "./pages/PageEssai";
 import { PageInscription } from "./pages/PageInscription";
+import { PageIntrouvable } from "./pages/PageIntrouvable";
 import { PageNouvelleFormation } from "./pages/PageNouvelleFormation";
 import { PageQuestionnaire } from "./pages/PageQuestionnaire";
 import { PageRecommandations } from "./pages/PageRecommandations";
@@ -60,7 +60,7 @@ export default function App() {
                 </RouteProtegee>
               }
             />
-            <Route path="*" element={<Page titre="Page introuvable" exigence="—" sprint="—" />} />
+            <Route path="*" element={<PageIntrouvable />} />
           </Routes>
           <PiedDePage />
         </div>
