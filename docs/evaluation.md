@@ -70,6 +70,12 @@ Depuis `backend/`, sans base de données (le catalogue est lu dans `database/02_
 | 29/10/2026 | Essai 7 : mots-clés des formations comptés deux fois | 0,47 (provisoire) | Écarté : sans effet ; catalogue non modifié (descriptions et mots-clés à valider par le cabinet). |
 | 29/10/2026 | Essai 8 : n-grammes de caractères (4 à 6, `char_wb`) avec les verbes génériques | 0,50 (provisoire) | Écarté malgré un point de plus : les scores changent d'échelle (seuils du libellé de correspondance à recalibrer) et le classement devient plus difficile à expliquer. |
 | 29/10/2026 | **Retenu** : essais 1 et 2 combinés (verbes génériques en stop-words, mots seuls) | **0,49 (provisoire)** | Gains : P10 (0,40 → 0,60), P17 (0,60 → 0,80) ; aucun profil en baisse. Maximum atteignable avec ces annotations : 0,64, d'où l'objectif de 0,6 hors de portée par le seul réglage du moteur : il faut l'annotation du cabinet ([grille à remplir](grille-annotation-cabinet.md)). Calcul : 7 ms au plus par profil. |
+| 31/10/2026 | Essai 9 : compétences actuelles pondérées à 0,5 puis 0,25 (comptes bruts combinés avant normalisation) | 0,49 (provisoire) | Écarté : aucun profil ne change. |
+| 31/10/2026 | Essai 10 : intitulé de la formation compté 2 puis 3 fois | 0,48 puis 0,47 (provisoire) | Écarté : P15 (et P17 à ×3) baissent. |
+| 31/10/2026 | Essai 11 : texte formation sans la description (intitulé + mots-clés) | 0,49 (provisoire) | Écarté : P03 monte, P15 baisse ; les descriptions restent utiles. |
+| 31/10/2026 | Essai 12 : mots trop fréquents ignorés (`max_df` 0,2 puis 0,1) | 0,49 puis 0,44 (provisoire) | Écarté : sans gain à 0,2 ; à 0,1, cinq profils baissent. |
+| 31/10/2026 | Essai 13 : synonymes courants côté profil (« intelligence artificielle » → ia, « développeur » → développement, « sites internet » → site web…) | 0,49 (provisoire) | Écarté : P10 monte (0,60 → 0,80), P14 baisse (0,60 → 0,40). |
+| 31/10/2026 | **Bilan** : moteur inchangé (essais 1 et 2 retenus le 29/10) | **0,49 (provisoire)** | Plafond du réglage atteint avec ces annotations. Les formations pertinentes manquées le sont par **écart de vocabulaire** : l'apprenant écrit « développeur », « intelligence artificielle », « sites internet », « commercial », le catalogue « développement », « IA », « site web », « commerce ». Correction proposée au cabinet : [mots-clés à valider](mots-cles-a-valider.md) ; catalogue non modifié. |
 
 ## 2. Retours du panel d'apprenants
 
