@@ -46,7 +46,9 @@ Dans l'autre sens, la fiche d'une formation de la plateforme propose « S'inscri
 
 Images du site : avec l'accord du cabinet (9 novembre 2026), les 4 couvertures de domaine du site (SISG, TIA, TRIT, TREB) illustrent les cartes de domaine de l'accueil de la plateforme (`frontend/public/photos/site-*.webp`, `COUVERTURE_DOMAINE`). Le site ne présente que 12 formations : les 6 qui ont un équivalent dans le catalogue (Power BI, Excel appliqué à IA, IA générative, Copilot, ChatBot, UML) reprennent leur image du site sur leur fiche, montrée en entier car ce sont souvent des affiches (`IMAGE_SITE`). Écartées : l'affiche Cybersécurité et Web3 (prix de 80 000 FCFA, contraire au catalogue), l'affiche de rentrée utilisée pour Analyse des données, et 4 formations sans équivalent. Les photos par thème (Pexels) restent en attendant de vraies photos du centre.
 
-Écarts à faire trancher par le cabinet : le site nomme « TIA » le domaine que la plateforme appelle « IA-Data », et propose deux domaines absents des fiches du cabinet (Investissement, Logiciels).
+Noms des domaines : la plateforme affiche ceux du site (SISG · Sciences Informatiques de Secrétariat et de Gestion, TIA · Technologies en Intelligence artificielle, TRIT · Technologies de Réalisation en Informatique et Télécoms, TREB · Technologies de Réalisation en Électricité et Bâtiment). Le code interne `IA-Data` (base, API, `?domaine=IA-Data`) ne change pas : seul le libellé affiché devient « TIA ».
+
+Écart restant à faire trancher par le cabinet : le site propose deux domaines absents de ses fiches (Investissement, Logiciels).
 
 ## Ce que fait HIT-T (ou son prestataire web)
 
