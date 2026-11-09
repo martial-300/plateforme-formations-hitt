@@ -16,8 +16,8 @@ flowchart LR
 
 ## Étapes
 
-1. **Texte formation** = intitulé + description + mots-clés.
-2. **Texte profil** = compétences + centres d'intérêt + objectif professionnel.
+1. **Texte formation** = intitulé + description + mots-clés ; intitulé et mots-clés comptent 6 fois, la description 1 fois.
+2. **Texte profil** = compétences + centres d'intérêt + objectif professionnel ; centres d'intérêt et objectif comptent 3 fois, les compétences 1 fois.
 3. **Vectorisation** avec `TfidfVectorizer` (ajusté sur les textes des formations, puis appliqué au profil).
 4. **Similarité cosinus** entre le vecteur profil et chaque formation.
 5. **Filtrage** : on écarte les formations d'un autre type que `type_souhaite` et celles dont le coût dépasse `budget_max_fcfa`, puis on garde les **5 meilleurs scores** et, pour chacune, les **mots-clés communs** au profil et à la formation.
@@ -30,10 +30,10 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 def texte_formation(f):
-    return " ".join([f.intitule, f.description, " ".join(f.mots_cles)])
+    return " ".join([f.intitule] * 6 + [f.description] + [" ".join(f.mots_cles)] * 6)
 
 def texte_profil(p):
-    return " ".join([p.competences, p.centres_interet, p.objectif_professionnel])
+    return " ".join([p.competences] + [p.centres_interet] * 3 + [p.objectif_professionnel] * 3)
 
 def recommander(profil, formations, k=5):
     vectorizer = TfidfVectorizer(strip_accents="unicode", lowercase=True,
@@ -63,6 +63,7 @@ def recommander(profil, formations, k=5):
 | Prix comparé au budget | Prix promo s'il existe, sinon prix normal (`prix_effectif`) |
 | Stop-words français | Liste fixe dans le code (scikit-learn n'en fournit pas en français), plus les verbes génériques des projets (« devenir », « apprendre »…) depuis le 29/10/2026 |
 | Découpage | Mots seuls (`ngram_range=(1, 1)`) depuis le 29/10/2026 ; les paires de mots n'amélioraient pas la mesure ([journal des essais](evaluation.md)) |
+| Poids des champs | Intitulé et mots-clés × 6, description × 1 ; centres d'intérêt et objectif × 3, compétences × 1, depuis le 01/11/2026 ([journal des essais](evaluation.md)) |
 | Accents / casse | `strip_accents="unicode"`, `lowercase=True` |
 | Score nul | Les formations de score 0 ne sont pas recommandées |
 | Doublon « Initiation Informatique » (SISG et TRIT) | Ne garder qu'une occurrence par intitulé dans le top 5 |

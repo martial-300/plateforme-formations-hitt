@@ -2,6 +2,7 @@
 -- Descriptions et mots-clés générés avec l'assistance d'une IA, à faire valider par le cabinet.
 -- 31/10/2026 : mots-clés de 10 formations ajustés par l'assistant IA, par délégation du cabinet
 -- (décision de TheRossDjickso), pour reprendre les mots des apprenants : docs/mots-cles-a-valider.md.
+-- 01/11/2026 : mots-clés de 3 formations ajustés par l'assistant IA, non relus par un conseiller : docs/mots-cles-a-valider.md.
 -- 09/11/2026 : 10 formations TREB ajoutées depuis la fiche « Technologies / Techniques et Bâtiment » ;
 -- descriptions et mots-clés rédigés par l'assistant IA d'après les seuls intitulés, à faire valider.
 -- Les lignes sans prix de la fiche (Génie civil, « à la demande ») ne sont pas reprises.
@@ -103,9 +104,9 @@ INSERT INTO formations (intitule, description, domaine, type, duree_valeur, dure
 ('IA Open Source et exemple d''application', 'Découvrir les outils d''IA open source et réaliser une première application concrète (15 h).', 'IA-Data', 'carte', 1, 'jour', 100500, 90000,
  ARRAY['intelligence artificielle','open source','application','python','modèles','développement','ia']),
 ('Bibliothèque TensorFlow ou PyTorch', 'Construire et entraîner des réseaux de neurones avec TensorFlow ou PyTorch (15 h).', 'IA-Data', 'carte', 1, 'jour', 80500, 75000,
- ARRAY['tensorflow','pytorch','deep learning','réseaux de neurones','python','machine learning','ia','intelligence artificielle']),
+ ARRAY['tensorflow','pytorch','deep learning','apprentissage automatique','réseaux de neurones','python','machine learning','intelligence artificielle']),
 ('Bibliothèque Keras', 'Créer rapidement des modèles de deep learning avec l''API haut niveau Keras (15 h).', 'IA-Data', 'carte', 1, 'jour', 80500, 75000,
- ARRAY['keras','deep learning','réseaux de neurones','python','tensorflow','machine learning','ia','intelligence artificielle']),
+ ARRAY['keras','deep learning','apprentissage automatique','réseaux de neurones','python','tensorflow','machine learning','intelligence artificielle']),
 ('Bibliothèque OpenCV', 'Traiter des images et des vidéos et faire de la vision par ordinateur avec OpenCV (15 h).', 'IA-Data', 'carte', 1, 'jour', 80500, 75000,
  ARRAY['opencv','vision par ordinateur','traitement d''image','vidéo','reconnaissance','python','ia']),
 ('Bibliothèque H2O.ai', 'Entraîner automatiquement des modèles de machine learning (AutoML) avec H2O.ai (15 h).', 'IA-Data', 'carte', 1, 'jour', 80500, 75000,
@@ -217,7 +218,7 @@ INSERT INTO formations (intitule, description, domaine, type, duree_valeur, dure
 ('Administrateur réseaux', 'Configurer, administrer et sécuriser les réseaux et serveurs d''une entreprise.', 'TRIT', 'modulaire', 6, 'mois', 250000, NULL,
  ARRAY['administrateur réseau','réseau','serveur','windows server','linux','sécurité','cisco']),
 ('Analyste Programmeur et Cybersécurité', 'Développer des applications et protéger les systèmes informatiques contre les attaques.', 'TRIT', 'modulaire', 9, 'mois', 380000, NULL,
- ARRAY['cybersécurité','analyste programmeur','programmation','sécurité informatique','développement','réseau','protection des données']),
+ ARRAY['cybersécurité','analyste programmeur','programmation','sécurité informatique','développement','réseau','protection des données','développeur']),
 ('Réseau et Cybersécurité', 'Administrer des réseaux d''entreprise et mettre en place leur sécurité.', 'TRIT', 'modulaire', 9, 'mois', 380000, NULL,
  ARRAY['cybersécurité','réseau','sécurité informatique','pare-feu','administration réseau','protection','hacking éthique']),
 

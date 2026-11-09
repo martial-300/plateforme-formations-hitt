@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 
 import pytest
 
-from app.services.recommandation import prix_effectif, recommander
+from app.services.recommandation import prix_effectif, recommander, texte_formation, texte_profil
 
 
 @dataclass
@@ -209,3 +209,21 @@ def test_mots_seuls_sans_paires_de_mots():
     melangee = F("Atelier omega", "web site", ["atelier"])
     resultats = recommander(P(centres_interet="site web"), [exacte, melangee])
     assert resultats[0].score == pytest.approx(resultats[1].score)
+
+
+def test_le_texte_formation_garde_les_trois_champs_et_favorise_intitule_et_mots_cles():
+    texte = texte_formation(F("alpha", "beta", ["gamma"])).split()
+    assert (texte.count("alpha"), texte.count("beta"), texte.count("gamma")) == (6, 1, 6)
+
+
+def test_le_texte_profil_favorise_le_projet_et_accepte_les_champs_vides():
+    texte = texte_profil(P("alpha", "beta", "gamma")).split()
+    assert (texte.count("alpha"), texte.count("beta"), texte.count("gamma")) == (1, 3, 3)
+    assert texte_profil(P(centres_interet="beta")).split() == ["beta"] * 3
+
+
+def test_un_mot_de_l_intitule_compte_plus_qu_un_mot_de_la_description():
+    dans_intitule = F("Comptabilité", "Atelier pratique.", ["atelier"])
+    dans_description = F("Atelier pratique", "Comptabilité.", ["atelier"])
+    resultats = recommander(P(centres_interet="comptabilité"), [dans_description, dans_intitule])
+    assert resultats[0].formation is dans_intitule
