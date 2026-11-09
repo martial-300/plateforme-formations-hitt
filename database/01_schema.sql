@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS formations (
     id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     intitule         VARCHAR(200) NOT NULL,
     description      TEXT         NOT NULL,
-    domaine          VARCHAR(20)  NOT NULL CHECK (domaine IN ('SISG', 'IA-Data', 'TRIT')),
+    domaine          VARCHAR(20)  NOT NULL CHECK (domaine IN ('SISG', 'IA-Data', 'TRIT', 'TREB')),
     type             VARCHAR(20)  NOT NULL CHECK (type IN ('carte', 'modulaire')),
     duree_valeur     NUMERIC(4,1) NOT NULL,
     duree_unite      VARCHAR(10)  NOT NULL CHECK (duree_unite IN ('heure', 'jour', 'semaine', 'mois')),

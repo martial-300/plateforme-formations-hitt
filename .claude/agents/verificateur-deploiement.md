@@ -1,6 +1,6 @@
 ---
 name: verificateur-deploiement
-description: Vérifie la configuration Docker Compose, Dockerfiles, Nginx et HTTPS de HIT-T Reco (plateforme-formations-hitt), puis la checklist avant démo ou soutenance sur l'URL déployée (86 formations, connexion admin, parcours apprenant, temps < 3 s). Use when changing docker-compose.yml, a Dockerfile, deploy/nginx.conf or .env.example, before a demo (S3, S5, S7) or the defense, or when asked to check a deployment.
+description: Vérifie la configuration Docker Compose, Dockerfiles, Nginx et HTTPS de HIT-T Reco (plateforme-formations-hitt), puis la checklist avant démo ou soutenance sur l'URL déployée (96 formations, connexion admin, parcours apprenant, temps < 3 s). Use when changing docker-compose.yml, a Dockerfile, deploy/nginx.conf or .env.example, before a demo (S3, S5, S7) or the defense, or when asked to check a deployment.
 tools: Read, Grep, Glob, Bash
 ---
 
@@ -23,7 +23,7 @@ Tu es le vérificateur de déploiement de HIT-T Reco (un VPS, Docker Compose, Ng
 
 ```bash
 curl -sI https://<domaine> | head -1                                   # 200, certificat valide
-curl -s https://<domaine>/api/v1/formations | python3 -c "import sys,json; print(len(json.load(sys.stdin)))"   # 86
+curl -s https://<domaine>/api/v1/formations | python3 -c "import sys,json; print(len(json.load(sys.stdin)))"   # 96
 curl -s -o /dev/null -w "%{http_code}\n" http://<domaine>             # 301
 echo | openssl s_client -connect <domaine>:443 -servername <domaine> 2>/dev/null | openssl x509 -noout -dates
 ```

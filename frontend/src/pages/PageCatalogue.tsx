@@ -47,7 +47,7 @@ export function PageCatalogue() {
 
   useEffect(() => {
     let actif = true;
-    // 86 formations : tout est chargé en une fois, les onglets et le filtre agissent sur place.
+    // 96 formations : tout est chargé en une fois, les onglets et le filtre agissent sur place.
     listerFormations()
       .then((formations) => actif && setEtat({ statut: "pret", formations }))
       .catch((erreur: Error) => actif && setEtat({ statut: "erreur", message: erreur.message }));
@@ -78,7 +78,7 @@ export function PageCatalogue() {
     setEssai((n) => n + 1);
   }
 
-  // L'API trie par ordre alphabétique (IA-Data d'abord) ; la maquette suit l'ordre SISG, IA, TRIT.
+  // L'API trie par ordre alphabétique (IA-Data d'abord) ; la maquette suit l'ordre SISG, IA, TRIT, TREB.
   const toutes =
     etat.statut === "pret"
       ? [...etat.formations].sort(
@@ -105,8 +105,8 @@ export function PageCatalogue() {
             <h1>Catalogue des formations</h1>
             <p className="catalogue__chapo">
               {etat.statut === "pret" ? `${toutes.length} formations` : "Les formations"} réparties
-              en trois domaines : Secrétariat et Gestion (SISG), IA, Data science et Blockchain,
-              Informatique et Télécoms (TRIT).
+              en quatre domaines : Secrétariat et Gestion (SISG), IA, Data science et Blockchain,
+              Informatique et Télécoms (TRIT), Électricité et Bâtiment (TREB).
             </p>
           </div>
           <aside className="encart">

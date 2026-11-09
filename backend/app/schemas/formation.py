@@ -13,7 +13,7 @@ from pydantic import (
     model_validator,
 )
 
-Domaine = Literal["SISG", "IA-Data", "TRIT"]
+Domaine = Literal["SISG", "IA-Data", "TRIT", "TREB"]
 TypeFormation = Literal["carte", "modulaire"]
 UniteDuree = Literal["heure", "jour", "semaine", "mois"]
 

@@ -209,11 +209,11 @@ def test_suppression_supprime_les_recommandations_liees(client, db, admin):
 # --- Compatibilité avec le catalogue réel ----------------------------------------------------
 
 
-def test_les_86_formations_du_catalogue_passent_la_validation(db):
+def test_les_96_formations_du_catalogue_passent_la_validation(db):
     # L'administrateur doit pouvoir réenregistrer n'importe quelle formation existante telle quelle.
     db.connection().exec_driver_sql(CATALOGUE_SQL.read_text(encoding="utf-8"))
     formations = db.scalars(select(Formation)).all()
-    assert len(formations) == 86
+    assert len(formations) == 96
     refusees = []
     for formation in formations:
         champs = {c: getattr(formation, c) for c in FormationEntree.model_fields}

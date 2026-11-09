@@ -42,7 +42,7 @@ export interface ReponseConnexionGoogle extends ReponseConnexion {
   nouveau_compte: boolean;
 }
 
-export type Domaine = "SISG" | "IA-Data" | "TRIT";
+export type Domaine = "SISG" | "IA-Data" | "TRIT" | "TREB";
 export type TypeFormation = "carte" | "modulaire";
 export type UniteDuree = "heure" | "jour" | "semaine" | "mois";
 

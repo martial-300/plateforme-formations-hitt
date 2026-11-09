@@ -10,6 +10,7 @@ enum Domaine {
   SISG
   IA_Data
   TRIT
+  TREB
 }
 enum TypeFormation {
   carte

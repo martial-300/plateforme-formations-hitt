@@ -110,7 +110,7 @@ Même format que la réponse de `POST /auth/register` :
 
 ### `GET /formations?domaine=TRIT&type=carte`
 
-Public. Paramètres optionnels : `domaine` (`SISG` | `IA-Data` | `TRIT`), `type` (`carte` | `modulaire`) ; une autre valeur → `422`. Formations triées par domaine, type puis intitulé ; liste vide si aucune ne correspond.
+Public. Paramètres optionnels : `domaine` (`SISG` | `IA-Data` | `TRIT` | `TREB`), `type` (`carte` | `modulaire`) ; une autre valeur → `422`. Formations triées par domaine, type puis intitulé ; liste vide si aucune ne correspond.
 
 ```json
 [
