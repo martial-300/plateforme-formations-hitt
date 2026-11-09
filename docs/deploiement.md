@@ -17,7 +17,7 @@ En production, cinq services tournent (profil Compose `production`) :
 ## Prérequis
 
 - VPS (Ubuntu 22.04+ recommandé, 2 Go de RAM suffisent) avec Docker et le plugin Docker Compose
-- Nom de domaine pointant vers l'IP du VPS (enregistrement A), **avant** de demander le certificat
+- Nom de domaine pointant vers l'IP du VPS (enregistrement A), **avant** de demander le certificat : un sous-domaine du site de HIT-T, par exemple `orientation.hittechnologie.com`, créé par le gestionnaire du domaine (voir [integration-plateforme.md](integration-plateforme.md))
 - Ports 80 et 443 ouverts
 
 ## Étapes

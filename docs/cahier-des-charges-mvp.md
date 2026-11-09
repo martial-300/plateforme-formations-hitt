@@ -1,6 +1,6 @@
 # Cahier des charges MVP — Plateforme de recommandation de formations (HIT-T Institute)
 
-*23 octobre 2026 · Martial — v1.1 du 24 octobre 2026 : ajout de l'aperçu pour les visiteurs (RF-12) et de la connexion avec Google (RF-13) — v1.2 du 28 octobre 2026 : lecture du profil enregistré (`GET /profil`) et routes du questionnaire réservées aux apprenants — v1.3 du 9 novembre 2026 : 4e fiche du cabinet (domaine TREB, 10 formations), à faire valider par les encadreurs*
+*23 octobre 2026 · Martial — v1.1 du 24 octobre 2026 : ajout de l'aperçu pour les visiteurs (RF-12) et de la connexion avec Google (RF-13) — v1.2 du 28 octobre 2026 : lecture du profil enregistré (`GET /profil`) et routes du questionnaire réservées aux apprenants — v1.3 du 9 novembre 2026 : 4e fiche du cabinet (domaine TREB, 10 formations) et intégration au site existant de HIT-T par un sous-domaine, à faire valider par les encadreurs*
 
 > Version Markdown du document de référence. Original Word : [Cahier_des_Charges_MVP_HITT_Institute.docx](Cahier_des_Charges_MVP_HITT_Institute.docx).
 
@@ -109,6 +109,8 @@ Architecture 3 couches, stack inchangée par rapport au cahier technique : seuls
 | Déploiement | Docker Compose, Nginx, Let's Encrypt | CI/CD |
 
 Pages frontend : Connexion/Inscription, Catalogue, Questionnaire, Mes recommandations, Administration.
+
+**Intégration à la plateforme existante** *(ajout v1.3)* : la plateforme est publiée sur un sous-domaine du site de l'entreprise (par exemple `orientation.hittechnologie.com`) ; le site existant y renvoie par des liens (« Trouver ma formation », « Essayer sans compte ») et la plateforme renvoie vers le site. Comptes, catalogue et base restent propres à la plateforme ; une intégration plus poussée (page intégrée, comptes partagés, catalogue commun) est reportée en V2. Détail : [integration-plateforme.md](integration-plateforme.md).
 
 ## 7. Modèle de données minimal
 
