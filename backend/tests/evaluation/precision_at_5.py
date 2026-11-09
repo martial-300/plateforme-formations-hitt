@@ -281,7 +281,11 @@ def grille(profils: list[dict], formations: list[SimpleNamespace]) -> str:
             "Formations pertinentes : 1. … 2. … 3. … 4. … 5. …",
             "",
         ]
-    lignes += ["## Catalogue (86 formations)", "", "| Domaine | Type | Intitulé | Prix (FCFA) |"]
+    lignes += [
+        f"## Catalogue ({len(formations)} formations)",
+        "",
+        "| Domaine | Type | Intitulé | Prix (FCFA) |",
+    ]
     lignes.append("|---|---|---|---|")
     for f in formations:
         prix = f.cout_promo_fcfa if f.cout_promo_fcfa is not None else f.cout_fcfa

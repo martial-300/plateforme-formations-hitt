@@ -141,6 +141,7 @@ classDiagram
         SISG
         IA_Data
         TRIT
+        TREB
     }
     class TypeFormation {
         <<enumeration>>
@@ -200,7 +201,7 @@ sequenceDiagram
     else Données valides
         API->>DB: INSERT ou UPDATE profils_apprenants
         API->>DB: SELECT formations
-        DB-->>API: 86 formations
+        DB-->>API: 96 formations
         API->>M: recommander(texte du profil, type, budget, k = 5)
         M->>M: TF-IDF + cosinus, filtre type et budget, top 5, mots communs
         M-->>API: 0 à 5 résultats

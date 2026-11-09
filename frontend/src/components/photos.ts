@@ -37,6 +37,8 @@ export const PHOTO_DOMAINE: Record<Domaine, NomPhoto> = {
   SISG: "bureau",
   "IA-Data": "code",
   TRIT: "reseau",
+  // Pas encore de photo électricité ou bâtiment : celle du technicien en attendant.
+  TREB: "maintenance",
 };
 
 // Thèmes cherchés dans l'intitulé, puis dans les mots-clés ; le premier qui correspond l'emporte,

@@ -49,6 +49,14 @@ const DOMAINES: {
     modulaires: 12,
     exemples: ["Développement de site web", "Maintenance informatique", "Réseau et Cybersécurité"],
   },
+  {
+    code: "TREB",
+    surtitre: "TREB",
+    nom: "Électricité et Bâtiment",
+    carte: 1,
+    modulaires: 9,
+    exemples: ["Électricité bâtiment", "Installation de panneaux solaires", "Domotique"],
+  },
 ];
 
 const ETAPES = [
@@ -159,7 +167,7 @@ export function PageAccueil() {
             </div>
             <div>
               <dt>{DOMAINES.length}</dt>
-              <dd>domaines : SISG, IA et Data, TRIT</dd>
+              <dd>domaines : SISG, IA et Data, TRIT, TREB</dd>
             </div>
             <div>
               <dt>2</dt>
@@ -171,7 +179,7 @@ export function PageAccueil() {
         </section>
 
         <section className="conteneur accueil__section" aria-labelledby="titre-domaines">
-          <h2 id="titre-domaines">Trois domaines de formation</h2>
+          <h2 id="titre-domaines">Quatre domaines de formation</h2>
           <ul className="domaines">
             {DOMAINES.map((domaine) => (
               <li key={domaine.code} className="domaine">

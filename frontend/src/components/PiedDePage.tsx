@@ -22,6 +22,9 @@ export function PiedDePage() {
               <li>
                 <Link to="/formations?domaine=TRIT">TRIT — Informatique et Télécoms</Link>
               </li>
+              <li>
+                <Link to="/formations?domaine=TREB">TREB — Électricité et Bâtiment</Link>
+              </li>
             </ul>
           </div>
           <div>

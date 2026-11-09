@@ -120,7 +120,7 @@ def classes():
     ey = 830
     b.append(text(50, ey - 14, 'Énumérations', 14, 700, 'start', C['green']))
     x = 50
-    for name, vals in [('Role', ['apprenant', 'administrateur']), ('Domaine', ['SISG', 'IA_Data', 'TRIT']), ('TypeFormation', ['carte', 'modulaire']), ('UniteDuree', ['heure', 'jour', 'semaine', 'mois']), ('Retour', ['aucun', 'pertinent', 'non_pertinent'])]:
+    for name, vals in [('Role', ['apprenant', 'administrateur']), ('Domaine', ['SISG', 'IA_Data', 'TRIT', 'TREB']), ('TypeFormation', ['carte', 'modulaire']), ('UniteDuree', ['heure', 'jour', 'semaine', 'mois']), ('Retour', ['aucun', 'pertinent', 'non_pertinent'])]:
         w = 200
         g, h = classe(x, ey, w, name, vals, (), 'enumeration')
         b.append(g); x += w + 30

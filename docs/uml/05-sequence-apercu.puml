@@ -14,7 +14,7 @@ UI -> API : POST /api/v1/recommandations/apercu
 activate API
 API -> API : Limite d'appels par adresse IP
 API -> DB : SELECT formations
-DB --> API : 86 formations
+DB --> API : 96 formations
 API -> M : recommander(réponse, type, budget, k = 3)
 M --> API : 3 résultats
 API --> UI : 200 { 3 formations, sans description }

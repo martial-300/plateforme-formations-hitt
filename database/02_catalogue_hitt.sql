@@ -1,7 +1,10 @@
--- Catalogue HIT-T Institute : 86 formations (fiches SISG, IA/Data, TRIT)
+-- Catalogue HIT-T Institute : 96 formations (fiches SISG, IA/Data, TRIT, TREB)
 -- Descriptions et mots-clés générés avec l'assistance d'une IA, à faire valider par le cabinet.
 -- 31/10/2026 : mots-clés de 10 formations ajustés par l'assistant IA, par délégation du cabinet
 -- (décision de TheRossDjickso), pour reprendre les mots des apprenants : docs/mots-cles-a-valider.md.
+-- 09/11/2026 : 10 formations TREB ajoutées depuis la fiche « Technologies / Techniques et Bâtiment » ;
+-- descriptions et mots-clés rédigés par l'assistant IA d'après les seuls intitulés, à faire valider.
+-- Les lignes sans prix de la fiche (Génie civil, « à la demande ») ne sont pas reprises.
 -- PostgreSQL 13+ (gen_random_uuid intégré).
 -- Les lignes « Autres formations à la demande du client » ne sont pas reprises.
 -- Les formations modulaires n'ont pas de prix promo : cout_promo_fcfa = NULL.
@@ -10,7 +13,7 @@ CREATE TABLE IF NOT EXISTS formations (
     id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     intitule         VARCHAR(200) NOT NULL,
     description      TEXT         NOT NULL,
-    domaine          VARCHAR(20)  NOT NULL CHECK (domaine IN ('SISG', 'IA-Data', 'TRIT')),
+    domaine          VARCHAR(20)  NOT NULL CHECK (domaine IN ('SISG', 'IA-Data', 'TRIT', 'TREB')),
     type             VARCHAR(20)  NOT NULL CHECK (type IN ('carte', 'modulaire')),
     duree_valeur     NUMERIC(4,1) NOT NULL,
     duree_unite      VARCHAR(10)  NOT NULL CHECK (duree_unite IN ('heure', 'jour', 'semaine', 'mois')),
@@ -216,4 +219,33 @@ INSERT INTO formations (intitule, description, domaine, type, duree_valeur, dure
 ('Analyste Programmeur et Cybersécurité', 'Développer des applications et protéger les systèmes informatiques contre les attaques.', 'TRIT', 'modulaire', 9, 'mois', 380000, NULL,
  ARRAY['cybersécurité','analyste programmeur','programmation','sécurité informatique','développement','réseau','protection des données']),
 ('Réseau et Cybersécurité', 'Administrer des réseaux d''entreprise et mettre en place leur sécurité.', 'TRIT', 'modulaire', 9, 'mois', 380000, NULL,
- ARRAY['cybersécurité','réseau','sécurité informatique','pare-feu','administration réseau','protection','hacking éthique']);
+ ARRAY['cybersécurité','réseau','sécurité informatique','pare-feu','administration réseau','protection','hacking éthique']),
+
+-- =====================================================================
+-- TREB : Technologies / Techniques et Bâtiment (électricité et bâtiment) — À LA CARTE
+-- Fiche sans prix promo : cout_promo_fcfa = NULL.
+-- =====================================================================
+('AutoCad / ArchiCad (Conception de plans électriques)', 'Concevoir sur ordinateur des plans de bâtiment et des plans électriques avec AutoCad et ArchiCad.', 'TREB', 'carte', 4, 'semaine', 80000, NULL,
+ ARRAY['autocad','archicad','dessin assisté par ordinateur','plan électrique','plan de bâtiment','conception','bâtiment']),
+
+-- =====================================================================
+-- TREB : Technologies / Techniques et Bâtiment — MODULAIRES
+-- =====================================================================
+('Électricité bâtiment', 'Réaliser et entretenir les installations électriques des bâtiments.', 'TREB', 'modulaire', 6, 'mois', 150000, NULL,
+ ARRAY['électricité','électricité bâtiment','installation électrique','câblage électrique','électricien','bâtiment','technicien']),
+('Dessin bâtiment / Schéma', 'Dessiner les plans d''un bâtiment et les schémas de ses installations.', 'TREB', 'modulaire', 6, 'mois', 150000, NULL,
+ ARRAY['dessin bâtiment','schéma','plan','dessin technique','lecture de plan','bâtiment','conception']),
+('Électronique', 'Comprendre, monter et dépanner des circuits et des équipements électroniques.', 'TREB', 'modulaire', 6, 'mois', 160000, NULL,
+ ARRAY['électronique','circuit électronique','composants','dépannage','systèmes embarqués','technicien','électricité']),
+('Froid et climatisation', 'Installer, entretenir et dépanner les équipements de froid et de climatisation.', 'TREB', 'modulaire', 6, 'mois', 165000, NULL,
+ ARRAY['froid','climatisation','frigoriste','installation','dépannage','maintenance','technicien']),
+('Informatique industrielle', 'Programmer et maintenir les systèmes informatiques et automatisés utilisés dans l''industrie.', 'TREB', 'modulaire', 6, 'mois', 175000, NULL,
+ ARRAY['informatique industrielle','automatisme','systèmes embarqués','programmation','industrie','électronique','maintenance']),
+('Électrotechnique', 'Installer et maintenir les machines et les équipements électriques.', 'TREB', 'modulaire', 6, 'mois', 150000, NULL,
+ ARRAY['électrotechnique','électricité','moteurs électriques','machines électriques','énergie','maintenance','technicien']),
+('Domotique', 'Installer et programmer les équipements qui automatisent une maison ou un bâtiment : éclairage, sécurité, confort.', 'TREB', 'modulaire', 6, 'mois', 210000, NULL,
+ ARRAY['domotique','maison connectée','automatisation','bâtiment','électricité','installation','programmation']),
+('Installation de panneaux solaires', 'Installer et entretenir des panneaux solaires et des installations photovoltaïques.', 'TREB', 'modulaire', 6, 'mois', 150000, NULL,
+ ARRAY['panneaux solaires','énergie solaire','photovoltaïque','énergie renouvelable','installation','électricité','maintenance']),
+('Réalisation des enseignes lumineuses', 'Concevoir et fabriquer des enseignes lumineuses pour les commerces et les entreprises.', 'TREB', 'modulaire', 6, 'mois', 200000, NULL,
+ ARRAY['enseigne lumineuse','éclairage','led','signalétique','électricité','conception','fabrication']);

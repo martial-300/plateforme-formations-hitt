@@ -155,7 +155,7 @@ def test_ne_modifie_pas_les_formations():
     assert EXCEL.mots_cles == ["excel", "tableur", "formules", "gestion"]
 
 
-def test_calcul_en_moins_d_une_seconde_sur_86_formations():
+def test_calcul_en_moins_d_une_seconde_sur_96_formations():
     themes = ["excel", "réseau", "comptabilité", "python", "web", "secrétariat", "blockchain"]
     formations = [
         F(
@@ -166,7 +166,7 @@ def test_calcul_en_moins_d_une_seconde_sur_86_formations():
             type="carte" if i % 3 else "modulaire",
             cout_fcfa=50_000 + 5_000 * i,
         )
-        for i in range(86)
+        for i in range(96)
     ]
     profil = P(
         competences="word excel bases internet",

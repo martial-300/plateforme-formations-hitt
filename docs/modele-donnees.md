@@ -35,7 +35,7 @@ erDiagram
         uuid id PK
         varchar intitule
         text description
-        varchar domaine "SISG | IA-Data | TRIT"
+        varchar domaine "SISG | IA-Data | TRIT | TREB"
         varchar type "carte | modulaire"
         numeric duree_valeur
         varchar duree_unite "heure | jour | semaine | mois"

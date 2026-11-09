@@ -19,7 +19,7 @@ from tests.evaluation.precision_at_5 import (
 
 def test_catalogue_sql_lu_sans_base():
     formations = charger_catalogue()
-    assert len(formations) == 86
+    assert len(formations) == 96
     assert Counter((f.domaine, f.type) for f in formations) == {
         ("SISG", "carte"): 14,
         ("SISG", "modulaire"): 17,
@@ -27,6 +27,8 @@ def test_catalogue_sql_lu_sans_base():
         ("IA-Data", "modulaire"): 3,
         ("TRIT", "carte"): 19,
         ("TRIT", "modulaire"): 12,
+        ("TREB", "carte"): 1,
+        ("TREB", "modulaire"): 9,
     }
     # Apostrophes doublées en SQL, prix promo NULL pour les modulaires, mots-clés en liste.
     intitules = {f.intitule for f in formations}

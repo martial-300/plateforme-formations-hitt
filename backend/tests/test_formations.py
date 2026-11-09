@@ -30,11 +30,11 @@ def ajouter_formation(db, **modifs) -> Formation:
 # --- GET /formations ---------------------------------------------------------------------------
 
 
-def test_liste_renvoie_les_86_formations_du_catalogue(client, catalogue):
+def test_liste_renvoie_les_96_formations_du_catalogue(client, catalogue):
     reponse = client.get("/api/v1/formations")
     assert reponse.status_code == 200
     formations = reponse.json()
-    assert len(formations) == 86
+    assert len(formations) == 96
     assert len(formations) == catalogue.scalar(select(func.count()).select_from(Formation))
 
 
@@ -47,6 +47,8 @@ def test_liste_renvoie_les_86_formations_du_catalogue(client, catalogue):
         ("IA-Data", "modulaire", 3),
         ("TRIT", "carte", 19),
         ("TRIT", "modulaire", 12),
+        ("TREB", "carte", 1),
+        ("TREB", "modulaire", 9),
     ],
 )
 def test_filtres_domaine_et_type_sur_le_catalogue(client, catalogue, domaine, type_, attendu):

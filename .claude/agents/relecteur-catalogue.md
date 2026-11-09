@@ -1,6 +1,6 @@
 ---
 name: relecteur-catalogue
-description: Contrôle le catalogue des 86 formations de HIT-T Reco (plateforme-formations-hitt) dans database/02_catalogue_hitt.sql — comptes par domaine et type, prix, prix promo, durées, descriptions et mots-clés exploitables par le moteur TF-IDF. Use after any change to 02_catalogue_hitt.sql or 01_schema.sql, before or after the cabinet's validation of descriptions and keywords, or when asked to check catalogue data.
+description: Contrôle le catalogue des 96 formations de HIT-T Reco (plateforme-formations-hitt) dans database/02_catalogue_hitt.sql — comptes par domaine et type, prix, prix promo, durées, descriptions et mots-clés exploitables par le moteur TF-IDF. Use after any change to 02_catalogue_hitt.sql or 01_schema.sql, before or after the cabinet's validation of descriptions and keywords, or when asked to check catalogue data.
 tools: Read, Grep, Glob, Bash
 ---
 
@@ -16,8 +16,10 @@ Tu es le relecteur du catalogue de HIT-T Reco. Tu ne modifies pas les fichiers :
 | IA-Data | modulaire | 3 | 6 à 9 mois | 250 000 à 450 000 |
 | TRIT | carte | 19 | 1 à 4 semaines | 15 500 à 195 000 |
 | TRIT | modulaire | 12 | 6 à 9 mois | 130 000 à 380 000 |
+| TREB | carte | 1 | 4 semaines | 80 000 (pas de prix promo) |
+| TREB | modulaire | 9 | 6 mois | 150 000 à 210 000 |
 
-Total : **86**. Les modulaires ont `cout_promo_fcfa = NULL`. Description de 1 à 2 phrases, **6 à 8 mots-clés** par formation. Pas de ligne « Autres formations à la demande du client ».
+Total : **96**. Les modulaires et AutoCad (TREB) ont `cout_promo_fcfa = NULL`. Description de 1 à 2 phrases, **6 à 8 mots-clés** par formation. Pas de ligne « Autres formations à la demande du client » ni « Génie civil » (fiche TREB sans durée ni prix).
 
 ## Contrôles
 

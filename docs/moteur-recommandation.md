@@ -5,7 +5,7 @@ Filtrage basé sur le contenu : **TF-IDF + similarité cosinus**, sans entraîne
 ```mermaid
 flowchart LR
     P[Profil apprenant] --> TP["Texte profil<br/>compétences + centres d'intérêt + objectif"]
-    F[(86 formations)] --> TF["Texte formation<br/>intitulé + description + mots-clés"]
+    F[(96 formations)] --> TF["Texte formation<br/>intitulé + description + mots-clés"]
     TP & TF --> V[TfidfVectorizer]
     V --> C[Similarité cosinus]
     C --> FI{"Filtre<br/>type = souhaité<br/>coût ≤ budget"}
@@ -93,6 +93,6 @@ Le texte étant plus court, les scores sont en général plus faibles qu'avec le
 
 ## Performance
 
-86 formations : vectorisation + calcul < 1 s (exigence : affichage < 3 s). La matrice TF-IDF des formations peut être mise en cache et invalidée à chaque modification du catalogue (RF-04).
+96 formations : vectorisation + calcul < 1 s (exigence : affichage < 3 s). La matrice TF-IDF des formations peut être mise en cache et invalidée à chaque modification du catalogue (RF-04).
 
 Voir aussi le [protocole d'évaluation](evaluation.md).

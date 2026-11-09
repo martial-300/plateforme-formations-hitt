@@ -30,7 +30,7 @@ Tu es le testeur backend de HIT-T Reco (Python 3.11, FastAPI, SQLAlchemy 2, Pyda
 - **Profil et recos (RF-06–10) :** `PUT /profil` crée puis écrase le profil (un seul par apprenant) et **remplace** les recommandations ; au plus 5, triées par score décroissant ; type ≠ `type_souhaite` et prix effectif (promo sinon normal) > budget exclus ; score 0 exclu ; doublon d'intitulé (« Initiation Informatique ») une seule fois ; budget négatif → 400/422 ; retour `pertinent`/`non_pertinent` uniquement, et seulement sur ses propres recos (sinon 404).
 - **Aperçu visiteur (RF-12) :** `POST /recommandations/apercu` sans JWT → au plus 3 résultats avec `rang`, sans id de recommandation ni description ; **aucune ligne** ajoutée dans `recommandations` ni `profils_apprenants` (compter avant/après) ; même filtre type + budget que `PUT /profil` ; limite d'appels par IP (429 au-delà) si elle est implémentée.
 - **Admin (RF-11) :** `nb_apprenants` ne compte pas l'admin ; `taux_pertinent` = `null` sans retour, sinon pertinents / retours donnés.
-- **Performance :** `PUT /profil` sur le catalogue réel (86 formations) en moins de 3 s.
+- **Performance :** `PUT /profil` sur le catalogue réel (96 formations) en moins de 3 s.
 
 ## Méthode
 

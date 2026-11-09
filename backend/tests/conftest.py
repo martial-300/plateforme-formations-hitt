@@ -77,7 +77,7 @@ def client(db: Session) -> Iterator[TestClient]:
 
 @pytest.fixture
 def catalogue(db):
-    """Les 86 formations de `database/02_catalogue_hitt.sql`, annulées à la fin du test."""
+    """Les 96 formations de `database/02_catalogue_hitt.sql`, annulées à la fin du test."""
     # Script statique du dépôt, sans paramètre : il vérifie aussi que le modèle ORM accepte
     # exactement les lignes chargées dans PostgreSQL au premier démarrage.
     db.connection().exec_driver_sql(CATALOGUE_SQL.read_text(encoding="utf-8"))

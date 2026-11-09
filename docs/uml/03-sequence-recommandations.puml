@@ -35,7 +35,7 @@ alt Données invalides
 else Données valides
   API -> DB : INSERT ou UPDATE profils_apprenants
   API -> DB : SELECT formations
-  DB --> API : 86 formations
+  DB --> API : 96 formations
   API -> M : recommander(texte du profil, type, budget, k = 5)
   activate M
   M -> M : TF-IDF + similarité cosinus

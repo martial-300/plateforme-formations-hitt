@@ -10,7 +10,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
 
-DOMAINES = ("SISG", "IA-Data", "TRIT")
+DOMAINES = ("SISG", "IA-Data", "TRIT", "TREB")
 TYPES = ("carte", "modulaire")
 UNITES_DUREE = ("heure", "jour", "semaine", "mois")
 

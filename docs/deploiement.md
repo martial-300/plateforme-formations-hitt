@@ -88,7 +88,7 @@ Si la base de développement tourne déjà, ajouter dans la copie un `docker-com
 Au **premier** démarrage (volume PostgreSQL vide), l'image PostgreSQL exécute automatiquement les scripts de `database/` par ordre alphabétique :
 
 1. `01_schema.sql` — 4 tables
-2. `02_catalogue_hitt.sql` — 86 formations
+2. `02_catalogue_hitt.sql` — 96 formations
 
 Pour recharger depuis zéro (⚠️ efface toutes les données, comptes compris) :
 
@@ -109,7 +109,7 @@ docker compose exec -T db pg_dump -U hitt hitt > sauvegarde_$(date +%F).sql
 ## Vérifications avant la soutenance
 
 - [ ] `https://<domaine>` répond, certificat valide ; `http://<domaine>` redirige vers HTTPS
-- [ ] `https://<domaine>/api/v1/formations` renvoie 86 formations
+- [ ] `https://<domaine>/api/v1/formations` renvoie 96 formations
 - [ ] Connexion admin OK, chiffres clés affichés
 - [ ] Comptes de démo créés, leurs recommandations affichées
 - [ ] Connexion avec Google OK (domaine dans les origines autorisées)

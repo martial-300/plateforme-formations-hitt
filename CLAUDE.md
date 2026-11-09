@@ -9,7 +9,7 @@ HIT-T Reco : MVP de soutenance qui recommande à un apprenant 5 formations du ca
 Développement : la base tourne dans Docker, backend et frontend en local. `./lancer.sh` lance les trois d'un coup (charge `.env` : c'est l'utilisateur qui le lance), `./arreter.sh` les arrête (données conservées) ; à la main :
 
 ```bash
-docker compose up -d db                     # PostgreSQL + catalogue (86 formations)
+docker compose up -d db                     # PostgreSQL + catalogue (96 formations)
 cd backend && uvicorn app.main:app --reload --port 8000   # après `set -a && . ../.env && set +a` (lancé par l'utilisateur, .env n'est pas lu)
 cd frontend && npm run dev                  # http://localhost:5173, API lue dans VITE_API_URL (frontend/.env.local)
 ```

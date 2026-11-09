@@ -37,7 +37,7 @@ export function MiseEnPageCompte({
         <p className="compte__accroche">Trouvez la formation adaptée à votre projet</p>
         <p className="compte__texte">
           Répondez à six questions sur votre parcours et vos objectifs : la plateforme compare
-          automatiquement votre profil aux 86 formations de HIT-T Institute et vous indique les cinq
+          automatiquement votre profil aux 96 formations de HIT-T Institute et vous indique les cinq
           plus adaptées.
         </p>
         <ol className="compte__etapes">

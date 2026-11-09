@@ -1,7 +1,7 @@
 // Libellés et formats d'affichage du catalogue (maquettes 03, 04, 11, M1, M4).
 import type { Domaine, Formation, TypeFormation, UniteDuree } from "../api/types";
 
-export const DOMAINES: Domaine[] = ["SISG", "IA-Data", "TRIT"];
+export const DOMAINES: Domaine[] = ["SISG", "IA-Data", "TRIT", "TREB"];
 export const TYPES: TypeFormation[] = ["carte", "modulaire"];
 
 /** Libellé court : onglets, colonne Domaine, sur-titre du détail. */
@@ -9,6 +9,7 @@ export const DOMAINE_COURT: Record<Domaine, string> = {
   SISG: "SISG",
   "IA-Data": "IA · Data",
   TRIT: "TRIT",
+  TREB: "TREB",
 };
 
 /** Intitulés des domaines du cahier des charges (§ 2). */
@@ -16,6 +17,7 @@ export const DOMAINE_COMPLET: Record<Domaine, string> = {
   SISG: "SISG — Secrétariat et Gestion",
   "IA-Data": "IA, Data science et Blockchain",
   TRIT: "TRIT — Informatique et Télécoms",
+  TREB: "TREB — Électricité et Bâtiment",
 };
 
 export const TYPE_COURT: Record<TypeFormation, string> = {

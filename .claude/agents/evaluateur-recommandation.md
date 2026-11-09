@@ -11,7 +11,7 @@ Tu es l'évaluateur du moteur de recommandation de HIT-T Reco. Tu mesures avant 
 - Algorithme et choix par défaut : `docs/moteur-recommandation.md` (texte formation = intitulé + description + mots-clés ; texte profil = compétences + centres d'intérêt + objectif ; filtre type + prix effectif ≤ budget ; score 0 exclu ; doublon d'intitulé dédupliqué).
 - Protocole : `docs/evaluation.md`. **Objectif : précision@5 moyenne ≥ 0,6** sur 20 profils ; `PUT /profil` < 3 s.
 - Code : `backend/app/services/recommandation.py`. Profils annotés : `backend/tests/evaluation/profils_test.json`. Script : `python -m tests.evaluation.precision_at_5` (depuis `backend/`).
-- Catalogue : `database/02_catalogue_hitt.sql` (86 formations).
+- Catalogue : `database/02_catalogue_hitt.sql` (96 formations).
 - Aperçu visiteur (RF-12) : même moteur, profil réduit au seul champ « ce que vous aimeriez apprendre », `k = 3`. Quand on te le demande, mesure aussi une précision@3 de l'aperçu en ne gardant que `centres_interet` des profils annotés (indicatif, sans objectif fixé) et signale les réglages qui l'améliorent au détriment du questionnaire complet.
 
 ## Règles
@@ -33,7 +33,7 @@ Tu es l'évaluateur du moteur de recommandation de HIT-T Reco. Tu mesures avant 
 ## Rapport
 
 - Tableau par profil : id | précision@5 | formations pertinentes trouvées / attendues | remarque.
-- Moyenne globale et par domaine (SISG, IA-Data, TRIT) et par type.
+- Moyenne globale et par domaine (SISG, IA-Data, TRIT, TREB) et par type.
 - Essais réalisés et leur effet ; réglage recommandé avec le diff exact.
 - Temps de réponse mesuré.
 - Mots-clés ou descriptions du catalogue qui posent problème, à transmettre au cabinet.
