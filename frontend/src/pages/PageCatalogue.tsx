@@ -47,7 +47,7 @@ export function PageCatalogue() {
 
   useEffect(() => {
     let actif = true;
-    // 86 formations : tout est chargé en une fois, les onglets et le filtre agissent sur place.
+    // 96 formations : tout est chargé en une fois, les onglets et le filtre agissent sur place.
     listerFormations()
       .then((formations) => actif && setEtat({ statut: "pret", formations }))
       .catch((erreur: Error) => actif && setEtat({ statut: "erreur", message: erreur.message }));
