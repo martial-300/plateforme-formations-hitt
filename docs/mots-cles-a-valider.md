@@ -30,3 +30,24 @@ Ajouter quelques mots-clés tels que les apprenants les écrivent corrige une pa
 Résultat (journal des essais, essai 14) : précision@5 provisoire de 0,49 à 0,51, aucun profil en baisse.
 
 Les profils de test ont servi à repérer ces écarts : une fois les mots-clés ajoutés, la mesure sur ces mêmes profils sera optimiste. La validation des annotations par un conseiller (et, si possible, de nouveaux profils) reste nécessaire pour une mesure fiable.
+
+## Ajouts du 1er novembre 2026 (à signaler au cabinet)
+
+Choisis en regardant les formations manquées des profils de test ([journal, essais 17 à 20](evaluation.md#journal-des-essais)). **Aucun conseiller ne les a relus.**
+
+Appliqués dans `database/02_catalogue_hitt.sql` (précision@5 : 0,58) :
+
+| Formation | Mot-clé retiré | Mot-clé ajouté | Justification |
+|---|---|---|---|
+| Bibliothèque TensorFlow ou PyTorch | ia | apprentissage automatique | Traduction de « machine learning », déjà présent ; « intelligence artificielle » reste |
+| Bibliothèque Keras | ia | apprentissage automatique | Idem |
+| Analyste Programmeur et Cybersécurité | — | développeur | La fiche dit « Développer des applications » |
+
+Non appliqués, **à décider par le cabinet** : ils vont au-delà des fiches. Confirmés tous les deux, ils porteraient la mesure à 0,60 ; ne pas les ajouter pour le seul score.
+
+| Formation | Changement | Question au cabinet |
+|---|---|---|
+| Marketing digital (modulaire) | « vente en ligne » à la place de « web marketing » | La formation enseigne-t-elle la vente en ligne, au-delà de la promotion ? |
+| Office PowerPoint 2010-2024 | « soutenance de mémoire » à la place de « soutenance » | La formation prépare-t-elle aux soutenances de mémoire ? |
+
+Bases déjà remplies : reporter les changements par la page Administration, comme ci-dessus.

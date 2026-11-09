@@ -31,6 +31,16 @@ STOPWORDS_FR = frozenset(
 # créer… »). Sans eux, « devenir » suffisait à rapprocher un projet de secrétariat d'une formation
 # de maintenance informatique (journal des essais, docs/evaluation.md).
 
+# Poids des champs, appliqués en répétant le texte : les descriptions, longues et générales,
+# masquaient l'intitulé et les mots-clés ; le projet de l'apprenant compte plus que ce qu'il sait
+# déjà faire (essais 15 et 16, docs/evaluation.md).
+POIDS_INTITULE = 6
+POIDS_DESCRIPTION = 1
+POIDS_MOTS_CLES = 6
+POIDS_COMPETENCES = 1
+POIDS_INTERETS = 3
+POIDS_OBJECTIF = 3
+
 
 class FormationRecommandable(Protocol):
     intitule: str
@@ -63,13 +73,21 @@ def normaliser(texte: str) -> str:
 
 
 def texte_formation(formation: FormationRecommandable) -> str:
-    return " ".join([formation.intitule, formation.description, " ".join(formation.mots_cles)])
+    return " ".join(
+        [formation.intitule] * POIDS_INTITULE
+        + [formation.description] * POIDS_DESCRIPTION
+        + [" ".join(formation.mots_cles)] * POIDS_MOTS_CLES
+    )
 
 
 def texte_profil(profil: ProfilRecommandable) -> str:
     # Champs vides acceptés : l'aperçu visiteur ne remplit que `centres_interet`.
-    champs = (profil.competences, profil.centres_interet, profil.objectif_professionnel)
-    return " ".join(champ for champ in champs if champ)
+    champs = (
+        (profil.competences, POIDS_COMPETENCES),
+        (profil.centres_interet, POIDS_INTERETS),
+        (profil.objectif_professionnel, POIDS_OBJECTIF),
+    )
+    return " ".join(" ".join([champ] * poids) for champ, poids in champs if champ)
 
 
 def prix_effectif(formation: FormationRecommandable) -> int:
