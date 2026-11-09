@@ -17,7 +17,7 @@ import {
 } from "../catalogue/libelles";
 import { Correspondance } from "../components/Correspondance";
 import { Photo } from "../components/Photo";
-import { photoFormation } from "../components/photos";
+import { estAffiche, photoFormation } from "../components/photos";
 import { AvisRecommandation } from "../recommandations/AvisRecommandation";
 import { lireEtat, type EtatDepuisRecommandations } from "../recommandations/navigation";
 
@@ -116,6 +116,7 @@ export function PageDetailFormation() {
 
   const { formation } = courant;
   const modulaire = formation.type === "modulaire";
+  const photo = photoFormation(formation);
   // L'état de navigation ne vaut que pour la formation recommandée qu'il décrit.
   const reco = depuis && depuis.recommandation.formation.id === formation.id ? depuis : null;
   const communs = new Set(reco?.recommandation.mots_cles_communs ?? []);
@@ -150,8 +151,8 @@ export function PageDetailFormation() {
           <h1>{formation.intitule}</h1>
           <p className="detail__description">{formation.description}</p>
           <Photo
-            nom={photoFormation(formation)}
-            className="detail__photo"
+            nom={photo}
+            className={estAffiche(photo) ? "detail__photo detail__photo--affiche" : "detail__photo"}
             tailles="(max-width: 860px) 100vw, 756px"
           />
 
@@ -205,6 +206,13 @@ export function PageDetailFormation() {
                 </Link>
               </>
             )}
+            <a
+              href="https://www.hittechnologie.com/trainings/apply"
+              className="bouton bouton--secondaire bouton--large tarif__site"
+              rel="noopener noreferrer"
+            >
+              S'inscrire sur le site de HIT-T
+            </a>
           </aside>
           {reco && avis && (
             <>

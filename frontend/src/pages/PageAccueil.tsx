@@ -5,7 +5,7 @@ import type { ApercuEntree, Domaine, RecommandationApercu } from "../api/types";
 import { formaterMontant } from "../catalogue/libelles";
 import { ListeApercu } from "../components/ListeApercu";
 import { Bandeau, Photo } from "../components/Photo";
-import { PHOTO_DOMAINE } from "../components/photos";
+import { COUVERTURE_DOMAINE } from "../components/photos";
 
 // Chiffres du catalogue validé (database/02_catalogue_hitt.sql) ; à lire depuis l'API
 // une fois GET /formations disponible.
@@ -184,7 +184,7 @@ export function PageAccueil() {
             {DOMAINES.map((domaine) => (
               <li key={domaine.code} className="domaine">
                 <Photo
-                  nom={PHOTO_DOMAINE[domaine.code]}
+                  nom={COUVERTURE_DOMAINE[domaine.code]}
                   className="domaine__photo"
                   tailles="(max-width: 860px) 100vw, 360px"
                 />

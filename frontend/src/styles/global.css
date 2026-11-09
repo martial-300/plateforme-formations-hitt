@@ -1211,6 +1211,11 @@ a {
   font-weight: 600;
 }
 
+/* Lien vers l'inscription sur le site de HIT-T (intégration par sous-domaine). */
+.tarif__site {
+  margin-top: 20px;
+}
+
 .detail__retour-mobile {
   display: none;
 }
@@ -2955,6 +2960,13 @@ a {
 .detail__photo {
   height: 340px;
   margin-top: 28px;
+}
+
+/* Image reprise du site de HIT-T (souvent une affiche avec du texte) : montrée en entière. */
+.detail__photo--affiche {
+  height: 420px;
+  object-fit: contain;
+  background: var(--carte);
 }
 
 .questionnaire__photo {
