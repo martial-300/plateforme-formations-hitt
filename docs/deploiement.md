@@ -90,6 +90,21 @@ Au **premier** démarrage (volume PostgreSQL vide), l'image PostgreSQL exécute 
 1. `01_schema.sql` — 4 tables
 2. `02_catalogue_hitt.sql` — 96 formations
 
+### Mettre à jour une base existante
+
+Ces scripts ne s'exécutent **qu'à la création** du volume, et `create_all` ne modifie pas une table qui existe déjà. Un changement du schéma ou du catalogue après la mise en service passe donc par un script de `database/maj/`, à lancer une fois sur chaque base existante (développement et VPS). Ces scripts sont relançables sans effet et ne touchent pas aux comptes.
+
+| Script | Quand | Effet |
+|---|---|---|
+| `2026-11-09_domaine_treb.sql` | Base créée avant l'ajout du domaine TREB (cahier des charges v1.3) | Contrainte du domaine élargie à `TREB` ; ajoute les 10 formations TREB qui manquent (86 → 96) |
+
+```bash
+docker compose exec -T db psql -U hitt -d hitt -v ON_ERROR_STOP=1 --single-transaction \
+  < database/maj/2026-11-09_domaine_treb.sql
+```
+
+Remplacer `-U hitt -d hitt` si `POSTGRES_USER` ou `POSTGRES_DB` ont été changés. Sans ce script, une base ancienne refuse toute formation TREB (erreur 500 à l'ajout depuis la page Administration). Un script de `database/maj/` reprend les mêmes valeurs que `01_schema.sql` et `02_catalogue_hitt.sql` : les modifier ensemble (un test le vérifie pour TREB).
+
 Pour recharger depuis zéro (⚠️ efface toutes les données, comptes compris) :
 
 ```bash

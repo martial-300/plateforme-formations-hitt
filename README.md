@@ -49,7 +49,8 @@ plateforme-formations-hitt/
 ├── frontend/         Application React + TypeScript (Vite)
 ├── database/
 │   ├── 01_schema.sql           Schéma des 4 tables
-│   └── 02_catalogue_hitt.sql   Catalogue réel : 96 formations
+│   ├── 02_catalogue_hitt.sql   Catalogue réel : 96 formations
+│   └── maj/                    Mises à jour d'une base existante (docs/deploiement.md)
 ├── deploy/           Configuration Nginx / production
 ├── docs/             Cahier des charges, architecture, API, UML, moteur IA…
 ├── docker-compose.yml
