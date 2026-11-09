@@ -24,6 +24,8 @@ flowchart LR
 
 Retirés pour le MVP : refresh token, Alembic (tables créées au démarrage), CI/CD.
 
+La plateforme est publiée sur un sous-domaine du site de HIT-T, qui y renvoie par des liens : voir [integration-plateforme.md](integration-plateforme.md).
+
 ## Pages frontend
 
 | Page | Accès | Exigences |
