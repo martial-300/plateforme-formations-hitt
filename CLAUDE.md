@@ -6,13 +6,17 @@ HIT-T Reco : MVP de soutenance qui recommande à un apprenant 5 formations du ca
 
 ## Commandes
 
-Développement : la base tourne dans Docker, backend et frontend en local. `./lancer.sh` lance les trois d'un coup (charge `.env` : c'est l'utilisateur qui le lance), `./arreter.sh` les arrête (données conservées) ; à la main :
+Développement : la base tourne dans Docker, backend et frontend en local. `./lancer.sh` lance les trois d'un coup (charge `.env` : c'est l'utilisateur qui le lance ; attend `backend/.venv` et `frontend/node_modules`), `./arreter.sh` les arrête (données conservées) ; à la main :
 
 ```bash
+(cd backend && uv venv --python 3.11 .venv && uv pip install --python .venv/bin/python -r requirements-dev.txt)
+(cd frontend && npm ci)
 docker compose up -d db                     # PostgreSQL + catalogue (96 formations)
 cd backend && uvicorn app.main:app --reload --port 8000   # après `set -a && . ../.env && set +a` (lancé par l'utilisateur, .env n'est pas lu)
-cd frontend && npm run dev                  # http://localhost:5173, API lue dans VITE_API_URL (frontend/.env.local)
+cd frontend && npm run dev                  # http://localhost:5173, API lue dans VITE_API_URL (défaut : /api/v1)
 ```
+
+Comptes apprenants de démo (questionnaire rempli, via l'API, mot de passe dans `DEMO_MOT_DE_PASSE`) : `docker compose exec backend python -m app.outils.comptes_demo`.
 
 Vérifications (à lancer avant chaque commit) :
 
@@ -22,7 +26,7 @@ cd backend && pytest tests/test_application.py::test_cors_limite_aux_origines_co
 cd frontend && npm run lint && npm run build   # ESLint + Prettier, puis tsc -b + build
 ```
 
-Évaluation du moteur (une fois écrite) : `cd backend && python -m tests.evaluation.precision_at_5` (protocole dans `docs/evaluation.md`).
+Évaluation du moteur : `cd backend && python -m tests.evaluation.precision_at_5` (lit `02_catalogue_hitt.sql` sans base ; protocole et journal des essais dans `docs/evaluation.md`).
 
 ## Architecture et pièges
 
@@ -32,7 +36,8 @@ cd frontend && npm run lint && npm run build   # ESLint + Prettier, puis tsc -b 
 - **API** : tous les routers sont montés sous `/api/v1` dans `main.py` ; CORS limité à `CORS_ORIGINS`, méthodes GET/POST/PUT/DELETE, en-têtes `Authorization` et `Content-Type` seulement.
 - **Frontend** : tout appel passe par `appelApi` (`src/api/client.ts`) ; le JWT est en `localStorage` (`hitt.jeton`), un 401 le supprime et déclenche la déconnexion via `quandNonAuthentifie` (branché par `ContexteAuth`). Les types de `src/api/types.ts` suivent `docs/api.md`. Pages protégées par `RouteProtegee`.
 - **Docker** : le conteneur frontend n'est joignable que derrière Nginx (production, S7) ; les ports sont publiés sur 127.0.0.1 uniquement.
-- Les routers, services (`security.py`, `recommandation.py`) et pages arrivent sprint par sprint : voir `docs/planning.md` pour savoir ce qui est attendu à quel moment.
+- **Moteur** : `services/recommandation.py::recommander` est une fonction pure (profil + formations déjà lus, TF-IDF recalculé à chaque appel, stop-words français maison sans accents). `PUT /profil` l'appelle avec k = 5 et remplace les lignes `recommandations` de l'apprenant (`GET /profil` relit ce qui est stocké) ; l'aperçu visiteur (RF-12, `routers/apercu.py`) l'appelle avec k = 3 sans rien stocker, derrière une limite d'appels par IP en mémoire (`LimiteAppels`, valable pour un seul worker uvicorn).
+- **Rôles** : dépendances `get_current_user`, `require_admin`, `require_apprenant` de `services/security.py` ; la connexion Google (RF-13) vérifie le jeton dans `services/identite_google.py`.
 
 ## Références
 
